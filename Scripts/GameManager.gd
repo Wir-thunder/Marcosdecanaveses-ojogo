@@ -135,4 +135,5 @@ func _ao_cliente_desistir(_pocao: ItemData) -> void:
 
 func _ao_cliente_sair() -> void:
 	cliente_atual = null
-	temporizador_cliente.start(1.5)
+	if temporizador_cliente.is_inside_tree():
+		temporizador_cliente.start(1.5)

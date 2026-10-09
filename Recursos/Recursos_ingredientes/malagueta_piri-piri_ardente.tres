@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_brwkr")
-id = "lagrima_douro"
-nome_do_item = "Lágrima do Douro"
-descricao = "Uma gota de névoa matinal cristalizada nas margens do Rio Douro. Acalma a mente e restaura a mana."
-valor_em_escudos = 50
+id = "malagueta_piri-piri_ardente"
+nome_do_item = "Malagueta Piri-Piri Ardente"
+descricao = "Pequena, vermelha e perigosa. Adiciona um efeito explosivo ou de fogo a qualquer mistura."
+valor_em_escudos = 8
 metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

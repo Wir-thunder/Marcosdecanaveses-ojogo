@@ -4,7 +4,8 @@
 
 [resource]
 script = ExtResource("1_n0lqi")
-id = "agua_tamega"
-nome_do_item = "Água do Tâmega"
-descricao = "Água pura e mágica recolhida nas margens de Marco de Canaveses. Base excelente para poções de cura."
+id = "musgo_aboboreira"
+nome_do_item = "Musgo de Aboboreira"
+descricao = "Musgo húmido colhido perto da Anta de Santa Marta. Tem fortes propriedades curativas se não for fervido em demasia."
+valor_em_escudos = 12
 metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

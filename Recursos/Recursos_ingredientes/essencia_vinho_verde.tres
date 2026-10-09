@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_xa03c")
-id = "musgo_aboboreira"
-nome_do_item = "Musgo de Aboboreira"
-descricao = "Musgo húmido colhido perto da Anta de Santa Marta. Tem fortes propriedades curativas se não for fervido em demasia."
-valor_em_escudos = 12
+id = "essencia_vinho_verde"
+nome_do_item = "Essência de Vinho Verde"
+descricao = "Essência aromática destilada de uvas verdes do Tâmega, usada para dar vigor e frescura às poções."
+valor_em_escudos = 25
 metadata/_custom_type_script = "uid://cyrtq3g5yojy6"
