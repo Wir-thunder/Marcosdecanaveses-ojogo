@@ -17,12 +17,12 @@ Abra `project.godot` no Godot 4.7 e carregue em **Executar projeto (F6/F5)**. A 
 
 ## Ciclo de jogo
 
-1. Veja o pedido e o tempo de paciência do cliente.
-2. Selecione e entregue a poção pedida no balcão antes que o tempo termine.
-3. Ganhe escudos com as vendas e acompanhe o stock no painel.
-4. Prepare poções no caldeirão. Cada receita consome os ingredientes listados no painel.
-5. Reponha ingredientes no fornecedor com os escudos ganhos nas vendas.
-6. Clientes só pedem poções que estejam disponíveis em stock.
+1. O primeiro cliente pede a poção que já tens selecionada; aproxima-te do balcão e carrega em **E**.
+2. Para os pedidos seguintes, usa **Q** até selecionares a poção pedida e entrega-a no balcão.
+3. Ganha escudos com as vendas e acompanha o pedido, a poção selecionada e o stock no painel.
+4. Junto ao caldeirão, usa **Tab** para escolher a receita e **E** para preparar a poção.
+5. No fornecedor, usa **F** para escolher um ingrediente e **E** para o comprar.
+6. As interações funcionam ao aproximar-se da estação; não é preciso acertar num pixel ou alinhar o boneco.
 
 O inventário inicial inclui quatro poções de demonstração e ingredientes para testar as quatro receitas. O inventário é mantido pelo autoload `InventoryManager` durante a sessão.
 

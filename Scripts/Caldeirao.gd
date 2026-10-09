@@ -9,6 +9,7 @@ signal feedback(mensagem: String)
 var indice_receita: int = 0
 
 func _ready() -> void:
+	add_to_group("interactables")
 	if receitas.is_empty():
 		push_error("O caldeirão precisa de pelo menos uma receita configurada.")
 

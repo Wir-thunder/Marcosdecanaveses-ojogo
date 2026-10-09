@@ -7,6 +7,7 @@ signal pocao_selecionada_alterada(pocao: ItemData)
 const VELOCIDADE: float = 140.0
 
 @export var distancia_interacao: float = 28.0
+@export var alcance_interacao: float = 72.0
 @export var escudos: int = 0
 @export var pocoes_disponiveis: Array[ItemData] = []
 @export var pocao_ativa: ItemData
@@ -69,24 +70,17 @@ func interagir() -> void:
 	alvo.call("interagir", self)
 
 func _obter_alvo(metodo: StringName) -> Node2D:
-	if interacao_area == null:
-		return null
-
 	var melhor_alvo: Node2D
 	var menor_distancia := INF
-	for corpo in interacao_area.get_overlapping_bodies():
-		if corpo is Node2D and corpo.has_method(metodo):
-			var distancia: float = global_position.distance_squared_to(corpo.global_position)
-			if distancia < menor_distancia:
-				menor_distancia = distancia
-				melhor_alvo = corpo
-
-	for area in interacao_area.get_overlapping_areas():
-		if area is Node2D and area.has_method(metodo):
-			var distancia: float = global_position.distance_squared_to(area.global_position)
-			if distancia < menor_distancia:
-				menor_distancia = distancia
-				melhor_alvo = area
+	var alcance_quadrado := alcance_interacao * alcance_interacao
+	for candidato in get_tree().get_nodes_in_group("interactables"):
+		if not candidato is Node2D or not candidato.has_method(metodo):
+			continue
+		var alvo := candidato as Node2D
+		var distancia := global_position.distance_squared_to(alvo.global_position)
+		if distancia <= alcance_quadrado and distancia < menor_distancia:
+			menor_distancia = distancia
+			melhor_alvo = alvo
 
 	return melhor_alvo
 

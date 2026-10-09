@@ -15,6 +15,9 @@ signal feedback(mensagem: String)
 
 var indice_selecionado: int = 0
 
+func _ready() -> void:
+	add_to_group("interactables")
+
 func obter_ingrediente_selecionado() -> ItemData:
 	if ingredientes.is_empty():
 		return null

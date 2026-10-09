@@ -5,6 +5,7 @@ signal feedback(mensagem: String)
 var fila: Array[ClienteNPC] = []
 
 func _ready() -> void:
+	add_to_group("interactables")
 	monitoring = true
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)

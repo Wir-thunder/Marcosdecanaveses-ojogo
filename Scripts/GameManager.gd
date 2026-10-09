@@ -35,6 +35,7 @@ const POCOES: Array[ItemData] = [
 
 var cliente_atual: ClienteNPC
 var estado_padrao: String = ""
+var vendas_concluidas: int = 0
 
 func _ready() -> void:
 	_inicializar_inventario()
@@ -68,17 +69,17 @@ func _process(_delta: float) -> void:
 		pocao_texto = jogador.pocao_ativa.nome_do_item
 		quantidade = InventoryManager.obter_quantidade(jogador.pocao_ativa.id)
 
-	var pedido_texto := "A aguardar cliente..."
+	var pedido_texto := "À espera do primeiro cliente"
 	var cliente := balcao.obter_cliente_atual()
 	if cliente != null and cliente.item_desejado != null:
-		pedido_texto = "Pedido: %s | Paciência: %ds" % [
+		pedido_texto = "PEDIDO: %s · %ds" % [
 			cliente.item_desejado.nome_do_item,
 			ceili(cliente.timer_paciencia.time_left),
 		]
 	elif cliente_atual != null and is_instance_valid(cliente_atual):
-		pedido_texto = "Cliente a sair..." if cliente_atual.estado == ClienteNPC.Estado.SAINDO else "Cliente a caminho..."
+		pedido_texto = "Cliente a sair" if cliente_atual.estado == ClienteNPC.Estado.SAINDO else "Cliente a chegar ao balcão"
 
-	estado_padrao = "ESCUDOS  %d     |     MÃO  %s ×%d     |     %s" % [
+	estado_padrao = "ESCUDOS %d  ·  POÇÃO: %s ×%d\n%s" % [
 		jogador.escudos,
 		pocao_texto,
 		quantidade,
@@ -139,13 +140,20 @@ func _ao_selecionar_pocao(_pocao: ItemData) -> void:
 func _obter_instrucao_contextual(alvo: Node2D) -> String:
 	if alvo == balcao:
 		var cliente := balcao.obter_cliente_atual()
-		if cliente != null:
-			return "E  ENTREGAR POÇÃO"
+		if cliente != null and cliente.item_desejado != null:
+			if jogador.pocao_ativa == cliente.item_desejado:
+				return "E  ENTREGAR %s" % cliente.item_desejado.nome_do_item.to_upper()
+			return "Q  SELECIONAR %s  ·  E  ENTREGAR" % cliente.item_desejado.nome_do_item.to_upper()
 		return "CLIENTE A CAMINHO"
 	if alvo == caldeirao:
-		return "E  PREPARAR     ·     TAB  TROCAR RECEITA"
+		return "E  PREPARAR POÇÃO  ·  TAB  TROCAR RECEITA"
 	if alvo == fornecedor:
 		return "E  COMPRAR INGREDIENTE     ·     F  TROCAR ITEM"
+	var cliente := balcao.obter_cliente_atual()
+	if cliente != null and cliente.item_desejado != null:
+		if jogador.pocao_ativa == cliente.item_desejado:
+			return "VAI AO BALCÃO E PRESSIONA E PARA ENTREGAR"
+		return "Q  ESCOLHE %s  ·  VAI AO BALCÃO  ·  E  ENTREGA" % cliente.item_desejado.nome_do_item.to_upper()
 	return "WASD / SETAS  MOVER     ·     APROXIMA-TE DE UMA ESTAÇÃO"
 
 func _alternar_pausa() -> void:
@@ -184,6 +192,9 @@ func _criar_cliente() -> void:
 		_mostrar_feedback("Sem stock: prepara poções no caldeirão.")
 		return
 
+	if vendas_concluidas == 0 and jogador.pocao_ativa != null:
+		pocoes_com_stock = [jogador.pocao_ativa]
+
 	cliente_atual = CENA_CLIENTE.instantiate() as ClienteNPC
 	cliente_atual.itens_possiveis = pocoes_com_stock
 	cliente_atual.ponto_entrada = Vector2(600.0, 250.0)
@@ -191,7 +202,11 @@ func _criar_cliente() -> void:
 	cliente_atual.ponto_saida = Vector2(600.0, 250.0)
 	cliente_atual.tree_exited.connect(_ao_cliente_sair)
 	cliente_atual.venda_fracassada.connect(_ao_cliente_desistir)
+	cliente_atual.venda_sucesso.connect(_ao_cliente_vender)
 	add_child(cliente_atual)
+
+func _ao_cliente_vender(_pocao: ItemData, _valor: int) -> void:
+	vendas_concluidas += 1
 
 func _ao_cliente_desistir(_pocao: ItemData) -> void:
 	_mostrar_feedback("O cliente perdeu a paciência. Mantém a loja abastecida.")

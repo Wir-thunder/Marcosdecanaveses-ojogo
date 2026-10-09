@@ -7,7 +7,7 @@ enum Estado { ENTRANDO, ESPERANDO, SAINDO }
 
 @export var itens_possiveis: Array[ItemData] = []
 @export var velocidade: float = 42.0
-@export var paciencia_total: float = 18.0
+@export var paciencia_total: float = 40.0
 @export var ponto_entrada: Vector2
 @export var ponto_espera: Vector2
 @export var ponto_saida: Vector2
