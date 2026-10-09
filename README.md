@@ -9,11 +9,11 @@ Abra `project.godot` no Godot 4.7 e carregue em **Executar projeto (F6/F5)**. A 
 ## Controlos
 
 - **WASD / setas** — mover o alquimista.
-- **E / Espaço** — preparar uma poção no caldeirão ou entregar a poção selecionada ao cliente no balcão.
+- **E / Espaço** — preparar uma poção no caldeirão, entregar a poção pedida ou comprar ingredientes junto do fornecedor.
 - **Q** — selecionar a próxima poção que tenha stock.
 - **Tab** — selecionar a próxima receita quando estiver junto do caldeirão.
 - **F** — selecionar um ingrediente quando estiver junto do fornecedor.
-- **E / Espaço no fornecedor** — comprar o ingrediente selecionado por 5 escudos.
+- **Esc** — pausar/retomar; o menu também permite reiniciar o turno ou sair.
 
 ## Ciclo de jogo
 

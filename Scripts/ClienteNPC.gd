@@ -6,8 +6,8 @@ signal venda_fracassada(item: ItemData)
 enum Estado { ENTRANDO, ESPERANDO, SAINDO }
 
 @export var itens_possiveis: Array[ItemData] = []
-@export var velocidade: float = 55.0
-@export var paciencia_total: float = 12.0
+@export var velocidade: float = 42.0
+@export var paciencia_total: float = 18.0
 @export var ponto_entrada: Vector2
 @export var ponto_espera: Vector2
 @export var ponto_saida: Vector2
@@ -18,6 +18,8 @@ enum Estado { ENTRANDO, ESPERANDO, SAINDO }
 var estado: Estado = Estado.ENTRANDO
 var item_desejado: ItemData
 var feliz: bool = false
+var tempo_animacao: float = 0.0
+var posicao_visual_base: Vector2
 
 func _ready() -> void:
 	if timer_paciencia == null:
@@ -26,6 +28,7 @@ func _ready() -> void:
 		return
 	timer_paciencia.one_shot = true
 	timer_paciencia.timeout.connect(_on_timer_paciencia_timeout)
+	posicao_visual_base = $Visual.position
 	global_position = ponto_entrada
 
 	if itens_possiveis.is_empty():
@@ -34,6 +37,11 @@ func _ready() -> void:
 		return
 
 func _process(_delta: float) -> void:
+	tempo_animacao += _delta
+	if estado == Estado.ESPERANDO:
+		$Visual.position = posicao_visual_base + Vector2(0.0, sin(tempo_animacao * 2.5) * 1.2)
+	else:
+		$Visual.position = posicao_visual_base
 	if pedido_label == null:
 		return
 	match estado:
