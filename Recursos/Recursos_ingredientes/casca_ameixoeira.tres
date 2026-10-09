@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://5e94b241004b"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_5e94b241"]
+
+[resource]
+script = ExtResource("1_5e94b241")
+id = "casca_ameixoeira"
+nome_do_item = "Casca de Ameixoeira"
+descricao = "Bainha seca e amarga, perfeita para poções que exigem equilíbrio entre cura e dano."
+valor_em_escudos = 17
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

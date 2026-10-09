@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://3c4323881138"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_3c432388"]
+
+[resource]
+script = ExtResource("1_3c432388")
+id = "acacia_branca"
+nome_do_item = "Acácia Branca"
+descricao = "Flores de acácia colhidas ao amanhecer, perfumadas e delicadas, ideais para misturas calmantes."
+valor_em_escudos = 18
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

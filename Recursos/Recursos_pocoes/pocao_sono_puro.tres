@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://986051451e4c"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_98605145"]
+
+[resource]
+script = ExtResource("1_98605145")
+id = "pocao_sono_puro"
+nome_do_item = "Poção Sono Puro"
+descricao = "Leva o corpo a um repouso profundo, restaurando forças e acalmando dores excessivas."
+valor_em_escudos = 78
+e_ingrediente = false
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

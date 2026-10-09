@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://287a45103ae4"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_287a4510"]
+
+[resource]
+script = ExtResource("1_287a4510")
+id = "raiz_celeste"
+nome_do_item = "Raiz Celeste"
+descricao = "Raiz branca de sombra profunda, cultiva-se em covas secretas e fortalece a magia."
+valor_em_escudos = 26
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

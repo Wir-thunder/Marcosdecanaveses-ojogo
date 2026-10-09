@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://67eea5711fff"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_67eea571"]
+
+[resource]
+script = ExtResource("1_67eea571")
+id = "baga_escura"
+nome_do_item = "Baga Escura"
+descricao = "Fruto de cor quase negra, doce com leve amargor, usado em misturas de proteção."
+valor_em_escudos = 13
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

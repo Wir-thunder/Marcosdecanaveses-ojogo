@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://3c6bba8b13b1"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_3c6bba8b"]
+
+[resource]
+script = ExtResource("1_3c6bba8b")
+id = "planta_de_lapa"
+nome_do_item = "Planta de Lapa"
+descricao = "Folha resistente de zonas rochosas, usada para estabilizar efeitos de cura."
+valor_em_escudos = 17
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

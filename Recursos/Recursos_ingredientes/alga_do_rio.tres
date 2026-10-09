@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://1ba3baea5c14"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_1ba3a9ea"]
+
+[resource]
+script = ExtResource("1_1ba3a9ea")
+id = "alga_do_rio"
+nome_do_item = "Alga do Rio"
+descricao = "Película verde e fria arrancada das margens do Douro, rica em minerais e sabor marítimo."
+valor_em_escudos = 12
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

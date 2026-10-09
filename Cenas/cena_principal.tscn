@@ -1,0 +1,207 @@
+[gd_scene load_steps=17 format=3 uid="uid://b86qe5mbiyta1"]
+
+[ext_resource type="Script" uid="uid://crxqbcxwury36" path="res://Scripts/GameManager.gd" id="1_game"]
+[ext_resource type="Script" uid="uid://dn8wmp8hice1c" path="res://Scripts/Player.gd" id="2_player"]
+[ext_resource type="Script" uid="uid://dgrcsyk4tv7f3" path="res://Scripts/BalcaoAtendimento.gd" id="3_balcao"]
+[ext_resource type="Script" uid="uid://db5fk8i8u7a3r" path="res://Scripts/Caldeirao.gd" id="4_caldeirao"]
+[ext_resource type="Resource" path="res://Recursos/Recursos_receitas/receita_vento_ligeiro.tres" id="7_receita_vento"]
+[ext_resource type="Resource" path="res://Recursos/Recursos_receitas/receita_espinheira_real.tres" id="8_receita_espinheira"]
+[ext_resource type="Resource" path="res://Recursos/Recursos_receitas/receita_mente_limpida.tres" id="9_receita_mente"]
+[ext_resource type="Resource" path="res://Recursos/Recursos_receitas/receita_escudo_do_lago.tres" id="10_receita_escudo"]
+[ext_resource type="Script" path="res://Scripts/PotionRecipeData.gd" id="11_recipe_data"]
+[ext_resource type="Script" path="res://Scripts/Fornecedor.gd" id="12_fornecedor"]
+
+[sub_resource type="CircleShape2D" id="PlayerCollider"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="InteractionShape"]
+radius = 24.0
+
+[sub_resource type="RectangleShape2D" id="CounterShape"]
+size = Vector2(142, 104)
+
+[sub_resource type="RectangleShape2D" id="CounterBlockShape"]
+size = Vector2(132, 26)
+
+[sub_resource type="CircleShape2D" id="CauldronInteractionShape"]
+radius = 24.0
+
+[sub_resource type="RectangleShape2D" id="SupplierAreaShape"]
+size = Vector2(54, 38)
+
+[node name="Loja" type="Node2D" unique_id=1575213275]
+script = ExtResource("1_game")
+
+[node name="Chao" type="Polygon2D" parent="." unique_id=1802054955]
+color = Color(0.18, 0.24, 0.2, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
+
+[node name="ParedeFundo" type="Polygon2D" parent="." unique_id=1203577194]
+color = Color(0.27, 0.18, 0.15, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 16, 0, 16)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=916926789 groups=["player"]]
+position = Vector2(235, 300)
+collision_layer = 1
+collision_mask = 1
+script = ExtResource("2_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=358101122]
+shape = SubResource("PlayerCollider")
+
+[node name="Visual" type="Polygon2D" parent="Player" unique_id=770328325]
+color = Color(0.3, 0.72, 0.9, 1)
+polygon = PackedVector2Array(-9, -11, 9, -11, 9, 8, 0, 13, -9, 8)
+
+[node name="InteracaoArea" type="Area2D" parent="Player" unique_id=1307811810]
+collision_layer = 2
+collision_mask = 1
+monitoring = true
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/InteracaoArea" unique_id=71922244]
+shape = SubResource("InteractionShape")
+
+[node name="Balcao" type="Area2D" parent="." unique_id=47932170]
+position = Vector2(330, 250)
+collision_layer = 1
+collision_mask = 1
+monitoring = true
+script = ExtResource("3_balcao")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Balcao" unique_id=1833654297]
+shape = SubResource("CounterShape")
+
+[node name="Tampo" type="Polygon2D" parent="Balcao" unique_id=726942654]
+color = Color(0.47, 0.27, 0.15, 1)
+polygon = PackedVector2Array(-66, -26, 66, -26, 66, 26, -66, 26)
+
+[node name="BalcaoFisico" type="StaticBody2D" parent="." unique_id=1746221300]
+position = Vector2(330, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BalcaoFisico" unique_id=653281327]
+shape = SubResource("CounterBlockShape")
+
+[node name="Prateleira" type="Polygon2D" parent="." unique_id=1790960627]
+position = Vector2(330, 250)
+color = Color(0.66, 0.42, 0.22, 1)
+polygon = PackedVector2Array(-72, -34, 72, -34, 72, -27, -72, -27)
+
+[node name="PlacaBalcao" type="Label" parent="."]
+offset_left = 282.0
+offset_top = 216.0
+offset_right = 378.0
+offset_bottom = 236.0
+theme_override_colors/font_color = Color(1, 0.9, 0.69, 1)
+theme_override_font_sizes/font_size = 12
+text = "ATENDIMENTO"
+horizontal_alignment = 1
+
+[node name="Caldeirao" type="Area2D" parent="." unique_id=289872812]
+position = Vector2(405, 260)
+collision_layer = 1
+collision_mask = 0
+monitorable = true
+script = ExtResource("4_caldeirao")
+receitas = Array[ExtResource("11_recipe_data")]([ExtResource("7_receita_vento"), ExtResource("8_receita_espinheira"), ExtResource("9_receita_mente"), ExtResource("10_receita_escudo")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Caldeirao" unique_id=249184466]
+shape = SubResource("CauldronInteractionShape")
+
+[node name="Visual" type="Polygon2D" parent="Caldeirao" unique_id=386485097]
+color = Color(0.23, 0.42, 0.38, 1)
+polygon = PackedVector2Array(-20, -12, 20, -12, 17, 12, 10, 20, -10, 20, -17, 12)
+
+[node name="Fumaca" type="Polygon2D" parent="Caldeirao" unique_id=765177025]
+position = Vector2(0, -19)
+color = Color(0.75, 0.83, 0.78, 0.6)
+polygon = PackedVector2Array(-5, -5, 3, -9, 9, -5, 7, 2, 0, 4, -6, 1)
+
+[node name="PlacaCaldeirao" type="Label" parent="."]
+offset_left = 360.0
+offset_top = 224.0
+offset_right = 450.0
+offset_bottom = 244.0
+theme_override_colors/font_color = Color(0.78, 0.9, 0.77, 1)
+theme_override_font_sizes/font_size = 12
+text = "CALDEIRÃO"
+horizontal_alignment = 1
+
+[node name="Fornecedor" type="Area2D" parent="."]
+position = Vector2(535, 260)
+collision_layer = 1
+collision_mask = 0
+monitorable = true
+script = ExtResource("12_fornecedor")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fornecedor"]
+shape = SubResource("SupplierAreaShape")
+
+[node name="Banca" type="Polygon2D" parent="Fornecedor"]
+color = Color(0.54, 0.38, 0.24, 1)
+polygon = PackedVector2Array(-27, -19, 27, -19, 27, 17, -27, 17)
+
+[node name="Frascos" type="Polygon2D" parent="Fornecedor"]
+color = Color(0.57, 0.79, 0.6, 1)
+polygon = PackedVector2Array(-15, -26, -8, -26, -8, -12, -15, -12, -17, -17, -17, -23)
+
+[node name="PlacaFornecedor" type="Label" parent="."]
+offset_left = 493.0
+offset_top = 224.0
+offset_right = 578.0
+offset_bottom = 244.0
+theme_override_colors/font_color = Color(0.86, 0.82, 0.62, 1)
+theme_override_font_sizes/font_size = 11
+text = "FORNECEDOR"
+horizontal_alignment = 1
+
+[node name="TemporizadorCliente" type="Timer" parent="." unique_id=1533797540]
+one_shot = true
+
+[node name="TemporizadorFeedback" type="Timer" parent="."]
+one_shot = true
+
+[node name="Interface" type="CanvasLayer" parent="." unique_id=1733094660]
+
+[node name="Painel" type="PanelContainer" parent="Interface" unique_id=1043761772]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 580.0
+offset_bottom = 194.0
+
+[node name="Margem" type="MarginContainer" parent="Interface/Painel" unique_id=581869510]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="Coluna" type="VBoxContainer" parent="Interface/Painel/Margem" unique_id=2029445355]
+layout_mode = 2
+
+[node name="Titulo" type="Label" parent="Interface/Painel/Margem/Coluna"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.78, 0.49, 1)
+theme_override_font_sizes/font_size = 17
+text = "A LOJA DO ALQUIMISTA — ALFA 0.1"
+
+[node name="Estado" type="Label" parent="Interface/Painel/Margem/Coluna" unique_id=1005245441]
+layout_mode = 2
+text = "A preparar a loja..."
+
+[node name="Receita" type="Label" parent="Interface/Painel/Margem/Coluna"]
+layout_mode = 2
+text = "Receita: Hortelã Nobre"
+
+[node name="Inventario" type="Label" parent="Interface/Painel/Margem/Coluna"]
+layout_mode = 2
+text = "POÇÕES"
+
+[node name="Fornecedor" type="Label" parent="Interface/Painel/Margem/Coluna"]
+layout_mode = 2
+text = "Fornecedor (F/E): Hortelã Nobre x4 — 5 escudos"
+
+[node name="Instrucoes" type="Label" parent="Interface/Painel/Margem/Coluna" unique_id=917414871]
+layout_mode = 2
+text = "WASD/setas: mover | E/Espaço: usar | Q: poção | Tab: receita | F: ingrediente"
+autowrap_mode = 3

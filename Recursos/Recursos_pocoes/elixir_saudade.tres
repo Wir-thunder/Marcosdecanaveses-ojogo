@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cac1yycfgd2nm"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_wv2dc"]
+
+[resource]
+script = ExtResource("1_wv2dc")
+id = "elixir_saudade"
+nome_do_item = "Elixir da Saudade"
+descricao = "Uma poção de cor azul melancólica. Faz com que o cliente se lembre de memórias esquecidas ou encontre o caminho de volta a casa."
+valor_em_escudos = 120
+e_ingrediente = false
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

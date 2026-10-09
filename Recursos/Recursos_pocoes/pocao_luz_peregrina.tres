@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://36fab9d93933"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_36fab9d9"]
+
+[resource]
+script = ExtResource("1_36fab9d9")
+id = "pocao_luz_peregrina"
+nome_do_item = "Poção Luz Peregrina"
+descricao = "Emite uma luz fraca, mas constante, revelando caminhos ocultos e criaturas invisíveis."
+valor_em_escudos = 70
+e_ingrediente = false
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

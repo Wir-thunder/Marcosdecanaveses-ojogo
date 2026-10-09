@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://062ba668d71a"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_062ba668"]
+
+[resource]
+script = ExtResource("1_062ba668")
+id = "linho_do_curro"
+nome_do_item = "Linho do Curro"
+descricao = "Semente de fibra fina, usada para dar consistência e acabamento às poções."
+valor_em_escudos = 11
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

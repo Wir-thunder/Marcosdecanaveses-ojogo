@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PotionRecipeData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Scripts/PotionRecipeData.gd" id="1_script"]
+[ext_resource type="Resource" path="res://Recursos/Recursos_pocoes/pocao_vento_ligeiro.tres" id="2_resultado"]
+[ext_resource type="Resource" path="res://Recursos/Recursos_ingredientes/hortela_nobre.tres" id="3_ingrediente"]
+[ext_resource type="Script" path="res://Scripts/ItemData.gd" id="4_item_data"]
+
+[resource]
+script = ExtResource("1_script")
+pocao_resultante = ExtResource("2_resultado")
+ingredientes_necessarios = Array[ExtResource("4_item_data")]([ExtResource("3_ingrediente")])

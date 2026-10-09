@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://68ec1188266b"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_68ec1188"]
+
+[resource]
+script = ExtResource("1_68ec1188")
+id = "pocao_sombra_longa"
+nome_do_item = "Poção Sombra Longa"
+descricao = "Dá uma vantagem discreta em movimentos silenciosos e evasivas furtivas."
+valor_em_escudos = 69
+e_ingrediente = false
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

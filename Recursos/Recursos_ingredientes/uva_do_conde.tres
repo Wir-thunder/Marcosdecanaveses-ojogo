@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://84a207d5d007"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_84a207d5"]
+
+[resource]
+script = ExtResource("1_84a207d5")
+id = "uva_do_conde"
+nome_do_item = "Uva do Conde"
+descricao = "Uvas pequenas e doces, usadas para dar sabor e suavidade a poções de cura."
+valor_em_escudos = 17
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

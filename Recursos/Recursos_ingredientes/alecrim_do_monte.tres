@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cbfe768f5756"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_cbfe768f"]
+
+[resource]
+script = ExtResource("1_cbfe768f")
+id = "alecrim_do_monte"
+nome_do_item = "Alecrim do Monte"
+descricao = "Erva amarga e aromática recolhida em encostas secas, muito usada em poções de energia e clareza."
+valor_em_escudos = 14
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

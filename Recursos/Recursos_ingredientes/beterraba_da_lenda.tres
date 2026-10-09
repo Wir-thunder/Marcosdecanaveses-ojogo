@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://7f2dc97785b9"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_7f2dc977"]
+
+[resource]
+script = ExtResource("1_7f2dc977")
+id = "beterraba_da_lenda"
+nome_do_item = "Beterraba da Lenda"
+descricao = "Raiz profunda e cor rubra intensa, conhecida por diluir venenos e fortalecer o corpo."
+valor_em_escudos = 19
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://03580b0e5d3c"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_03580b0e"]
+
+[resource]
+script = ExtResource("1_03580b0e")
+id = "amora_silvestre"
+nome_do_item = "Amora Silvestre"
+descricao = "Bagas escuras e doces, colhidas em bosques de outono, perfeitas para poções nutritivas."
+valor_em_escudos = 16
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

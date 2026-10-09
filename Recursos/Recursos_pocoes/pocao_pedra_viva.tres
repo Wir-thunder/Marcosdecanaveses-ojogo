@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c6eade603d4e"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_c6eade60"]
+
+[resource]
+script = ExtResource("1_c6eade60")
+id = "pocao_pedra_viva"
+nome_do_item = "Poção Pedra Viva"
+descricao = "Dá resistência extrema a golpes e quedas, tornando o corpo quase impossível de abalar."
+valor_em_escudos = 100
+e_ingrediente = false
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

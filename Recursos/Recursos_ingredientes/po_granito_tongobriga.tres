@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://htaj1v3rkovr"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_n1t8l"]
+
+[resource]
+script = ExtResource("1_n1t8l")
+id = "malagueta_piri-piri_ardente"
+nome_do_item = "Malagueta Piri-Piri Ardente"
+descricao = "Pequena, vermelha e perigosa. Adiciona um efeito explosivo ou de fogo a qualquer mistura."
+valor_em_escudos = 8
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

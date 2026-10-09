@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://3187e4714ba2"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_3187e471"]
+
+[resource]
+script = ExtResource("1_3187e471")
+id = "pocao_furia_do_trigo"
+nome_do_item = "Poção Fúria do Trigo"
+descricao = "Aumenta a força bruta e o ímpeto do corpo, mas exige cautela na concentração."
+valor_em_escudos = 90
+e_ingrediente = false
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

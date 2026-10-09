@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://28760234242d"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_28760234"]
+
+[resource]
+script = ExtResource("1_28760234")
+id = "erva_cidreira"
+nome_do_item = "Erva-Cidreira"
+descricao = "Folhas macias e perfumadas, frequentemente usadas em elixires de descanso e serenidade."
+valor_em_escudos = 15
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

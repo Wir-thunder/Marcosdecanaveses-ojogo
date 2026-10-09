@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b2ad477a85d4"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_b2ad477a"]
+
+[resource]
+script = ExtResource("1_b2ad477a")
+id = "basalto_fervente"
+nome_do_item = "Basalto Fervente"
+descricao = "Pó frito de rocha vulcânica, raro e pesado, usado para estabilizar poções pesadas."
+valor_em_escudos = 28
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

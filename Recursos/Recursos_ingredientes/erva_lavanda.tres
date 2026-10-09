@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://152d70326ab8"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_152d7032"]
+
+[resource]
+script = ExtResource("1_152d7032")
+id = "erva_lavanda"
+nome_do_item = "Erva de Lavanda"
+descricao = "Inflorescência azul com aroma doce, ideal para poesia, calma e cura leve."
+valor_em_escudos = 16
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

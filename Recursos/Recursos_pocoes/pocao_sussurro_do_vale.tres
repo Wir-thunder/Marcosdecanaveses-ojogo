@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://347f2a5130b7"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_347f2a51"]
+
+[resource]
+script = ExtResource("1_347f2a51")
+id = "pocao_sussurro_do_vale"
+nome_do_item = "Poção Sussurro do Vale"
+descricao = "Acalma a mente e aumenta a discrição, sendo útuíl em infiltrações e observações."
+valor_em_escudos = 68
+e_ingrediente = false
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

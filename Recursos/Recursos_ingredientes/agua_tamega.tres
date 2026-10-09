@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://by6eiinge1lqa"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_r1rbg"]
+
+[resource]
+script = ExtResource("1_r1rbg")
+id = "agua_tamega"
+nome_do_item = "Água do Tâmega"
+descricao = "Água pura e mágica recolhida nas margens de Marco de Canaveses. Base excelente para poções de cura."
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

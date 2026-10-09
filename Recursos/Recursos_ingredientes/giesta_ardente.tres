@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://7265755d589b"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_7265755d"]
+
+[resource]
+script = ExtResource("1_7265755d")
+id = "giesta_ardente"
+nome_do_item = "Giesta Ardente"
+descricao = "Flores amarelas em tons de fogo, usadas para criar poções ofensivas e energéticas."
+valor_em_escudos = 23
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

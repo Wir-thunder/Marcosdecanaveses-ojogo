@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://4baf51e9acdd"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_4baf51e9"]
+
+[resource]
+script = ExtResource("1_4baf51e9")
+id = "tomilho_do_mar"
+nome_do_item = "Tomilho do Mar"
+descricao = "Erva salina e forte, adaptada a subidas costeiras e muito útuíl em misturas de resistência."
+valor_em_escudos = 18
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

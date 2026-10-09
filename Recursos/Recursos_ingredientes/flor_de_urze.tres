@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://6ffea7b2cd6e"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_6ffea7b2"]
+
+[resource]
+script = ExtResource("1_6ffea7b2")
+id = "flor_de_urze"
+nome_do_item = "Flor de Urze"
+descricao = "Botão roxo de zonas pedregosas, muito valorizado em misturas de visão e foco."
+valor_em_escudos = 19
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"

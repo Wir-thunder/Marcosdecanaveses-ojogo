@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://9f024a6465a6"]
+
+[ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_9f024a64"]
+
+[resource]
+script = ExtResource("1_9f024a64")
+id = "musgo_do_pombal"
+nome_do_item = "Musgo do Pombal"
+descricao = "Tapete verde húmido recolhido em pedras antigas, com forte poder de cura lenta."
+valor_em_escudos = 16
+e_ingrediente = true
+metadata/_custom_type_script = "uid://cyrtq3g5yojy6"
