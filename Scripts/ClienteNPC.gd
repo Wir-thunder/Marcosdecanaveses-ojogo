@@ -3,6 +3,7 @@ class_name ClienteNPC extends CharacterBody2D
 const TEXTURA_CLIENTES: Texture2D = preload("res://Sprites/5clientes_transparente.png")
 const LINHAS_VISUAIS: Array[int] = [0, 2, 3, 5, 6]
 const LINHAS_TRASEIRAS: Array[int] = [1, 2, 4, 5, 7]
+const DIRECOES: Array[String] = ["down", "up", "left", "right"]
 const LARGURA_FRAME: float = 212.0
 const ALTURA_FRAME: float = 316.0
 
@@ -24,14 +25,11 @@ enum Estado { ENTRANDO, ESPERANDO, SAINDO }
 @onready var timer_paciencia: Timer = get_node_or_null("TimerPaciencia")
 @onready var pedido_label: Label = get_node_or_null("Pedido")
 @onready var anim: AnimatedSprite2D = get_node_or_null("Anim")
-@onready var visual_fallback: Node2D = get_node_or_null("Visual")
 
 var estado: Estado = Estado.ENTRANDO
 var item_desejado: ItemData
 var feliz: bool = false
 var direcao_atual: String = "down"
-var tempo_animacao: float = 0.0
-var posicao_visual_base: Vector2
 
 func _ready() -> void:
 	if timer_paciencia == null:
@@ -40,8 +38,10 @@ func _ready() -> void:
 		return
 	timer_paciencia.one_shot = true
 	timer_paciencia.timeout.connect(_on_timer_paciencia_timeout)
-	if visual_fallback != null:
-		posicao_visual_base = visual_fallback.position
+	if anim == null:
+		push_error("ClienteNPC precisa de um AnimatedSprite2D filho chamado Anim.")
+		set_physics_process(false)
+		return
 	_preparar_visual()
 	global_position = ponto_entrada
 
@@ -51,12 +51,6 @@ func _ready() -> void:
 		return
 
 func _process(_delta: float) -> void:
-	tempo_animacao += _delta
-	if visual_fallback != null and visual_fallback.visible:
-		visual_fallback.position = posicao_visual_base
-		if estado == Estado.ESPERANDO:
-			visual_fallback.position.y += sin(tempo_animacao * 2.5) * 1.2
-		visual_fallback.scale.x = -1.0 if direcao_atual == "left" else 1.0
 	if pedido_label == null:
 		return
 	match estado:
@@ -78,18 +72,18 @@ func _physics_process(_delta: float) -> void:
 				estado = Estado.ESPERANDO
 				escolher_pocao_aleatoria()
 				timer_paciencia.start(paciencia_total)
-				_atualizar_animacao(false)
+				_atualizar_animacao()
 			else:
-				_atualizar_animacao(true)
+				_atualizar_animacao()
 		Estado.ESPERANDO:
 			velocity = Vector2.ZERO
 			move_and_slide()
-			_atualizar_animacao(false)
+			_atualizar_animacao()
 		Estado.SAINDO:
 			if _mover_para(ponto_saida):
 				queue_free()
 			else:
-				_atualizar_animacao(true)
+				_atualizar_animacao()
 
 func _mover_para(destino: Vector2) -> bool:
 	var deslocamento := destino - global_position
@@ -99,47 +93,29 @@ func _mover_para(destino: Vector2) -> bool:
 		move_and_slide()
 		return true
 
-	var dir := deslocamento.normalized()
-	_atualizar_direcao(dir)
-	velocity = dir * velocidade
+	velocity = deslocamento.normalized() * velocidade
 	move_and_slide()
 	return false
 
-func _atualizar_direcao(vetor: Vector2) -> void:
-	if abs(vetor.x) >= abs(vetor.y):
-		direcao_atual = "right" if vetor.x > 0.0 else "left"
-	else:
-		direcao_atual = "down" if vetor.y > 0.0 else "up"
-
-func _atualizar_animacao(a_mover: bool) -> void:
+func _atualizar_animacao() -> void:
 	if anim == null or anim.sprite_frames == null:
-		if anim != null:
-			anim.visible = false
-		if visual_fallback != null:
-			visual_fallback.visible = false
 		return
 
-	var prefixo := "walk_" if a_mover else "idle_"
-	var anim_nome := _obter_animacao_disponivel(prefixo)
-	if anim_nome.is_empty():
-		anim.visible = false
-		if visual_fallback != null:
-			visual_fallback.visible = false
+	if absf(velocity.x) > absf(velocity.y):
+		direcao_atual = "right" if velocity.x > 0.0 else "left"
+	elif absf(velocity.y) > 0.01:
+		direcao_atual = "down" if velocity.y > 0.0 else "up"
+
+	var nome_animacao := "walk_" + direcao_atual
+	if velocity.length_squared() <= 0.01:
+		if anim.animation != nome_animacao:
+			anim.play(nome_animacao)
+		anim.pause()
+		anim.set_frame_and_progress(0, 0.0)
 		return
 
-	anim.visible = true
-	if visual_fallback != null:
-		visual_fallback.visible = false
-	if anim.animation != anim_nome or not anim.is_playing():
-		anim.play(anim_nome)
-
-func _obter_animacao_disponivel(prefixo: String) -> String:
-	if anim == null or anim.sprite_frames == null:
-		return ""
-	for nome in [prefixo + direcao_atual, prefixo + "down", "idle_down"]:
-		if anim.sprite_frames.has_animation(nome):
-			return nome
-	return ""
+	if anim.animation != nome_animacao or not anim.is_playing():
+		anim.play(nome_animacao)
 
 func _preparar_visual() -> void:
 	if anim == null:
@@ -152,32 +128,22 @@ func _preparar_visual() -> void:
 	var frames := SpriteFrames.new()
 	frames.remove_animation(&"default")
 
-	var direcoes: Array[String] = ["down", "up", "left", "right"]
-	for indice in range(direcoes.size()):
-		var direcao: String = direcoes[indice]
-		var linha_idle := linha_costas if direcao == "up" else linha_frente
-		var idle_coluna := indice
-		var walk_coluna := indice + 4
-		var idle_nome := "idle_" + direcao
-		var walk_nome := "walk_" + direcao
-
-		frames.add_animation(idle_nome)
-		frames.set_animation_speed(idle_nome, 8.0)
-		frames.set_animation_loop(idle_nome, true)
-		frames.add_frame(idle_nome, _obter_textura_frame(linha_idle, idle_coluna))
-
-		frames.add_animation(walk_nome)
-		frames.set_animation_speed(walk_nome, 8.0)
-		frames.set_animation_loop(walk_nome, true)
-		frames.add_frame(walk_nome, _obter_textura_frame(linha_frente, idle_coluna))
-		frames.add_frame(walk_nome, _obter_textura_frame(linha_frente, walk_coluna))
+	for indice in range(DIRECOES.size()):
+		var direcao: String = DIRECOES[indice]
+		var linha := linha_costas if direcao == "up" else linha_frente
+		var nome_animacao := "walk_" + direcao
+		frames.add_animation(nome_animacao)
+		frames.set_animation_speed(nome_animacao, 8.0)
+		frames.set_animation_loop(nome_animacao, true)
+		frames.add_frame(nome_animacao, _obter_textura_frame(linha, indice))
+		frames.add_frame(nome_animacao, _obter_textura_frame(linha, indice + 4))
 
 	anim.sprite_frames = frames
 	anim.scale = Vector2(0.13, 0.13)
 	anim.offset = Vector2(0.0, -18.0)
 	anim.visible = true
-	if visual_fallback != null:
-		visual_fallback.visible = false
+	anim.play("walk_down")
+	anim.pause()
 
 func _obter_textura_frame(linha: int, coluna: int) -> AtlasTexture:
 	var textura := AtlasTexture.new()

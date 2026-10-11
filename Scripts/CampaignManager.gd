@@ -7,17 +7,13 @@ signal expedicao_concluida(relatorio: String)
 enum Fase { MANHA, LOJA, NOITE }
 
 const DURACAO_TURNO: float = 180.0
-const DURACAO_MINIMA_EXPEDICAO: float = 360.0
-const DURACAO_MAXIMA_EXPEDICAO: float = 900.0
+const SALAS_EXPEDICAO: int = 3
 const PROFISSOES: Array[String] = ["Guerreiro", "Arqueiro", "Mago", "Curandeiro"]
 const TESOUROS_POR_QUALIDADE: Array[Array] = [
 	["calcedonia_fina", "po_granito_tongobriga", "azeite_do_olival"],
 	["mel_do_olival", "pinho_resinato", "musgo_do_pombal"],
 	["raiz_mandrago", "raiz_celeste", "basalto_fervente"],
 	["lagrima_douro", "calcedonia_fina", "basalto_fervente"],
-]
-const NOMES_QUALIDADE: Array[String] = [
-	"comum", "incomum", "raro", "lendário",
 ]
 const NOMES_MERCENARIOS: Array[String] = [
 	"Alba", "Bruno", "Catarina", "Duarte", "Eva", "Filipe", "Gonçalo",
@@ -32,6 +28,7 @@ var mercenarios: Array[Dictionary] = []
 var ofertas: Array[Dictionary] = []
 var expedicao: Dictionary = {}
 var ultimo_relatorio: String = ""
+var torneio_jogado_dia: int = -1
 
 var _rng := RandomNumberGenerator.new()
 var _proximo_id_mercenario: int = 1
@@ -55,17 +52,14 @@ func _process(delta: float) -> void:
 		if tempo_turno <= 0.0:
 			encerrar_turno()
 
-	if bool(expedicao.get("ativa", false)):
-		expedicao["tempo_decorrido"] = minf(
-			float(expedicao["tempo_decorrido"]) + delta,
-			float(expedicao["duracao"])
-		)
-		progresso_alterado.emit()
-		if float(expedicao["tempo_decorrido"]) >= float(expedicao["duracao"]):
-			_concluir_expedicao()
-
 func esta_de_noite() -> bool:
 	return fase == Fase.NOITE
+
+func iniciar_torneio() -> bool:
+	if torneio_jogado_dia == dia:
+		return false
+	torneio_jogado_dia = dia
+	return true
 
 func iniciar_turno_loja() -> void:
 	if fase != Fase.MANHA:
@@ -112,45 +106,21 @@ func iniciar_expedicao(ids_mercenarios: Array[String]) -> bool:
 	if equipa.size() != ids_mercenarios.size():
 		return false
 
-	var soma_velocidade: int = 0
-	var soma_poder: int = 0
-	var soma_niveis: int = 0
-	var bonus_qualidade: int = 0
-	var bonus_ouro: int = 0
-	var bonus_recursos: int = 0
+	var vidas: Dictionary = {}
 	var nomes: Array[String] = []
 	for mercenario in equipa:
-		soma_velocidade += int(mercenario["velocidade"])
-		soma_poder += int(mercenario["poder"])
-		soma_niveis += int(mercenario["nivel"])
+		var vida_maxima := int(mercenario.get("vida_maxima", 40))
+		mercenario["vida_maxima"] = vida_maxima
+		vidas[str(mercenario["id"])] = vida_maxima
 		nomes.append(str(mercenario["nome"]))
-		match str(mercenario["profissao"]):
-			"Guerreiro":
-				soma_poder += int(mercenario["nivel"])
-			"Arqueiro":
-				bonus_qualidade += 1
-			"Mago":
-				bonus_ouro += int(mercenario["nivel"]) * 8
-			"Curandeiro":
-				bonus_recursos += 1
-
-	var duracao := clampf(
-		DURACAO_MINIMA_EXPEDICAO + float(soma_poder * 15) - float(soma_velocidade * 10),
-		DURACAO_MINIMA_EXPEDICAO,
-		DURACAO_MAXIMA_EXPEDICAO
-	)
 	expedicao = {
 		"ativa": true,
 		"mercenarios": ids_mercenarios.duplicate(),
 		"nomes": nomes,
-		"tempo_decorrido": 0.0,
-		"duracao": duracao,
-		"dia_partida": dia,
-		"nivel_medio": ceili(float(soma_niveis) / float(equipa.size())),
-		"bonus_qualidade": bonus_qualidade,
-		"bonus_ouro": bonus_ouro,
-		"bonus_recursos": bonus_recursos,
-		"soma_poder": soma_poder,
+		"vidas": vidas,
+		"ouro_saqueado": 0,
+		"sala": 1,
+		"salas_total": SALAS_EXPEDICAO,
 	}
 	ultimo_relatorio = ""
 	progresso_alterado.emit()
@@ -177,41 +147,88 @@ func reiniciar_turno() -> void:
 func obter_progresso_expedicao() -> float:
 	if not bool(expedicao.get("ativa", false)):
 		return 0.0
-	return clampf(
-		float(expedicao["tempo_decorrido"]) / float(expedicao["duracao"]),
-		0.0,
-		1.0
-	)
-
-func obter_tempo_expedicao() -> float:
-	if not bool(expedicao.get("ativa", false)):
-		return 0.0
-	return maxf(
-		float(expedicao["duracao"]) - float(expedicao["tempo_decorrido"]),
-		0.0
-	)
+	return float(int(expedicao["sala"]) - 1) / float(expedicao["salas_total"])
 
 func obter_dias_expedicao() -> int:
-	if not bool(expedicao.get("ativa", false)):
-		return 0
-	return maxi(1, ceili(
-		float(expedicao["tempo_decorrido"]) / DURACAO_TURNO
-	))
+	return int(expedicao.get("sala", 0))
 
 func obter_dias_previstos_expedicao() -> int:
-	if not bool(expedicao.get("ativa", false)):
-		return 0
-	return maxi(1, ceili(float(expedicao["duracao"]) / DURACAO_TURNO))
+	return int(expedicao.get("salas_total", 0))
 
-func obter_qualidade_expedicao() -> int:
+func obter_equipa_expedicao() -> Array[Dictionary]:
+	var equipa: Array[Dictionary] = []
 	if not bool(expedicao.get("ativa", false)):
-		return 0
-	return _calcular_qualidade(
-		obter_dias_expedicao(),
-		int(expedicao["nivel_medio"]),
-		int(expedicao["dia_partida"]),
-		int(expedicao["bonus_qualidade"])
-	)
+		return equipa
+	for mercenario in mercenarios:
+		var id := str(mercenario["id"])
+		if not expedicao["mercenarios"].has(id):
+			continue
+		var combatente: Dictionary = mercenario.duplicate(true)
+		combatente["vida_atual"] = int(expedicao["vidas"].get(
+			id,
+			int(mercenario.get("vida_maxima", 40))
+		))
+		equipa.append(combatente)
+	return equipa
+
+func atualizar_vida_expedicao(id_mercenario: String, vida: int) -> void:
+	if not bool(expedicao.get("ativa", false)):
+		return
+	if not expedicao["mercenarios"].has(id_mercenario):
+		return
+	expedicao["vidas"][id_mercenario] = maxi(vida, 0)
+
+func avancar_sala_expedicao() -> bool:
+	if not bool(expedicao.get("ativa", false)):
+		return false
+	if int(expedicao["sala"]) >= int(expedicao["salas_total"]):
+		return false
+	expedicao["sala"] = int(expedicao["sala"]) + 1
+	for combatente in obter_equipa_expedicao():
+		var vida := int(combatente["vida_atual"])
+		var vida_maxima := int(combatente["vida_maxima"])
+		expedicao["vidas"][str(combatente["id"])] = mini(
+			vida_maxima,
+			vida + maxi(1, ceili(float(vida_maxima) * 0.2))
+		)
+	progresso_alterado.emit()
+	return true
+
+func finalizar_expedicao(vitoriosa: bool, ouro_saqueado: int) -> void:
+	if not bool(expedicao.get("ativa", false)):
+		return
+	var ids: Array = expedicao["mercenarios"]
+	var salas_concluidas := int(expedicao["sala"]) - 1
+	if vitoriosa:
+		salas_concluidas = int(expedicao["salas_total"])
+	var experiencia := 20 + salas_concluidas * 30
+	for mercenario in mercenarios:
+		if ids.has(str(mercenario["id"])):
+			_adicionar_experiencia(mercenario, experiencia)
+			mercenario["vida_maxima"] = int(mercenario.get("vida_maxima", 40))
+
+	if vitoriosa:
+		InventoryManager.escudos += ouro_saqueado
+		var tesouros: Array = TESOUROS_POR_QUALIDADE[mini(salas_concluidas, 3)]
+		var item_id: String = tesouros[_rng.randi_range(0, tesouros.size() - 1)]
+		InventoryManager.adicionar_item(
+			item_id,
+			1 + floori(float(salas_concluidas) / 2.0)
+		)
+		ultimo_relatorio = "Dungeon concluída · +%d ouro · saque: %s · +%d XP para a equipa." % [
+			ouro_saqueado,
+			item_id.replace("_", " "),
+			experiencia,
+		]
+	else:
+		ultimo_relatorio = "A equipa recuou após a sala %d · +%d XP para a equipa." % [
+			maxi(salas_concluidas, 1),
+			experiencia,
+		]
+
+	expedicao.clear()
+	expedicao_concluida.emit(ultimo_relatorio)
+	progresso_alterado.emit()
 
 func _terminar_turno() -> void:
 	if fase != Fase.LOJA:
@@ -228,10 +245,15 @@ func _terminar_turno() -> void:
 
 func _gerar_ofertas() -> void:
 	ofertas.clear()
-	for profissao in PROFISSOES:
+	for indice_oferta in range(6):
+		var profissao: String = (
+			PROFISSOES[indice_oferta]
+			if indice_oferta < PROFISSOES.size()
+			else PROFISSOES[_rng.randi_range(0, PROFISSOES.size() - 1)]
+		)
 		var nivel_maximo := mini(
 			10,
-			3 + floori(float(maxi(dia - 1, 0)) / 3.0)
+			5 + floori(float(maxi(dia - 1, 0)) / 2.0)
 		)
 		var nivel := _rng.randi_range(1, nivel_maximo)
 		var poder_base := 4
@@ -258,75 +280,26 @@ func _gerar_ofertas() -> void:
 		var nome: String = NOMES_MERCENARIOS[
 			_rng.randi_range(0, NOMES_MERCENARIOS.size() - 1)
 		]
-		var preco := 18 + nivel * 9 + maxi(dia - 1, 0) * 2 + _rng.randi_range(0, 15)
+		var vida_base := 30 + nivel * 8
+		match profissao:
+			"Guerreiro":
+				vida_base += 18
+			"Curandeiro":
+				vida_base += 8
+		var preco := 16 + nivel * 12 + maxi(dia - 1, 0) * 3 + _rng.randi_range(0, 18)
 		ofertas.append({
 			"id": _proximo_id_mercenario,
 			"nome": nome,
 			"profissao": profissao,
 			"nivel": nivel,
 			"experiencia": 0,
+			"vida_maxima": vida_base,
 			"poder": poder_base + nivel + _rng.randi_range(0, 3),
 			"velocidade": velocidade_base + _rng.randi_range(0, 3),
 			"habilidade": habilidade,
 			"preco": preco,
 		})
 		_proximo_id_mercenario += 1
-
-func _concluir_expedicao() -> void:
-	var dias := obter_dias_expedicao()
-	var equipa_ids: Array = expedicao["mercenarios"]
-	var qualidade := _calcular_qualidade(
-		dias,
-		int(expedicao["nivel_medio"]),
-		int(expedicao["dia_partida"]),
-		int(expedicao["bonus_qualidade"])
-	)
-	var ouro := (
-		20
-		+ int(expedicao["soma_poder"]) * 2
-		+ equipa_ids.size() * 8
-		+ int(expedicao["bonus_ouro"])
-		+ dias * 12
-	) * (qualidade + 1)
-	var quantidade_itens := clampi(
-		1 + qualidade + floori(float(expedicao["soma_poder"]) / 20.0)
-			+ int(expedicao["bonus_recursos"]),
-		1,
-		12
-	)
-	var itens_encontrados: Dictionary = {}
-	for _indice in range(quantidade_itens):
-		var tesouros: Array = TESOUROS_POR_QUALIDADE[qualidade]
-		var item_id: String = tesouros[
-			_rng.randi_range(0, tesouros.size() - 1)
-		]
-		itens_encontrados[item_id] = int(itens_encontrados.get(item_id, 0)) + 1
-
-	for item_id in itens_encontrados:
-		InventoryManager.adicionar_item(item_id, int(itens_encontrados[item_id]))
-
-	var nomes_itens: Array[String] = []
-	for item_id in itens_encontrados:
-		var nome_item := str(item_id).replace("_", " ")
-		nomes_itens.append("%dx %s" % [itens_encontrados[item_id], nome_item])
-
-	for mercenario in mercenarios:
-		if equipa_ids.has(str(mercenario["id"])):
-			_adicionar_experiencia(
-				mercenario,
-				35 + equipa_ids.size() * 10 + dias * 15 + qualidade * 10
-			)
-
-	InventoryManager.escudos += ouro
-	ultimo_relatorio = "Expedição de %d dias · saque %s: +%d ouro · %s." % [
-		dias,
-		NOMES_QUALIDADE[qualidade],
-		ouro,
-		", ".join(PackedStringArray(nomes_itens)),
-	]
-	expedicao.clear()
-	expedicao_concluida.emit(ultimo_relatorio)
-	progresso_alterado.emit()
 
 func _adicionar_experiencia(mercenario: Dictionary, quantidade: int) -> void:
 	mercenario["experiencia"] = int(mercenario["experiencia"]) + quantidade
@@ -337,20 +310,4 @@ func _adicionar_experiencia(mercenario: Dictionary, quantidade: int) -> void:
 		mercenario["nivel"] = int(mercenario["nivel"]) + 1
 		mercenario["poder"] = int(mercenario["poder"]) + 1
 		mercenario["velocidade"] = int(mercenario["velocidade"]) + 1
-
-func _calcular_qualidade(
-	dias: int,
-	nivel_medio: int,
-	dia_partida: int,
-	bonus_qualidade: int
-) -> int:
-	var progresso_mundo := floori(float(maxi(dia_partida - 1, 0)) / 4.0)
-	var pontos := dias + floori(float(nivel_medio - 1) / 2.0)
-	pontos += progresso_mundo + bonus_qualidade
-	if pontos >= 9:
-		return 3
-	if pontos >= 6:
-		return 2
-	if pontos >= 3:
-		return 1
-	return 0
+		mercenario["vida_maxima"] = int(mercenario.get("vida_maxima", 40)) + 8

@@ -1,0 +1,176 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Tongobriga.gd" id="1_tongobriga"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/praca_cenario.png" id="2_background"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.09, 0.075, 0.06, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.67, 0.49, 0.25, 1)
+
+[node name="Tongobriga" type="Node2D"]
+script = ExtResource("1_tongobriga")
+
+[node name="Cenario" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(320, 180)
+modulate = Color(0.74, 0.7, 0.61, 1)
+texture = ExtResource("2_background")
+
+[node name="ChaoArena" type="Polygon2D" parent="."]
+color = Color(0.3, 0.23, 0.16, 1)
+polygon = PackedVector2Array(0, 279, 640, 279, 640, 360, 0, 360)
+
+[node name="LinhaArena" type="Line2D" parent="."]
+points = PackedVector2Array(0, 279, 640, 279)
+width = 3.0
+default_color = Color(0.82, 0.64, 0.34, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Selecao" type="PanelContainer" parent="UI"]
+offset_left = 22.0
+offset_top = 14.0
+offset_right = 618.0
+offset_bottom = 346.0
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="Margem" type="MarginContainer" parent="UI/Selecao"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="Conteudo" type="VBoxContainer" parent="UI/Selecao/Margem"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Titulo" type="Label" parent="UI/Selecao/Margem/Conteudo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.47, 1)
+theme_override_font_sizes/font_size = 20
+text = "TONGÓBRIGA · TORNEIO DOS CAMPEÕES"
+horizontal_alignment = 1
+
+[node name="Descricao" type="Label" parent="UI/Selecao/Margem/Conteudo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.85, 0.74, 1)
+theme_override_font_sizes/font_size = 10
+text = "Escolhe o teu campeão. Vence três combates para conquistar a arena."
+horizontal_alignment = 1
+
+[node name="Elenco" type="GridContainer" parent="UI/Selecao/Margem/Conteudo"]
+custom_minimum_size = Vector2(0, 126)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 4
+columns = 4
+
+[node name="SelecaoLabel" type="Label" parent="UI/Selecao/Margem/Conteudo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.84, 0.66, 1)
+theme_override_font_sizes/font_size = 10
+text = "Seleciona um campeão."
+horizontal_alignment = 1
+
+[node name="Botoes" type="HBoxContainer" parent="UI/Selecao/Margem/Conteudo"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Iniciar" type="Button" parent="UI/Selecao/Margem/Conteudo/Botoes"]
+custom_minimum_size = Vector2(210, 30)
+layout_mode = 2
+text = "ENTRAR NO TORNEIO"
+
+[node name="Sair" type="Button" parent="UI/Selecao/Margem/Conteudo/Botoes"]
+custom_minimum_size = Vector2(180, 30)
+layout_mode = 2
+text = "VOLTAR À PRAÇA"
+
+[node name="Arena" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NomeJogador" type="Label" parent="UI/Arena"]
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 280.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(1, 0.91, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+text = "JOGADOR"
+
+[node name="NomeOponente" type="Label" parent="UI/Arena"]
+offset_left = 360.0
+offset_top = 10.0
+offset_right = 620.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(1, 0.91, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+text = "OPONENTE"
+horizontal_alignment = 2
+
+[node name="VidaJogador" type="ProgressBar" parent="UI/Arena"]
+offset_left = 20.0
+offset_top = 32.0
+offset_right = 280.0
+offset_bottom = 45.0
+show_percentage = false
+
+[node name="VidaOponente" type="ProgressBar" parent="UI/Arena"]
+offset_left = 360.0
+offset_top = 32.0
+offset_right = 620.0
+offset_bottom = 45.0
+show_percentage = false
+
+[node name="Ronda" type="Label" parent="UI/Arena"]
+offset_left = 260.0
+offset_top = 12.0
+offset_right = 380.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(1, 0.81, 0.45, 1)
+theme_override_font_sizes/font_size = 10
+text = "TORNEIO 1/3"
+horizontal_alignment = 1
+
+[node name="Mensagem" type="Label" parent="UI/Arena"]
+offset_left = 30.0
+offset_top = 226.0
+offset_right = 610.0
+offset_bottom = 253.0
+theme_override_colors/font_color = Color(1, 0.91, 0.68, 1)
+theme_override_font_sizes/font_size = 11
+text = "Prepara-te!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Controlos" type="Label" parent="UI/Arena"]
+offset_left = 10.0
+offset_top = 327.0
+offset_right = 630.0
+offset_bottom = 350.0
+theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
+theme_override_font_sizes/font_size = 9
+text = "A/D mover · W saltar · J soco · K pontapé · L defender · I especial"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Regressar" type="Button" parent="UI/Arena"]
+visible = false
+offset_left = 230.0
+offset_top = 284.0
+offset_right = 410.0
+offset_bottom = 315.0
+text = "VOLTAR À PRAÇA"

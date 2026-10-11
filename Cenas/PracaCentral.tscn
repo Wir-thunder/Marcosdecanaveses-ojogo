@@ -100,6 +100,12 @@ posicao_entrada = Vector2(80, 255)
 destino_label = "TAVERNA"
 apenas_a_noite = true
 
+[node name="PortaTongobriga" parent="." instance=ExtResource("3_door")]
+position = Vector2(225, 150)
+cena_destino = "res://Cenas/Tongobriga.tscn"
+posicao_entrada = Vector2(320, 180)
+destino_label = "TONGÓBRIGA · SALA DE GUERRA"
+
 [node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector2(105, 240)
 

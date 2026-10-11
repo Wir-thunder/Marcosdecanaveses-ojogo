@@ -1,0 +1,104 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/DungeonBattle.gd" id="1_battle"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/dungeon_cenario.png" id="2_background"]
+
+[node name="DungeonCombate" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_battle")
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Fundo" type="TextureRect" parent="Interface"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_filter = 1
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Escurecer" type="ColorRect" parent="Interface"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.035, 0.055, 0.72)
+
+[node name="Conteudo" type="VBoxContainer" parent="Interface"]
+offset_left = 18.0
+offset_top = 12.0
+offset_right = 622.0
+offset_bottom = 348.0
+theme_override_constants/separation = 5
+
+[node name="Sala" type="Label" parent="Interface/Conteudo"]
+custom_minimum_size = Vector2(0, 24)
+theme_override_colors/font_color = Color(1, 0.83, 0.52, 1)
+theme_override_font_sizes/font_size = 19
+text = "DUNGEON · SALA 1/3"
+horizontal_alignment = 1
+
+[node name="Estado" type="Label" parent="Interface/Conteudo"]
+custom_minimum_size = Vector2(0, 34)
+theme_override_colors/font_color = Color(0.95, 0.9, 0.79, 1)
+theme_override_font_sizes/font_size = 10
+text = "Escolhe uma ação."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Inimigos" type="HBoxContainer" parent="Interface/Conteudo"]
+custom_minimum_size = Vector2(0, 62)
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Equipa" type="HBoxContainer" parent="Interface/Conteudo"]
+custom_minimum_size = Vector2(0, 54)
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Turno" type="Label" parent="Interface/Conteudo"]
+custom_minimum_size = Vector2(0, 22)
+theme_override_colors/font_color = Color(0.72, 0.91, 0.78, 1)
+theme_override_font_sizes/font_size = 11
+text = "Vez do aventureiro"
+horizontal_alignment = 1
+
+[node name="Comandos" type="HBoxContainer" parent="Interface/Conteudo"]
+custom_minimum_size = Vector2(0, 40)
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Atacar" type="Button" parent="Interface/Conteudo/Comandos"]
+custom_minimum_size = Vector2(112, 34)
+text = "ATACAR"
+
+[node name="Habilidade" type="Button" parent="Interface/Conteudo/Comandos"]
+custom_minimum_size = Vector2(176, 34)
+text = "HABILIDADE"
+
+[node name="Defender" type="Button" parent="Interface/Conteudo/Comandos"]
+custom_minimum_size = Vector2(112, 34)
+text = "DEFENDER"
+
+[node name="Recuar" type="Button" parent="Interface/Conteudo/Comandos"]
+custom_minimum_size = Vector2(112, 34)
+text = "RECUAR"
+
+[node name="Registo" type="Label" parent="Interface/Conteudo"]
+custom_minimum_size = Vector2(0, 50)
+theme_override_colors/font_color = Color(0.91, 0.85, 0.72, 1)
+theme_override_font_sizes/font_size = 9
+text = "Escolhe um alvo e executa ações por turnos."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

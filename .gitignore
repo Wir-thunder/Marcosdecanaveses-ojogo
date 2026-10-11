@@ -2,3 +2,19 @@
 .godot/
 .godot_ai_update/
 /android/
+
+# Build / distribuição (regenerável)
+Distribuicao/
+
+# Ambiente Python local
+.venv/
+
+# Referências de arte descartáveis (ficam no disco, fora do repo)
+referências_descartável/
+
+# Ferramenta de IA (não faz parte do jogo)
+addons/godot_ai/
+
+# Vídeo duplicado (o jogo usa o .ogv)
+*.mp4
+

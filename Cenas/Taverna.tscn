@@ -161,9 +161,13 @@ show_percentage = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.91, 0.84, 0.65, 1)
 theme_override_font_sizes/font_size = 11
-text = "MERCENARIOS DISPONIVEIS · CONTRATAR"
+text = "AVENTUREIROS · CONTRATAR (NÍVEIS E PREÇOS VARIÁVEIS)"
 
-[node name="Ofertas" type="VBoxContainer" parent="Interface/Painel/Coluna"]
+[node name="OfertasScroll" type="ScrollContainer" parent="Interface/Painel/Coluna"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+
+[node name="Ofertas" type="VBoxContainer" parent="Interface/Painel/Coluna/OfertasScroll"]
 layout_mode = 2
 theme_override_constants/separation = 1
 
@@ -171,7 +175,7 @@ theme_override_constants/separation = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.91, 0.84, 0.65, 1)
 theme_override_font_sizes/font_size = 11
-text = "A TUA EQUIPA · SELECIONA ATÉ 4 PARA A DUNGEON"
+text = "A TUA EQUIPA · SELECIONA ATÉ 4 PARA O GRUPO"
 
 [node name="EquipaScroll" type="ScrollContainer" parent="Interface/Painel/Coluna"]
 custom_minimum_size = Vector2(0, 72)
@@ -196,7 +200,7 @@ theme_override_constants/separation = 8
 [node name="Enviar" type="Button" parent="Interface/Painel/Coluna/Botoes"]
 custom_minimum_size = Vector2(230, 24)
 layout_mode = 2
-text = "ENVIAR EQUIPA À DUNGEON"
+text = "INICIAR DUNGEON POR TURNOS"
 
 [node name="ProximoTurno" type="Button" parent="Interface/Painel/Coluna/Botoes"]
 custom_minimum_size = Vector2(230, 24)

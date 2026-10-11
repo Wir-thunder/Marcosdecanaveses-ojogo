@@ -10,7 +10,7 @@ const RETRATOS_PROFISSAO: Dictionary = {
 @onready var estado_label: Label = $Interface/Painel/Coluna/Estado
 @onready var expedicao_label: Label = $Interface/Painel/Coluna/Expedicao
 @onready var progresso_barra: ProgressBar = $Interface/Painel/Coluna/Progresso
-@onready var ofertas_lista: VBoxContainer = $Interface/Painel/Coluna/Ofertas
+@onready var ofertas_lista: VBoxContainer = $Interface/Painel/Coluna/OfertasScroll/Ofertas
 @onready var equipa_lista: VBoxContainer = $Interface/Painel/Coluna/EquipaScroll/Equipa
 @onready var relatorio_label: Label = $Interface/Painel/Coluna/Relatorio
 @onready var enviar_botao: Button = $Interface/Painel/Coluna/Botoes/Enviar
@@ -76,7 +76,7 @@ func _atualizar_listas() -> void:
 
 	for oferta in CampaignManager.ofertas:
 		var botao := Button.new()
-		botao.custom_minimum_size = Vector2(0.0, 22.0)
+		botao.custom_minimum_size = Vector2(0.0, 28.0)
 		botao.add_theme_font_size_override("font_size", 9)
 		botao.text = "%s · %s Nv.%d · P%d V%d · %s · %d ouro" % [
 			oferta["nome"],
@@ -89,7 +89,7 @@ func _atualizar_listas() -> void:
 		]
 		botao.pressed.connect(_contratar.bind(int(oferta["id"])))
 		var linha_oferta := HBoxContainer.new()
-		linha_oferta.custom_minimum_size.y = 30.0
+		linha_oferta.custom_minimum_size.y = 34.0
 		linha_oferta.add_child(_criar_retrato(str(oferta["profissao"])))
 		botao.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		linha_oferta.add_child(botao)
@@ -97,7 +97,7 @@ func _atualizar_listas() -> void:
 
 	for mercenario in CampaignManager.mercenarios:
 		var selecao := CheckButton.new()
-		selecao.custom_minimum_size = Vector2(0.0, 20.0)
+		selecao.custom_minimum_size = Vector2(0.0, 24.0)
 		selecao.add_theme_font_size_override("font_size", 9)
 		selecao.text = "%s · %s Nv.%d · P%d V%d · %d/%d XP · %s" % [
 			mercenario["nome"],
@@ -114,7 +114,7 @@ func _atualizar_listas() -> void:
 			_alternar_selecao.bind(str(mercenario["id"]))
 		)
 		var linha_mercenario := HBoxContainer.new()
-		linha_mercenario.custom_minimum_size.y = 30.0
+		linha_mercenario.custom_minimum_size.y = 34.0
 		linha_mercenario.add_child(_criar_retrato(str(mercenario["profissao"])))
 		selecao.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		linha_mercenario.add_child(selecao)
@@ -145,13 +145,9 @@ func _atualizar_progresso() -> void:
 	enviar_botao.disabled = ativa or _mercenarios_selecionados.is_empty()
 
 	if ativa:
-		var qualidade: int = CampaignManager.obter_qualidade_expedicao()
-		expedicao_label.text = "DUNGEON %d%% · DIA %d/%d · saque %s · %d s" % [
-			roundi(CampaignManager.obter_progresso_expedicao() * 100.0),
+		expedicao_label.text = "EXPEDIÇÃO · SALA %d/%d · combate por turnos" % [
 			CampaignManager.obter_dias_expedicao(),
 			CampaignManager.obter_dias_previstos_expedicao(),
-			CampaignManager.NOMES_QUALIDADE[qualidade],
-			ceili(CampaignManager.obter_tempo_expedicao()),
 		]
 		estado_label.text = "DIA %d · OURO %d · equipa: %s" % [
 			CampaignManager.dia,
@@ -186,8 +182,9 @@ func _enviar_equipa() -> void:
 	if CampaignManager.iniciar_expedicao(_mercenarios_selecionados):
 		_mercenarios_selecionados.clear()
 		_atualizar_listas()
-		relatorio_label.text = "A equipa partiu. A expedição avança mesmo fora da taverna."
+		relatorio_label.text = "A equipa parte para a dungeon..."
 		_atualizar_progresso()
+		SceneRouter.ir_para("res://Cenas/DungeonCombate.tscn", Vector2.ZERO)
 	else:
 		relatorio_label.text = "Escolhe pelo menos um mercenário disponível."
 
