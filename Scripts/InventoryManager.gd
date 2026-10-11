@@ -2,6 +2,8 @@ extends Node
 
 # Um dicionário que guarda o ID do item e a quantidade que tens. Ex: {"musgo_aboboreira": 5}
 var inventario: Dictionary = {}
+var escudos: int = 0
+var recolhas: Dictionary = {}
 
 # Função para adicionar itens
 func adicionar_item(item_id: String, quantidade: int = 1):
@@ -24,3 +26,9 @@ func remover_item(item_id: String, quantidade: int = 1) -> bool:
 
 func obter_quantidade(item_id: String) -> int:
 	return int(inventario.get(item_id, 0))
+
+func foi_recolhido(recolha_id: String) -> bool:
+	return recolhas.has(recolha_id)
+
+func marcar_recolhido(recolha_id: String) -> void:
+	recolhas[recolha_id] = true

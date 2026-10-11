@@ -1,0 +1,204 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Taverna.gd" id="1_taverna"]
+[ext_resource type="PackedScene" path="res://Cenas/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://Cenas/PortaCena.tscn" id="3_door"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/taverna_cenario.png" id="4_background"]
+[ext_resource type="Script" path="res://Scripts/TavernaInteraction.gd" id="5_interaction"]
+
+[sub_resource type="StyleBoxFlat" id="TavernPanelStyle"]
+bg_color = Color(0.12, 0.08, 0.07, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.48, 0.32, 0.2, 1)
+
+[sub_resource type="RectangleShape2D" id="WallHorizontal"]
+size = Vector2(640, 10)
+
+[sub_resource type="RectangleShape2D" id="WallVertical"]
+size = Vector2(10, 360)
+
+[sub_resource type="RectangleShape2D" id="BarCollision"]
+size = Vector2(170, 22)
+
+[sub_resource type="RectangleShape2D" id="TableCollision"]
+size = Vector2(42, 20)
+
+[node name="Taverna" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_taverna")
+
+[node name="CenarioPixel" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("4_background")
+
+[node name="Limites" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="ParedeCima" type="CollisionShape2D" parent="Limites"]
+position = Vector2(320, 5)
+shape = SubResource("WallHorizontal")
+
+[node name="ParedeBaixo" type="CollisionShape2D" parent="Limites"]
+position = Vector2(320, 355)
+shape = SubResource("WallHorizontal")
+
+[node name="ParedeEsquerda" type="CollisionShape2D" parent="Limites"]
+position = Vector2(5, 180)
+shape = SubResource("WallVertical")
+
+[node name="ParedeDireita" type="CollisionShape2D" parent="Limites"]
+position = Vector2(635, 180)
+shape = SubResource("WallVertical")
+
+[node name="ObstaculosMobiliario" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="Balcao" type="CollisionShape2D" parent="ObstaculosMobiliario"]
+position = Vector2(220, 160)
+shape = SubResource("BarCollision")
+
+[node name="MesaCentral" type="CollisionShape2D" parent="ObstaculosMobiliario"]
+position = Vector2(385, 270)
+shape = SubResource("TableCollision")
+
+[node name="MesaLateral" type="CollisionShape2D" parent="ObstaculosMobiliario"]
+position = Vector2(535, 250)
+shape = SubResource("TableCollision")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(64, 255)
+
+[node name="PortaPraca" parent="." instance=ExtResource("3_door")]
+position = Vector2(64, 318)
+cena_destino = "res://Cenas/PracaCentral.tscn"
+posicao_entrada = Vector2(320, 180)
+destino_label = "SAIR PARA A PRACA"
+
+[node name="InteracaoBalcao" type="Node2D" parent="."]
+position = Vector2(220, 198)
+script = ExtResource("5_interaction")
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Instrucao" type="Label" parent="Interface"]
+offset_left = 8.0
+offset_top = 331.0
+offset_right = 632.0
+offset_bottom = 355.0
+theme_override_colors/font_color = Color(1, 0.91, 0.69, 1)
+theme_override_font_sizes/font_size = 11
+text = "Aproxima-te do balcão e carrega em E · Esc fecha o painel"
+horizontal_alignment = 1
+
+[node name="FundoPopUp" type="ColorRect" parent="Interface"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0, 0, 0, 0.55)
+
+[node name="Painel" type="PanelContainer" parent="Interface"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -168.0
+offset_right = 248.0
+offset_bottom = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("TavernPanelStyle")
+
+[node name="Coluna" type="VBoxContainer" parent="Interface/Painel"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Cabecalho" type="HBoxContainer" parent="Interface/Painel/Coluna"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Titulo" type="Label" parent="Interface/Painel/Coluna/Cabecalho"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.91, 0.78, 0.49, 1)
+theme_override_font_sizes/font_size = 16
+text = "A TAVERNA · NOITE"
+
+[node name="Fechar" type="Button" parent="Interface/Painel/Coluna/Cabecalho"]
+custom_minimum_size = Vector2(28, 24)
+layout_mode = 2
+text = "X"
+
+[node name="Estado" type="Label" parent="Interface/Painel/Coluna"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.88, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "A recrutar aventureiros..."
+
+[node name="Expedicao" type="Label" parent="Interface/Painel/Coluna"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.91, 0.79, 1)
+theme_override_font_sizes/font_size = 11
+text = "Sem expedições ativas."
+
+[node name="Progresso" type="ProgressBar" parent="Interface/Painel/Coluna"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+show_percentage = false
+
+[node name="OfertaTitulo" type="Label" parent="Interface/Painel/Coluna"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.84, 0.65, 1)
+theme_override_font_sizes/font_size = 11
+text = "MERCENARIOS DISPONIVEIS · CONTRATAR"
+
+[node name="Ofertas" type="VBoxContainer" parent="Interface/Painel/Coluna"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="EquipaTitulo" type="Label" parent="Interface/Painel/Coluna"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.84, 0.65, 1)
+theme_override_font_sizes/font_size = 11
+text = "A TUA EQUIPA · SELECIONA ATÉ 4 PARA A DUNGEON"
+
+[node name="EquipaScroll" type="ScrollContainer" parent="Interface/Painel/Coluna"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+
+[node name="Equipa" type="VBoxContainer" parent="Interface/Painel/Coluna/EquipaScroll"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Relatorio" type="Label" parent="Interface/Painel/Coluna"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.71, 0.39, 1)
+theme_override_font_sizes/font_size = 10
+text = ""
+autowrap_mode = 3
+
+[node name="Botoes" type="HBoxContainer" parent="Interface/Painel/Coluna"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Enviar" type="Button" parent="Interface/Painel/Coluna/Botoes"]
+custom_minimum_size = Vector2(230, 24)
+layout_mode = 2
+text = "ENVIAR EQUIPA À DUNGEON"
+
+[node name="ProximoTurno" type="Button" parent="Interface/Painel/Coluna/Botoes"]
+custom_minimum_size = Vector2(230, 24)
+layout_mode = 2
+text = "REGRESSAR À LOJA"

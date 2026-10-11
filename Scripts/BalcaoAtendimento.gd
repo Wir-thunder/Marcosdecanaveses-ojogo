@@ -42,7 +42,7 @@ func interagir(jogador: Player) -> void:
 		InventoryManager.remover_item(pocao.id)
 		jogador.atualizar_pocao_apos_venda()
 		fila.erase(cliente)
-		feedback.emit("Venda concluída: " + pocao.nome_do_item + " (+" + str(pocao.valor_em_escudos) + " escudos).")
+		feedback.emit("Venda concluída: " + pocao.nome_do_item + " (+" + str(cliente.calcular_preco(pocao)) + " ouro).")
 	else:
 		feedback.emit("Poção errada. O cliente pediu: " + cliente.item_desejado.nome_do_item + ".")
 
@@ -52,6 +52,12 @@ func obter_cliente_atual() -> ClienteNPC:
 		if cliente.estado == ClienteNPC.Estado.ESPERANDO:
 			return cliente
 	return null
+
+func obter_pocao_solicitada() -> ItemData:
+	var cliente := obter_cliente_atual()
+	if cliente == null:
+		return null
+	return cliente.item_desejado
 
 func _limpar_fila() -> void:
 	for indice in range(fila.size() - 1, -1, -1):

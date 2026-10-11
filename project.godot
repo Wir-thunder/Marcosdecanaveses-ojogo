@@ -10,20 +10,24 @@ config_version=5
 
 [application]
 
-config/name="A Loja do Alquimista"
+config/name="Marcos de Canaveses"
 config/version="0.1.0-alpha.1"
-run/main_scene="res://Cenas/cena_principal.tscn"
+run/main_scene="res://Cenas/IntroCutscene.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 InventoryManager="*uid://bgt8yaj7kb3x5"
+SceneRouter="*res://Scripts/SceneRouter.gd"
+CampaignManager="*res://Scripts/CampaignManager.gd"
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=360
+window/size/window_width_override=1280
+window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -70,7 +74,7 @@ cycle_potion={
 }
 cycle_recipe={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194309,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194306,"physical_keycode":4194306,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 cycle_stock={
@@ -86,3 +90,5 @@ cycle_stock={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true

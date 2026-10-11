@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://Scripts/ExplorationScene.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://Cenas/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://Cenas/PortaCena.tscn" id="3_door"]
+[ext_resource type="PackedScene" path="res://Cenas/RecursoColetavel.tscn" id="4_pickup"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/floresta_cenario.png" id="5_background"]
+
+[sub_resource type="RectangleShape2D" id="WallHorizontal"]
+size = Vector2(640, 10)
+
+[sub_resource type="RectangleShape2D" id="WallVertical"]
+size = Vector2(10, 360)
+
+[sub_resource type="CircleShape2D" id="TreeTrunkCollision"]
+radius = 9.0
+
+[node name="Floresta" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_world")
+nome_local = "Floresta do Tamega"
+
+[node name="CenarioPixel" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("5_background")
+
+[node name="Limites" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="ParedeCima" type="CollisionShape2D" parent="Limites"]
+position = Vector2(320, 5)
+shape = SubResource("WallHorizontal")
+
+[node name="ParedeBaixo" type="CollisionShape2D" parent="Limites"]
+position = Vector2(320, 355)
+shape = SubResource("WallHorizontal")
+
+[node name="ParedeEsquerda" type="CollisionShape2D" parent="Limites"]
+position = Vector2(5, 180)
+shape = SubResource("WallVertical")
+
+[node name="ParedeDireita" type="CollisionShape2D" parent="Limites"]
+position = Vector2(635, 180)
+shape = SubResource("WallVertical")
+
+[node name="Troncos" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="TroncoNoroeste" type="CollisionShape2D" parent="Troncos"]
+position = Vector2(105, 70)
+shape = SubResource("TreeTrunkCollision")
+
+[node name="TroncoSudoeste" type="CollisionShape2D" parent="Troncos"]
+position = Vector2(92, 197)
+shape = SubResource("TreeTrunkCollision")
+
+[node name="TroncoCentroSul" type="CollisionShape2D" parent="Troncos"]
+position = Vector2(354, 278)
+shape = SubResource("TreeTrunkCollision")
+
+[node name="TroncoEste" type="CollisionShape2D" parent="Troncos"]
+position = Vector2(555, 178)
+shape = SubResource("TreeTrunkCollision")
+
+[node name="Hortela" parent="." instance=ExtResource("4_pickup")]
+position = Vector2(220, 165)
+tipo = 0
+item_id = "hortela_nobre"
+recolha_id = "floresta_hortela_1"
+nome_exibicao = "MENTA"
+quantidade = 2
+cor = Color(0.48, 0.85, 0.39, 1)
+
+[node name="Musgo" parent="." instance=ExtResource("4_pickup")]
+position = Vector2(420, 154)
+tipo = 0
+item_id = "musgo_aboboreira"
+recolha_id = "floresta_musgo_1"
+nome_exibicao = "MUSGO"
+quantidade = 2
+cor = Color(0.3, 0.68, 0.37, 1)
+
+[node name="Arnica" parent="." instance=ExtResource("4_pickup")]
+position = Vector2(347, 235)
+tipo = 0
+item_id = "arnica_selvagem"
+recolha_id = "floresta_arnica_1"
+nome_exibicao = "ARNICA"
+quantidade = 1
+cor = Color(0.95, 0.73, 0.29, 1)
+
+[node name="ErvaCidreira" parent="." instance=ExtResource("4_pickup")]
+position = Vector2(218, 265)
+tipo = 0
+item_id = "erva_cidreira"
+recolha_id = "floresta_cidreira_1"
+nome_exibicao = "CIDREIRA"
+quantidade = 1
+cor = Color(0.67, 0.83, 0.43, 1)
+
+[node name="PortaPraca" parent="." instance=ExtResource("3_door")]
+position = Vector2(320, 38)
+cena_destino = "res://Cenas/PracaCentral.tscn"
+posicao_entrada = Vector2(105, 240)
+destino_label = "VOLTAR A PRACA"
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(320, 310)
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Estado" type="Label" parent="Interface"]
+offset_left = 12.0
+offset_top = 8.0
+offset_right = 628.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(0.85, 0.97, 0.78, 1)
+theme_override_font_sizes/font_size = 14
+text = "FLORESTA"
+
+[node name="Instrucao" type="Label" parent="Interface"]
+offset_left = 12.0
+offset_top = 333.0
+offset_right = 628.0
+offset_bottom = 353.0
+theme_override_colors/font_color = Color(0.96, 0.91, 0.76, 1)
+theme_override_font_sizes/font_size = 11
+text = "WASD / SETAS mover  ·  E recolher recursos"

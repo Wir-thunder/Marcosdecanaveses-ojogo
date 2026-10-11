@@ -1,22 +1,33 @@
-[gd_scene load_steps=18 format=3 uid="uid://b86qe5mbiyta1"]
+[gd_scene format=3 uid="uid://b86qe5mbiyta1"]
 
 [ext_resource type="Script" uid="uid://crxqbcxwury36" path="res://Scripts/GameManager.gd" id="1_game"]
-[ext_resource type="Script" uid="uid://dn8wmp8hice1c" path="res://Scripts/Player.gd" id="2_player"]
+[ext_resource type="PackedScene" path="res://Cenas/Player.tscn" id="2_player_scene"]
 [ext_resource type="Script" uid="uid://dgrcsyk4tv7f3" path="res://Scripts/BalcaoAtendimento.gd" id="3_balcao"]
 [ext_resource type="Script" uid="uid://db5fk8i8u7a3r" path="res://Scripts/Caldeirao.gd" id="4_caldeirao"]
 [ext_resource type="Resource" path="res://Recursos/Recursos_receitas/receita_vento_ligeiro.tres" id="7_receita_vento"]
 [ext_resource type="Resource" path="res://Recursos/Recursos_receitas/receita_espinheira_real.tres" id="8_receita_espinheira"]
 [ext_resource type="Resource" path="res://Recursos/Recursos_receitas/receita_mente_limpida.tres" id="9_receita_mente"]
 [ext_resource type="Resource" path="res://Recursos/Recursos_receitas/receita_escudo_do_lago.tres" id="10_receita_escudo"]
-[ext_resource type="Script" path="res://Scripts/PotionRecipeData.gd" id="11_recipe_data"]
-[ext_resource type="Script" path="res://Scripts/Fornecedor.gd" id="12_fornecedor"]
-[ext_resource type="Script" path="res://Scripts/Pausa.gd" id="13_pausa"]
+[ext_resource type="Script" uid="uid://c7kcjgdu6dyii" path="res://Scripts/PotionRecipeData.gd" id="11_recipe_data"]
+[ext_resource type="Script" uid="uid://cc4flmcuimjla" path="res://Scripts/Fornecedor.gd" id="12_fornecedor"]
+[ext_resource type="Script" uid="uid://c61qlh4wyk5uh" path="res://Scripts/Pausa.gd" id="13_pausa"]
+[ext_resource type="Texture2D" uid="uid://cvtoxbtcd7h0j" path="res://Assets/Environment/props/balcao.png" id="14_balcao_texture"]
+[ext_resource type="Texture2D" uid="uid://dyauruam4qbce" path="res://Assets/Environment/props/caldeirao.png" id="15_caldeirao_texture"]
+[ext_resource type="Texture2D" path="res://Sprites/Cenário_loja.jpeg" id="16_room_texture"]
+[ext_resource type="PackedScene" path="res://Cenas/PortaCena.tscn" id="18_door"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/props/fornecedor_pixel.png" id="19_supplier_sprite"]
+[ext_resource type="Script" path="res://Scripts/TimeControls.gd" id="20_time_controls"]
 
-[sub_resource type="CircleShape2D" id="PlayerCollider"]
-radius = 9.0
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundary_Top"]
+normal = Vector2(0, 1)
 
-[sub_resource type="CircleShape2D" id="InteractionShape"]
-radius = 24.0
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundary_Bottom"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundary_Left"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundary_Right"]
+normal = Vector2(-1, 0)
 
 [sub_resource type="RectangleShape2D" id="CounterShape"]
 size = Vector2(142, 104)
@@ -25,345 +36,135 @@ size = Vector2(142, 104)
 size = Vector2(132, 26)
 
 [sub_resource type="CircleShape2D" id="CauldronInteractionShape"]
-radius = 24.0
+radius = 26.0
+
+[sub_resource type="CircleShape2D" id="CauldronBaseShape"]
 
 [sub_resource type="RectangleShape2D" id="SupplierAreaShape"]
-size = Vector2(54, 38)
+size = Vector2(64, 44)
+
+[sub_resource type="RectangleShape2D" id="SupplierFrontShape"]
+size = Vector2(64, 12)
 
 [node name="Loja" type="Node2D" unique_id=1575213275]
+y_sort_enabled = true
 script = ExtResource("1_game")
 
-[node name="Chao" type="Polygon2D" parent="." unique_id=1802054955]
-color = Color(0.22, 0.25, 0.21, 1)
-polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
+[node name="CenarioFundo" type="Sprite2D" parent="." unique_id=1802054955]
+z_index = -1
+texture_filter = 1
+position = Vector2(320, 180)
+scale = Vector2(0.232558, 0.234375)
+texture = ExtResource("16_room_texture")
 
-[node name="ParedeFundo" type="Polygon2D" parent="." unique_id=1203577194]
-color = Color(0.24, 0.17, 0.14, 1)
-polygon = PackedVector2Array(0, 0, 640, 0, 640, 118, 0, 118)
+[node name="LimitesSala" type="StaticBody2D" parent="." unique_id=987123456]
+collision_mask = 0
 
-[node name="FrisoParede" type="Polygon2D" parent="."]
-position = Vector2(0, 0)
-color = Color(0.39, 0.26, 0.18, 1)
-polygon = PackedVector2Array(0, 108, 640, 108, 640, 121, 0, 121)
+[node name="ParedeCima" type="CollisionShape2D" parent="LimitesSala" unique_id=1612490750]
+position = Vector2(320, 126)
+shape = SubResource("WorldBoundary_Top")
 
-[node name="JanelaMoldura" type="Polygon2D" parent="."]
-position = Vector2(36, 52)
-color = Color(0.61, 0.42, 0.26, 1)
-polygon = PackedVector2Array(-2, -2, 104, -2, 104, 43, -2, 43)
+[node name="ParedeBaixo" type="CollisionShape2D" parent="LimitesSala" unique_id=328593793]
+position = Vector2(320, 355)
+shape = SubResource("WorldBoundary_Bottom")
 
-[node name="Janela" type="Polygon2D" parent="."]
-position = Vector2(40, 56)
-color = Color(0.4, 0.62, 0.61, 1)
-polygon = PackedVector2Array(0, 0, 96, 0, 96, 34, 0, 34)
+[node name="ParedeEsquerda" type="CollisionShape2D" parent="LimitesSala" unique_id=1345854337]
+position = Vector2(10, 180)
+shape = SubResource("WorldBoundary_Left")
 
-[node name="JanelaReflexo" type="Polygon2D" parent="."]
-position = Vector2(42, 58)
-color = Color(0.77, 0.83, 0.68, 0.42)
-polygon = PackedVector2Array(0, 0, 14, 0, 45, 33, 31, 33)
-
-[node name="JanelaTravessaVertical" type="Polygon2D" parent="."]
-position = Vector2(88, 56)
-color = Color(0.61, 0.42, 0.26, 1)
-polygon = PackedVector2Array(-2, 0, 2, 0, 2, 34, -2, 34)
-
-[node name="JanelaTravessaHorizontal" type="Polygon2D" parent="."]
-position = Vector2(40, 73)
-color = Color(0.61, 0.42, 0.26, 1)
-polygon = PackedVector2Array(0, -2, 96, -2, 96, 2, 0, 2)
-
-[node name="PrateleiraParede" type="Polygon2D" parent="."]
-position = Vector2(190, 112)
-color = Color(0.47, 0.29, 0.18, 1)
-polygon = PackedVector2Array(0, 0, 390, 0, 390, 7, 0, 7)
-
-[node name="PrateleiraApoioEsquerdo" type="Polygon2D" parent="."]
-position = Vector2(220, 112)
-color = Color(0.36, 0.23, 0.15, 1)
-polygon = PackedVector2Array(0, 0, 5, 0, 5, 30, 0, 30)
-
-[node name="PrateleiraApoioDireito" type="Polygon2D" parent="."]
-position = Vector2(548, 112)
-color = Color(0.36, 0.23, 0.15, 1)
-polygon = PackedVector2Array(0, 0, 5, 0, 5, 30, 0, 30)
-
-[node name="FrascoPrateleira1" type="Polygon2D" parent="."]
-position = Vector2(246, 97)
-color = Color(0.57, 0.77, 0.55, 1)
-polygon = PackedVector2Array(0, 5, 2, 0, 8, 0, 10, 5, 9, 15, 1, 15)
-
-[node name="FrascoPrateleira2" type="Polygon2D" parent="."]
-position = Vector2(280, 91)
-color = Color(0.74, 0.48, 0.32, 1)
-polygon = PackedVector2Array(1, 5, 3, 0, 8, 0, 11, 5, 10, 21, 1, 21)
-
-[node name="FrascoPrateleira3" type="Polygon2D" parent="."]
-position = Vector2(319, 99)
-color = Color(0.55, 0.64, 0.81, 1)
-polygon = PackedVector2Array(0, 4, 2, 0, 8, 0, 10, 4, 9, 13, 1, 13)
-
-[node name="FrascoPrateleira4" type="Polygon2D" parent="."]
-position = Vector2(502, 94)
-color = Color(0.78, 0.69, 0.39, 1)
-polygon = PackedVector2Array(1, 5, 3, 0, 8, 0, 11, 5, 10, 18, 1, 18)
-
-[node name="VigaPiso1" type="Polygon2D" parent="."]
-color = Color(0.29, 0.31, 0.25, 1)
-polygon = PackedVector2Array(0, 142, 640, 142, 640, 144, 0, 144)
-
-[node name="VigaPiso2" type="Polygon2D" parent="."]
-color = Color(0.29, 0.31, 0.25, 1)
-polygon = PackedVector2Array(0, 190, 640, 190, 640, 192, 0, 192)
-
-[node name="VigaPiso3" type="Polygon2D" parent="."]
-color = Color(0.29, 0.31, 0.25, 1)
-polygon = PackedVector2Array(0, 238, 640, 238, 640, 240, 0, 240)
-
-[node name="VigaPiso4" type="Polygon2D" parent="."]
-color = Color(0.29, 0.31, 0.25, 1)
-polygon = PackedVector2Array(0, 286, 640, 286, 640, 288, 0, 288)
-
-[node name="Player" type="CharacterBody2D" parent="." unique_id=916926789 groups=["player"]]
-position = Vector2(235, 250)
-collision_layer = 1
-collision_mask = 1
-script = ExtResource("2_player")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=358101122]
-shape = SubResource("PlayerCollider")
-
-[node name="Visual" type="Node2D" parent="Player" unique_id=770328325]
-
-[node name="Sombra" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(0, 10)
-color = Color(0.08, 0.1, 0.09, 0.36)
-polygon = PackedVector2Array(-13, 0, -10, -3, -4, -4, 5, -4, 11, -2, 13, 0, 10, 2, -10, 2)
-
-[node name="PernaEsquerda" type="Polygon2D" parent="Player/Visual"]
-color = Color(0.28, 0.3, 0.28, 1)
-polygon = PackedVector2Array(-7, 3, -1, 3, -2, 12, -7, 12)
-
-[node name="PernaDireita" type="Polygon2D" parent="Player/Visual"]
-color = Color(0.28, 0.3, 0.28, 1)
-polygon = PackedVector2Array(1, 3, 7, 3, 7, 12, 2, 12)
-
-[node name="BotaEsquerda" type="Polygon2D" parent="Player/Visual"]
-color = Color(0.27, 0.18, 0.13, 1)
-polygon = PackedVector2Array(-8, 9, -2, 9, 0, 13, -8, 13)
-
-[node name="BotaDireita" type="Polygon2D" parent="Player/Visual"]
-color = Color(0.27, 0.18, 0.13, 1)
-polygon = PackedVector2Array(2, 9, 8, 9, 9, 13, 1, 13)
-
-[node name="TúnicaContorno" type="Polygon2D" parent="Player/Visual"]
-color = Color(0.16, 0.3, 0.27, 1)
-polygon = PackedVector2Array(-8, -5, -4, -9, 4, -9, 8, -5, 10, 4, 6, 8, -6, 8, -10, 4)
-
-[node name="Túnica" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(0, -1)
-color = Color(0.31, 0.52, 0.43, 1)
-polygon = PackedVector2Array(-7, -5, -4, -8, 4, -8, 7, -5, 8, 3, 5, 6, -5, 6, -8, 3)
-
-[node name="Avental" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(0, 1)
-color = Color(0.88, 0.76, 0.56, 1)
-polygon = PackedVector2Array(-4, -5, 4, -5, 5, 5, -5, 5)
-
-[node name="Fivela" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(0, 1)
-color = Color(0.91, 0.69, 0.34, 1)
-polygon = PackedVector2Array(-2, -1, 2, -1, 2, 1, -2, 1)
-
-[node name="BracoEsquerdo" type="Polygon2D" parent="Player/Visual"]
-color = Color(0.27, 0.46, 0.38, 1)
-polygon = PackedVector2Array(-8, -4, -11, -1, -9, 4, -6, 3, -6, -1)
-
-[node name="BracoDireito" type="Polygon2D" parent="Player/Visual"]
-color = Color(0.27, 0.46, 0.38, 1)
-polygon = PackedVector2Array(8, -4, 11, -1, 9, 4, 6, 3, 6, -1)
-
-[node name="Cabeca" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(0, -14)
-color = Color(0.94, 0.72, 0.53, 1)
-polygon = PackedVector2Array(-5, -5, -2, -7, 3, -6, 6, -2, 5, 4, 2, 7, -3, 6, -6, 2)
-
-[node name="Cabelo" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(0, -18)
-color = Color(0.29, 0.2, 0.16, 1)
-polygon = PackedVector2Array(-6, 0, -5, -5, -1, -7, 4, -6, 6, -2, 3, -3, 0, -4, -3, -2, -5, 2)
-
-[node name="OlhoEsquerdo" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(-2, -13)
-color = Color(0.17, 0.15, 0.13, 1)
-polygon = PackedVector2Array(-1, -1, 1, -1, 1, 1, -1, 1)
-
-[node name="OlhoDireito" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(3, -13)
-color = Color(0.17, 0.15, 0.13, 1)
-polygon = PackedVector2Array(-1, -1, 1, -1, 1, 1, -1, 1)
-
-[node name="Chapeu" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(0, -23)
-color = Color(0.21, 0.35, 0.29, 1)
-polygon = PackedVector2Array(-7, 3, -5, -1, -2, -3, 0, -9, 2, -3, 6, -1, 8, 3)
-
-[node name="AbaChapeu" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(0, -20)
-color = Color(0.17, 0.29, 0.24, 1)
-polygon = PackedVector2Array(-9, 0, -7, -2, 7, -2, 9, 0, 7, 2, -7, 2)
-
-[node name="FitaChapeu" type="Polygon2D" parent="Player/Visual"]
-position = Vector2(0, -20)
-color = Color(0.84, 0.62, 0.3, 1)
-polygon = PackedVector2Array(-5, -1, 5, -1, 5, 1, -5, 1)
-
-[node name="InteracaoArea" type="Area2D" parent="Player" unique_id=1307811810]
-collision_layer = 2
-collision_mask = 1
-monitoring = true
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/InteracaoArea" unique_id=71922244]
-shape = SubResource("InteractionShape")
+[node name="ParedeDireita" type="CollisionShape2D" parent="LimitesSala" unique_id=993721944]
+position = Vector2(630, 180)
+shape = SubResource("WorldBoundary_Right")
 
 [node name="Balcao" type="Area2D" parent="." unique_id=47932170]
 position = Vector2(330, 190)
-collision_layer = 1
-collision_mask = 1
-monitoring = true
 script = ExtResource("3_balcao")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Balcao" unique_id=1833654297]
 shape = SubResource("CounterShape")
 
-[node name="Tampo" type="Polygon2D" parent="Balcao" unique_id=726942654]
-color = Color(0.47, 0.27, 0.15, 1)
-polygon = PackedVector2Array(-66, -26, 66, -26, 66, 26, -66, 26)
-
-[node name="BordaTampo" type="Polygon2D" parent="Balcao"]
-position = Vector2(0, -24)
-color = Color(0.81, 0.59, 0.33, 1)
-polygon = PackedVector2Array(-66, -4, 66, -4, 66, 1, -66, 1)
-
-[node name="FrenteBalcao" type="Polygon2D" parent="Balcao"]
-position = Vector2(0, 25)
-color = Color(0.33, 0.25, 0.17, 1)
-polygon = PackedVector2Array(-66, -26, 66, -26, 66, 1, -66, 1)
-
-[node name="PainelBalcao" type="Polygon2D" parent="Balcao"]
-position = Vector2(0, 26)
-color = Color(0.43, 0.25, 0.16, 1)
-polygon = PackedVector2Array(-30, -16, 30, -16, 30, -4, -30, -4)
-
-[node name="Emblema" type="Polygon2D" parent="Balcao"]
-position = Vector2(0, 10)
-color = Color(0.87, 0.69, 0.37, 1)
-polygon = PackedVector2Array(0, -8, 7, 0, 0, 8, -7, 0)
+[node name="Sprite2D" type="Sprite2D" parent="Balcao" unique_id=198612413]
+texture_filter = 1
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("14_balcao_texture")
+region_enabled = true
+region_rect = Rect2(2, 2, 348, 190)
 
 [node name="BalcaoFisico" type="StaticBody2D" parent="." unique_id=1746221300]
-position = Vector2(330, 190)
+position = Vector2(330, 208)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BalcaoFisico" unique_id=653281327]
 shape = SubResource("CounterBlockShape")
 
-[node name="Prateleira" type="Polygon2D" parent="." unique_id=1790960627]
-position = Vector2(330, 190)
-color = Color(0.66, 0.42, 0.22, 1)
-polygon = PackedVector2Array(-72, -34, 72, -34, 72, -27, -72, -27)
-
-[node name="PlacaBalcao" type="Label" parent="."]
+[node name="PlacaBalcao" type="Label" parent="." unique_id=2085095696]
+z_index = 10
 offset_left = 282.0
-offset_top = 156.0
+offset_top = 132.0
 offset_right = 378.0
-offset_bottom = 176.0
+offset_bottom = 152.0
 theme_override_colors/font_color = Color(1, 0.9, 0.69, 1)
 theme_override_font_sizes/font_size = 12
 text = "ATENDIMENTO"
 horizontal_alignment = 1
 
 [node name="Caldeirao" type="Area2D" parent="." unique_id=289872812]
-position = Vector2(405, 190)
-collision_layer = 1
+position = Vector2(455, 190)
 collision_mask = 0
-monitorable = true
 script = ExtResource("4_caldeirao")
 receitas = Array[ExtResource("11_recipe_data")]([ExtResource("7_receita_vento"), ExtResource("8_receita_espinheira"), ExtResource("9_receita_mente"), ExtResource("10_receita_escudo")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Caldeirao" unique_id=249184466]
 shape = SubResource("CauldronInteractionShape")
 
-[node name="Visual" type="Polygon2D" parent="Caldeirao" unique_id=386485097]
-color = Color(0.23, 0.42, 0.38, 1)
-polygon = PackedVector2Array(-20, -12, 20, -12, 17, 12, 10, 20, -10, 20, -17, 12)
+[node name="Sprite2D" type="Sprite2D" parent="Caldeirao" unique_id=890371548]
+texture_filter = 1
+position = Vector2(0, -20)
+scale = Vector2(0.625, 0.625)
+texture = ExtResource("15_caldeirao_texture")
 
-[node name="BordaCaldeirao" type="Polygon2D" parent="Caldeirao"]
-position = Vector2(0, -11)
-color = Color(0.52, 0.68, 0.57, 1)
-polygon = PackedVector2Array(-19, 0, -16, -3, 16, -3, 19, 0, 16, 3, -16, 3)
+[node name="BaseFisica" type="StaticBody2D" parent="Caldeirao" unique_id=1482366006]
+collision_mask = 0
 
-[node name="Pocao" type="Polygon2D" parent="Caldeirao"]
-position = Vector2(0, -7)
-color = Color(0.63, 0.8, 0.48, 1)
-polygon = PackedVector2Array(-11, 0, -9, -3, 9, -3, 11, 0, 8, 7, -8, 7)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Caldeirao/BaseFisica" unique_id=1818368956]
+shape = SubResource("CauldronBaseShape")
 
-[node name="Bolha1" type="Polygon2D" parent="Caldeirao"]
-position = Vector2(-6, -8)
-color = Color(0.83, 0.91, 0.65, 0.85)
-polygon = PackedVector2Array(-2, 0, -1, -2, 1, -2, 2, 0, 1, 2, -1, 2)
-
-[node name="Bolha2" type="Polygon2D" parent="Caldeirao"]
-position = Vector2(5, -4)
-color = Color(0.83, 0.91, 0.65, 0.85)
-polygon = PackedVector2Array(-2, 0, -1, -2, 1, -2, 2, 0, 1, 2, -1, 2)
-
-[node name="Fumaca" type="Polygon2D" parent="Caldeirao" unique_id=765177025]
-position = Vector2(0, -19)
-color = Color(0.75, 0.83, 0.78, 0.6)
-polygon = PackedVector2Array(-5, -5, 3, -9, 9, -5, 7, 2, 0, 4, -6, 1)
-
-[node name="PlacaCaldeirao" type="Label" parent="."]
-offset_left = 360.0
-offset_top = 146.0
-offset_right = 450.0
-offset_bottom = 166.0
+[node name="PlacaCaldeirao" type="Label" parent="." unique_id=1275906571]
+z_index = 10
+offset_left = 410.0
+offset_top = 132.0
+offset_right = 500.0
+offset_bottom = 152.0
 theme_override_colors/font_color = Color(0.78, 0.9, 0.77, 1)
 theme_override_font_sizes/font_size = 12
 text = "CALDEIRÃO"
 horizontal_alignment = 1
 
-[node name="Fornecedor" type="Area2D" parent="."]
+[node name="Fornecedor" type="Area2D" parent="." unique_id=1316958283]
 position = Vector2(535, 190)
-collision_layer = 1
 collision_mask = 0
-monitorable = true
 script = ExtResource("12_fornecedor")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Fornecedor"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fornecedor" unique_id=2139852154]
+position = Vector2(0, 8)
 shape = SubResource("SupplierAreaShape")
 
-[node name="Banca" type="Polygon2D" parent="Fornecedor"]
-color = Color(0.54, 0.38, 0.24, 1)
-polygon = PackedVector2Array(-27, -19, 27, -19, 27, 17, -27, 17)
+[node name="PrateleiraFundo" type="Node2D" parent="." unique_id=1332412675]
+position = Vector2(535, 190)
 
-[node name="Tampo" type="Polygon2D" parent="Fornecedor"]
-position = Vector2(0, -16)
-color = Color(0.78, 0.56, 0.34, 1)
-polygon = PackedVector2Array(-29, -3, 29, -3, 29, 2, -29, 2)
+[node name="PrateleiraPixel" type="Sprite2D" parent="PrateleiraFundo" unique_id=1021726531]
+texture_filter = 1
+texture = ExtResource("19_supplier_sprite")
 
-[node name="Frascos" type="Polygon2D" parent="Fornecedor"]
-color = Color(0.57, 0.79, 0.6, 1)
-polygon = PackedVector2Array(-15, -26, -8, -26, -8, -12, -15, -12, -17, -17, -17, -23)
+[node name="BalcaoFrente" type="StaticBody2D" parent="." unique_id=759925133]
+position = Vector2(535, 198)
+collision_mask = 0
 
-[node name="FrascoAzul" type="Polygon2D" parent="Fornecedor"]
-position = Vector2(3, -1)
-color = Color(0.55, 0.67, 0.85, 1)
-polygon = PackedVector2Array(-4, -9, -2, -12, 2, -12, 4, -9, 4, 1, 2, 3, -3, 3, -4, 1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BalcaoFrente" unique_id=1838463967]
+position = Vector2(0, 1)
+shape = SubResource("SupplierFrontShape")
 
-[node name="FrascoDourado" type="Polygon2D" parent="Fornecedor"]
-position = Vector2(15, 0)
-color = Color(0.84, 0.66, 0.34, 1)
-polygon = PackedVector2Array(-4, -8, -2, -11, 2, -11, 4, -8, 4, 2, 2, 4, -3, 4, -4, 2)
-
-[node name="PlacaFornecedor" type="Label" parent="."]
+[node name="PlacaFornecedor" type="Label" parent="." unique_id=1523241235]
+z_index = 10
 offset_left = 493.0
 offset_top = 146.0
 offset_right = 578.0
@@ -373,92 +174,126 @@ theme_override_font_sizes/font_size = 11
 text = "FORNECEDOR"
 horizontal_alignment = 1
 
+[node name="PortaPraca" parent="." unique_id=1906365511 instance=ExtResource("18_door")]
+position = Vector2(320, 326)
+cena_destino = "res://Cenas/PracaCentral.tscn"
+posicao_entrada = Vector2(540, 270)
+destino_label = "SAIR PARA A PRACA"
+entrar_ao_tocar = true
+
+[node name="Player" parent="." unique_id=916926789 instance=ExtResource("2_player_scene")]
+position = Vector2(235, 250)
+
 [node name="TemporizadorCliente" type="Timer" parent="." unique_id=1533797540]
 one_shot = true
 
-[node name="TemporizadorFeedback" type="Timer" parent="."]
+[node name="TemporizadorFeedback" type="Timer" parent="." unique_id=560851586]
 one_shot = true
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1733094660]
-layer = 1
 
 [node name="Painel" type="PanelContainer" parent="Interface" unique_id=1043761772]
 offset_left = 12.0
 offset_top = 8.0
 offset_right = 628.0
-offset_bottom = 76.0
+offset_bottom = 62.0
+
+[node name="BarraPocoes" type="HBoxContainer" parent="Interface" unique_id=2048371122]
+offset_left = 12.0
+offset_top = 66.0
+offset_right = 628.0
+offset_bottom = 90.0
+theme_override_constants/separation = 4
+
+[node name="ControlesTempo" type="HBoxContainer" parent="Interface"]
+process_mode = 3
+offset_left = 412.0
+offset_top = 94.0
+offset_right = 628.0
+offset_bottom = 118.0
+theme_override_constants/separation = 4
+script = ExtResource("20_time_controls")
+
+[node name="Play" type="Button" parent="Interface/ControlesTempo"]
+custom_minimum_size = Vector2(72, 22)
+layout_mode = 2
+text = "PLAY"
+
+[node name="Pause" type="Button" parent="Interface/ControlesTempo"]
+custom_minimum_size = Vector2(72, 22)
+layout_mode = 2
+text = "PAUSE"
+
+[node name="Accelerate" type="Button" parent="Interface/ControlesTempo"]
+custom_minimum_size = Vector2(60, 22)
+layout_mode = 2
+text = "2×"
 
 [node name="Margem" type="MarginContainer" parent="Interface/Painel" unique_id=581869510]
 layout_mode = 2
 theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 5
+theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_bottom = 2
 
 [node name="Coluna" type="VBoxContainer" parent="Interface/Painel/Margem" unique_id=2029445355]
 layout_mode = 2
-theme_override_constants/separation = 1
+theme_override_constants/separation = 0
 
-[node name="Titulo" type="Label" parent="Interface/Painel/Margem/Coluna"]
+[node name="Titulo" type="Label" parent="Interface/Painel/Margem/Coluna" unique_id=1348138675]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.91, 0.78, 0.49, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "A LOJA DO ALQUIMISTA — ALFA 0.1"
 
 [node name="Estado" type="Label" parent="Interface/Painel/Margem/Coluna" unique_id=1005245441]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.88, 0.75, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 10
 text = "A preparar a loja..."
 
-[node name="Rodape" type="PanelContainer" parent="Interface"]
+[node name="Rodape" type="PanelContainer" parent="Interface" unique_id=839812752]
 offset_left = 12.0
-offset_top = 274.0
+offset_top = 294.0
 offset_right = 628.0
 offset_bottom = 352.0
 
-[node name="Margem" type="MarginContainer" parent="Interface/Rodape"]
+[node name="Margem" type="MarginContainer" parent="Interface/Rodape" unique_id=1647789784]
 layout_mode = 2
 theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 6
+theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 6
+theme_override_constants/margin_bottom = 3
 
-[node name="Coluna" type="VBoxContainer" parent="Interface/Rodape/Margem"]
+[node name="Coluna" type="VBoxContainer" parent="Interface/Rodape/Margem" unique_id=443026943]
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="Receita" type="Label" parent="Interface/Rodape/Margem/Coluna"]
+[node name="Receita" type="Label" parent="Interface/Rodape/Margem/Coluna" unique_id=432107173]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.91, 0.84, 0.65, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 9
 text = "RECEITA"
 
-[node name="Inventario" type="Label" parent="Interface/Rodape/Margem/Coluna"]
+[node name="Inventario" type="Label" parent="Interface/Rodape/Margem/Coluna" unique_id=2142692613]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.82, 0.88, 0.77, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 9
 text = "STOCK"
-
-[node name="Fornecedor" type="Label" parent="Interface/Rodape/Margem/Coluna"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.82, 0.84, 0.74, 1)
-theme_override_font_sizes/font_size = 11
-text = "FORNECEDOR"
 
 [node name="Instrucoes" type="Label" parent="Interface/Rodape/Margem/Coluna" unique_id=917414871]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.91, 0.71, 0.39, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 9
 text = "WASD mover · E usar · Q poção · TAB receita · F ingrediente · ESC pausa"
 autowrap_mode = 3
 
-[node name="Pausa" type="CanvasLayer" parent="."]
-visible = false
+[node name="Pausa" type="CanvasLayer" parent="." unique_id=618883394]
 layer = 10
+visible = false
 script = ExtResource("13_pausa")
 
-[node name="Fundo" type="ColorRect" parent="Pausa"]
+[node name="Fundo" type="ColorRect" parent="Pausa" unique_id=1821785050]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -466,47 +301,47 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.05, 0.06, 0.05, 0.8)
 
-[node name="Painel" type="PanelContainer" parent="Pausa"]
+[node name="Painel" type="PanelContainer" parent="Pausa" unique_id=1091110919]
 offset_left = 186.0
 offset_top = 77.0
 offset_right = 454.0
 offset_bottom = 283.0
 
-[node name="Margem" type="MarginContainer" parent="Pausa/Painel"]
+[node name="Margem" type="MarginContainer" parent="Pausa/Painel" unique_id=1871924163]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 14
 
-[node name="Coluna" type="VBoxContainer" parent="Pausa/Painel/Margem"]
+[node name="Coluna" type="VBoxContainer" parent="Pausa/Painel/Margem" unique_id=832491240]
 layout_mode = 2
 theme_override_constants/separation = 7
 
-[node name="Titulo" type="Label" parent="Pausa/Painel/Margem/Coluna"]
+[node name="Titulo" type="Label" parent="Pausa/Painel/Margem/Coluna" unique_id=941223463]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.91, 0.78, 0.49, 1)
 theme_override_font_sizes/font_size = 22
 text = "LOJA EM PAUSA"
 horizontal_alignment = 1
 
-[node name="Mensagem" type="Label" parent="Pausa/Painel/Margem/Coluna"]
+[node name="Mensagem" type="Label" parent="Pausa/Painel/Margem/Coluna" unique_id=1458851285]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.84, 0.81, 0.73, 1)
 text = "A loja fica à tua espera."
 horizontal_alignment = 1
 
-[node name="Retomar" type="Button" parent="Pausa/Painel/Margem/Coluna"]
+[node name="Retomar" type="Button" parent="Pausa/Painel/Margem/Coluna" unique_id=1150452415]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 text = "Retomar"
 
-[node name="Reiniciar" type="Button" parent="Pausa/Painel/Margem/Coluna"]
+[node name="Reiniciar" type="Button" parent="Pausa/Painel/Margem/Coluna" unique_id=739346380]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 text = "Reiniciar turno"
 
-[node name="Sair" type="Button" parent="Pausa/Painel/Margem/Coluna"]
+[node name="Sair" type="Button" parent="Pausa/Painel/Margem/Coluna" unique_id=1941057351]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 text = "Sair do jogo"

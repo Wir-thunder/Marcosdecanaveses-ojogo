@@ -1,0 +1,124 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://Scripts/ExplorationScene.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://Cenas/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://Cenas/PortaCena.tscn" id="3_door"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/praca_cenario.png" id="4_background"]
+
+[sub_resource type="RectangleShape2D" id="WallHorizontal"]
+size = Vector2(640, 10)
+
+[sub_resource type="RectangleShape2D" id="WallVertical"]
+size = Vector2(10, 360)
+
+[sub_resource type="CircleShape2D" id="FountainCollision"]
+radius = 18.0
+
+[sub_resource type="CircleShape2D" id="TreeCollision"]
+radius = 9.0
+
+[sub_resource type="RectangleShape2D" id="BenchCollision"]
+size = Vector2(46, 8)
+
+[node name="PracaCentral" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_world")
+nome_local = "Praça Central de Canaveses"
+
+[node name="CenarioPixel" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("4_background")
+
+[node name="Limites" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="ParedeCima" type="CollisionShape2D" parent="Limites"]
+position = Vector2(320, 5)
+shape = SubResource("WallHorizontal")
+
+[node name="ParedeBaixo" type="CollisionShape2D" parent="Limites"]
+position = Vector2(320, 355)
+shape = SubResource("WallHorizontal")
+
+[node name="ParedeEsquerda" type="CollisionShape2D" parent="Limites"]
+position = Vector2(5, 180)
+shape = SubResource("WallVertical")
+
+[node name="ParedeDireita" type="CollisionShape2D" parent="Limites"]
+position = Vector2(635, 180)
+shape = SubResource("WallVertical")
+
+[node name="ObstaculosCenario" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="Fonte" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(320, 242)
+shape = SubResource("FountainCollision")
+
+[node name="ArvoreEsquerda" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(157, 150)
+shape = SubResource("TreeCollision")
+
+[node name="ArvoreDireita" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(412, 144)
+shape = SubResource("TreeCollision")
+
+[node name="BancoEsquerdo" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(220, 294)
+shape = SubResource("BenchCollision")
+
+[node name="BancoDireito" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(430, 294)
+shape = SubResource("BenchCollision")
+
+[node name="PortaLoja" parent="." instance=ExtResource("3_door")]
+position = Vector2(540, 238)
+cena_destino = "res://Cenas/cena_principal.tscn"
+posicao_entrada = Vector2(320, 275)
+destino_label = "LOJA"
+entrar_ao_tocar = true
+
+[node name="PortaFloresta" parent="." instance=ExtResource("3_door")]
+position = Vector2(105, 210)
+cena_destino = "res://Cenas/Floresta.tscn"
+posicao_entrada = Vector2(320, 310)
+destino_label = "FLORESTA"
+
+[node name="PortaDungeon" parent="." instance=ExtResource("3_door")]
+position = Vector2(480, 210)
+cena_destino = "res://Cenas/Dungeon.tscn"
+posicao_entrada = Vector2(320, 310)
+destino_label = "DUNGEON"
+
+[node name="PortaTaverna" parent="." instance=ExtResource("3_door")]
+position = Vector2(320, 150)
+cena_destino = "res://Cenas/Taverna.tscn"
+posicao_entrada = Vector2(80, 255)
+destino_label = "TAVERNA"
+apenas_a_noite = true
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(105, 240)
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Estado" type="Label" parent="Interface"]
+offset_left = 12.0
+offset_top = 8.0
+offset_right = 628.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(1, 0.93, 0.73, 1)
+theme_override_font_sizes/font_size = 14
+text = "PRAÇA CENTRAL DE CANAVESES"
+
+[node name="Instrucao" type="Label" parent="Interface"]
+offset_left = 12.0
+offset_top = 333.0
+offset_right = 628.0
+offset_bottom = 353.0
+theme_override_colors/font_color = Color(0.96, 0.91, 0.76, 1)
+theme_override_font_sizes/font_size = 11
+text = "WASD / SETAS mover  ·  E interagir"

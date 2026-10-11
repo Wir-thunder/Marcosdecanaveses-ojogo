@@ -1,0 +1,205 @@
+[gd_scene load_steps=23 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_player"]
+[ext_resource type="Texture2D" path="res://Assets/Characters/sombra_personagem.png" id="2_shadow"]
+[ext_resource type="Texture2D" path="res://Sprites/Marco_prausar.png" id="3_player_sprite"]
+
+[sub_resource type="CircleShape2D" id="PlayerCollider"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="InteractionShape"]
+radius = 24.0
+
+[sub_resource type="AtlasTexture" id="PlayerDown1"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(223, 0, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerDown2"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(491, 0, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerDown3"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(753, 0, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerDown4"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(1011, 0, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerUp1"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(229, 270, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerUp2"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(481, 270, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerUp3"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(760, 270, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerUp4"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(1005, 270, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerLeft1"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(220, 533, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerLeft2"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(481, 533, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerLeft3"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(749, 533, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerLeft4"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(1013, 533, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerRight1"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(237, 795, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerRight2"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(490, 795, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerRight3"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(753, 795, 160, 280)
+
+[sub_resource type="AtlasTexture" id="PlayerRight4"]
+atlas = ExtResource("3_player_sprite")
+region = Rect2(1020, 795, 160, 280)
+
+[sub_resource type="SpriteFrames" id="PlayerSpriteFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("PlayerDown1")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("PlayerUp1")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("PlayerLeft1")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("PlayerRight1")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("PlayerDown1")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerDown2")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerDown3")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerDown4")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("PlayerUp1")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerUp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerUp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerUp4")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("PlayerLeft1")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerLeft2")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerLeft3")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerLeft4")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("PlayerRight1")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerRight2")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerRight3")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlayerRight4")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 8.0
+}]
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 1
+collision_mask = 1
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("PlayerCollider")
+
+[node name="Sombra" type="Sprite2D" parent="."]
+texture_filter = 1
+show_behind_parent = true
+texture = ExtResource("2_shadow")
+
+[node name="Anim" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+offset = Vector2(0, -68)
+scale = Vector2(0.18, 0.18)
+sprite_frames = SubResource("PlayerSpriteFrames")
+
+[node name="InteracaoArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 1
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteracaoArea"]
+shape = SubResource("InteractionShape")
