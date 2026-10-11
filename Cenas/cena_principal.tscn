@@ -208,9 +208,9 @@ theme_override_constants/separation = 4
 [node name="ControlesTempo" type="HBoxContainer" parent="Interface"]
 process_mode = 3
 offset_left = 412.0
-offset_top = 94.0
+offset_top = 268.0
 offset_right = 628.0
-offset_bottom = 118.0
+offset_bottom = 292.0
 theme_override_constants/separation = 4
 script = ExtResource("20_time_controls")
 

@@ -1,9 +1,12 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://1bbd8ead3b2a"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Potions/pocao_espinheira_real.png" id="icone_1"]
+
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_1bbd8ead"]
 
 [resource]
 script = ExtResource("1_1bbd8ead")
+icone = ExtResource("icone_1")
 id = "pocao_espinheira_real"
 nome_do_item = "Poção Espinheira Real"
 descricao = "Uma mistura amarga de cura forte, ideal para recuperação em campo de batalha."

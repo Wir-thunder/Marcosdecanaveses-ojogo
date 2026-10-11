@@ -1,9 +1,12 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://6cca75ef94e1"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/azeite_do_olival.png" id="icone_1"]
+
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_6cca75ef"]
 
 [resource]
 script = ExtResource("1_6cca75ef")
+icone = ExtResource("icone_1")
 id = "azeite_do_olival"
 nome_do_item = "Azeite do Olival"
 descricao = "O líquido dourado da colheita local, levemente picante e excelente como base de poções."

@@ -17,11 +17,19 @@ func _process(_delta: float) -> void:
 func _play() -> void:
 	if CampaignManager.fase == CampaignManager.Fase.MANHA:
 		CampaignManager.iniciar_turno_loja()
-	get_tree().paused = false
+	var cena := get_tree().current_scene
+	if cena != null and cena.has_method("retomar_jogo"):
+		cena.retomar_jogo()
+	else:
+		get_tree().paused = false
 	_atualizar_botoes()
 
 func _pause() -> void:
-	get_tree().paused = true
+	var cena := get_tree().current_scene
+	if cena != null and cena.has_method("pausar_jogo"):
+		cena.pausar_jogo()
+	else:
+		get_tree().paused = true
 	_atualizar_botoes()
 
 func _accelerate() -> void:

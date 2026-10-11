@@ -1,9 +1,12 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bfhyicv0pt3if"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/musgo_aboboreira.png" id="icone_1"]
+
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_n0lqi"]
 
 [resource]
 script = ExtResource("1_n0lqi")
+icone = ExtResource("icone_1")
 id = "musgo_aboboreira"
 nome_do_item = "Musgo de Aboboreira"
 descricao = "Musgo húmido colhido perto da Anta de Santa Marta. Tem fortes propriedades curativas se não for fervido em demasia."

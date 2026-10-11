@@ -1,9 +1,12 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://htaj1v3rkovr"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/po_granito_tongobriga.png" id="icone_1"]
+
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_n1t8l"]
 
 [resource]
 script = ExtResource("1_n1t8l")
+icone = ExtResource("icone_1")
 id = "po_granito_tongobriga"
 nome_do_item = "Pó de Granito de Tongobriga"
 descricao = "Poeira de pedra ancestral recolhida nas ruínas romanas. Excelente para poções de defesa e endurecimento."
