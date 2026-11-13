@@ -1,9 +1,14 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene format=3 uid="uid://dilqe0ci4gdwu"]
 
-[ext_resource type="Script" path="res://Scripts/ExplorationScene.gd" id="1_world"]
+[ext_resource type="Script" uid="uid://c5lnmwrihjcj2" path="res://Scripts/ExplorationScene.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://Cenas/Player.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://Cenas/PortaCena.tscn" id="3_door"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/praca_cenario.png" id="4_background"]
+[ext_resource type="Texture2D" uid="uid://bjieuumv466bg" path="res://Assets/Environment/backgrounds/praca_cenario.png" id="4_background"]
+[ext_resource type="Texture2D" uid="uid://bpnu4xiqil25a" path="res://Assets/Environment/overlays/praca_foreground.png" id="6_praca_overlay"]
+[ext_resource type="Texture2D" uid="uid://duqsyiavcoyax" path="res://Assets/Environment/props_ysort/fonte_praca_mascarada.png" id="7_fonte"]
+[ext_resource type="Texture2D" uid="uid://bquknab0kdmn8" path="res://Assets/Environment/props_ysort/arvore_esq_mascarada.png" id="8_arv_esq"]
+[ext_resource type="Texture2D" uid="uid://b2prwlkrd0rla" path="res://Assets/Environment/props_ysort/arvore_dir_mascarada.png" id="9_arv_dir"]
+[ext_resource type="Texture2D" uid="uid://pcv3c82lvqht" path="res://Assets/Characters/sombra_personagem.png" id="10_sombra"]
 
 [sub_resource type="RectangleShape2D" id="WallHorizontal"]
 size = Vector2(640, 10)
@@ -11,107 +16,304 @@ size = Vector2(640, 10)
 [sub_resource type="RectangleShape2D" id="WallVertical"]
 size = Vector2(10, 360)
 
-[sub_resource type="CircleShape2D" id="FountainCollision"]
-radius = 18.0
+[sub_resource type="RectangleShape2D" id="RuinsWall"]
+size = Vector2(136, 40)
 
-[sub_resource type="CircleShape2D" id="TreeCollision"]
-radius = 9.0
+[sub_resource type="RectangleShape2D" id="StoneWall"]
+size = Vector2(120, 36)
+
+[sub_resource type="RectangleShape2D" id="TavernaPorchLeft"]
+size = Vector2(18, 42)
+
+[sub_resource type="RectangleShape2D" id="TavernaPorchRight"]
+size = Vector2(18, 42)
+
+[sub_resource type="RectangleShape2D" id="ShopBuildingWall"]
+size = Vector2(104, 166)
+
+[sub_resource type="CircleShape2D" id="BarrelCollision"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="PostCollision"]
+radius = 5.0
 
 [sub_resource type="RectangleShape2D" id="BenchCollision"]
-size = Vector2(46, 8)
+size = Vector2(36, 14)
 
-[node name="PracaCentral" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="LowWallCollision"]
+size = Vector2(22, 32)
+
+[sub_resource type="RectangleShape2D" id="FountainCollision"]
+size = Vector2(100, 40)
+
+[sub_resource type="CircleShape2D" id="TreeCollision"]
+
+[sub_resource type="Gradient" id="LeafGradient"]
+offsets = PackedFloat32Array(0, 0.7, 1)
+colors = PackedColorArray(0.45, 0.68, 0.28, 0.85, 0.72, 0.58, 0.22, 0.7, 0.35, 0.22, 0.1, 0)
+
+[node name="PracaCentral" type="Node2D" unique_id=628133053]
 y_sort_enabled = true
 script = ExtResource("1_world")
-nome_local = "Praça Central de Canaveses"
+nome_local = "Praça Central de Marco de Canaveses"
 
-[node name="CenarioPixel" type="Sprite2D" parent="."]
+[node name="CenarioPixel" type="Sprite2D" parent="." unique_id=49364758]
 z_index = -10
 texture_filter = 1
 position = Vector2(320, 180)
 texture = ExtResource("4_background")
 
-[node name="Limites" type="StaticBody2D" parent="."]
-collision_layer = 1
+[node name="ModuladorLuz" type="CanvasModulate" parent="." unique_id=1142881673]
+color = Color(0.96, 0.94, 0.9, 1)
+
+[node name="Limites" type="StaticBody2D" parent="." unique_id=889157940]
 collision_mask = 0
 
-[node name="ParedeCima" type="CollisionShape2D" parent="Limites"]
-position = Vector2(320, 5)
+[node name="ParedeCima" type="CollisionShape2D" parent="Limites" unique_id=249223010]
+position = Vector2(320, 96)
 shape = SubResource("WallHorizontal")
 
-[node name="ParedeBaixo" type="CollisionShape2D" parent="Limites"]
+[node name="ParedeBaixo" type="CollisionShape2D" parent="Limites" unique_id=1685190166]
 position = Vector2(320, 355)
 shape = SubResource("WallHorizontal")
 
-[node name="ParedeEsquerda" type="CollisionShape2D" parent="Limites"]
+[node name="ParedeEsquerda" type="CollisionShape2D" parent="Limites" unique_id=1401592043]
 position = Vector2(5, 180)
 shape = SubResource("WallVertical")
 
-[node name="ParedeDireita" type="CollisionShape2D" parent="Limites"]
+[node name="ParedeDireita" type="CollisionShape2D" parent="Limites" unique_id=530961760]
 position = Vector2(635, 180)
 shape = SubResource("WallVertical")
 
-[node name="ObstaculosCenario" type="StaticBody2D" parent="."]
+[node name="ObstaculosCenario" type="StaticBody2D" parent="." unique_id=1382354765]
 collision_mask = 0
 
-[node name="Fonte" type="CollisionShape2D" parent="ObstaculosCenario"]
-position = Vector2(320, 242)
+[node name="MuralhaRuinas" type="CollisionShape2D" parent="ObstaculosCenario" unique_id=2137970951]
+position = Vector2(68, 116)
+shape = SubResource("RuinsWall")
+
+[node name="MuroTongobrigaTaverna" type="CollisionShape2D" parent="ObstaculosCenario" unique_id=210532676]
+position = Vector2(258, 124)
+shape = SubResource("StoneWall")
+
+[node name="AlpendreTavernaEsq" type="CollisionShape2D" parent="ObstaculosCenario" unique_id=506640425]
+position = Vector2(326, 134)
+shape = SubResource("TavernaPorchLeft")
+
+[node name="AlpendreTavernaDir" type="CollisionShape2D" parent="ObstaculosCenario" unique_id=262123653]
+position = Vector2(378, 134)
+shape = SubResource("TavernaPorchRight")
+
+[node name="MuroTavernaDungeon" type="CollisionShape2D" parent="ObstaculosCenario" unique_id=1735889201]
+position = Vector2(434, 118)
+shape = SubResource("StoneWall")
+
+[node name="FachadaLojaAlquimia" type="CollisionShape2D" parent="ObstaculosCenario" unique_id=430298290]
+position = Vector2(588, 183)
+shape = SubResource("ShopBuildingWall")
+
+[node name="BarrilFeira1" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(526, 246)
+shape = SubResource("BarrelCollision")
+
+[node name="BarrilFeira2" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(526, 262)
+shape = SubResource("BarrelCollision")
+
+[node name="BarrilTaverna1" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(413, 146)
+shape = SubResource("BarrelCollision")
+
+[node name="BarrilTaverna2" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(431, 146)
+shape = SubResource("BarrelCollision")
+
+[node name="BarrilFlores" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(200, 277)
+shape = SubResource("BarrelCollision")
+
+[node name="PosteEsq" type="CollisionShape2D" parent="ObstaculosCenario" unique_id=1714838717]
+position = Vector2(225, 222)
+shape = SubResource("PostCollision")
+
+[node name="PosteDir" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(310, 324)
+shape = SubResource("PostCollision")
+
+[node name="BancoEsquerdo" type="CollisionShape2D" parent="ObstaculosCenario" unique_id=696510996]
+position = Vector2(203, 236)
+shape = SubResource("BenchCollision")
+
+[node name="MuretoEsquerdo" type="CollisionShape2D" parent="ObstaculosCenario"]
+position = Vector2(187, 264)
+shape = SubResource("LowWallCollision")
+
+[node name="BancoDireito" type="CollisionShape2D" parent="ObstaculosCenario" unique_id=348875745]
+position = Vector2(242, 315)
+shape = SubResource("BenchCollision")
+
+[node name="FonteYsort" type="StaticBody2D" parent="." unique_id=1631861090]
+position = Vector2(385, 262)
+collision_mask = 0
+
+[node name="Sombra" type="Sprite2D" parent="FonteYsort" unique_id=493403341]
+modulate = Color(1, 1, 1, 0.3)
+scale = Vector2(5.5, 2.4)
+texture = ExtResource("10_sombra")
+
+[node name="Sprite" type="Sprite2D" parent="FonteYsort" unique_id=1218235310]
+texture_filter = 1
+position = Vector2(0, -52)
+texture = ExtResource("7_fonte")
+
+[node name="Colisao" type="CollisionShape2D" parent="FonteYsort" unique_id=57898108]
+position = Vector2(0, -2)
 shape = SubResource("FountainCollision")
 
-[node name="ArvoreEsquerda" type="CollisionShape2D" parent="ObstaculosCenario"]
-position = Vector2(157, 150)
+[node name="ArvoreEsqYsort" type="StaticBody2D" parent="." unique_id=684010302]
+position = Vector2(45, 225)
+collision_mask = 0
+
+[node name="Sombra" type="Sprite2D" parent="ArvoreEsqYsort" unique_id=1984236245]
+modulate = Color(1, 1, 1, 0.4)
+scale = Vector2(1.5, 1)
+texture = ExtResource("10_sombra")
+
+[node name="Sprite" type="Sprite2D" parent="ArvoreEsqYsort" unique_id=1918647202]
+texture_filter = 1
+position = Vector2(0, -35)
+texture = ExtResource("8_arv_esq")
+
+[node name="Colisao" type="CollisionShape2D" parent="ArvoreEsqYsort" unique_id=1846077144]
 shape = SubResource("TreeCollision")
 
-[node name="ArvoreDireita" type="CollisionShape2D" parent="ObstaculosCenario"]
-position = Vector2(412, 144)
+[node name="ArvoreDirYsort" type="StaticBody2D" parent="." unique_id=1765782962]
+position = Vector2(152, 210)
+collision_mask = 0
+
+[node name="Sombra" type="Sprite2D" parent="ArvoreDirYsort" unique_id=2147107608]
+modulate = Color(1, 1, 1, 0.4)
+scale = Vector2(1.5, 1)
+texture = ExtResource("10_sombra")
+
+[node name="Sprite" type="Sprite2D" parent="ArvoreDirYsort" unique_id=1458997341]
+texture_filter = 1
+position = Vector2(0, -35)
+texture = ExtResource("9_arv_dir")
+
+[node name="Colisao" type="CollisionShape2D" parent="ArvoreDirYsort" unique_id=1384120012]
 shape = SubResource("TreeCollision")
 
-[node name="BancoEsquerdo" type="CollisionShape2D" parent="ObstaculosCenario"]
-position = Vector2(220, 294)
-shape = SubResource("BenchCollision")
-
-[node name="BancoDireito" type="CollisionShape2D" parent="ObstaculosCenario"]
-position = Vector2(430, 294)
-shape = SubResource("BenchCollision")
-
-[node name="PortaLoja" parent="." instance=ExtResource("3_door")]
-position = Vector2(540, 238)
+[node name="PortaLoja" parent="." unique_id=2064510337 instance=ExtResource("3_door")]
+position = Vector2(586, 272)
 cena_destino = "res://Cenas/cena_principal.tscn"
 posicao_entrada = Vector2(320, 275)
-destino_label = "LOJA"
-entrar_ao_tocar = true
+destino_label = "LOJA DO ALQUIMISTA"
+titulo_area = "A LOJA DO ALQUIMISTA · MARCO"
+descricao_area = "O teu atelier alquímico. Prepara elixires no caldeirão de cobre, gere o stock de ingredientes com o fornecedor e atende os clientes no balcão."
+icone_simbolo = "🧪"
 
-[node name="PortaFloresta" parent="." instance=ExtResource("3_door")]
-position = Vector2(105, 210)
+[node name="PortaFloresta" parent="." unique_id=876812188 instance=ExtResource("3_door")]
+position = Vector2(98, 262)
 cena_destino = "res://Cenas/Floresta.tscn"
 posicao_entrada = Vector2(320, 310)
-destino_label = "FLORESTA"
+destino_label = "FLORESTA DO TMEGA"
+titulo_area = "FLORESTA DO TMEGA"
+descricao_area = "Bosque luxuriante nas margens do rio Tâmega. Atravessa as pontes rústicas e recolhe ervas medicinais como hortelã, arnica e musgo para poções."
+icone_simbolo = "🌿"
 
-[node name="PortaDungeon" parent="." instance=ExtResource("3_door")]
-position = Vector2(480, 210)
+[node name="PortaDungeon" parent="." unique_id=1020710253 instance=ExtResource("3_door")]
+position = Vector2(506, 128)
 cena_destino = "res://Cenas/Dungeon.tscn"
-posicao_entrada = Vector2(320, 310)
-destino_label = "DUNGEON"
+posicao_entrada = Vector2(320, 286)
+destino_label = "MINA ANTIGA"
+titulo_area = "MINA ANTIGA DE CANAVESES"
+descricao_area = "Galerias subterrâneas de granito ricas em veios de ouro e cristais raros de calcedónia fina. Perigos e monstros ancestrais espreitam nas sombras!"
+icone_simbolo = "⛏️"
 
-[node name="PortaTaverna" parent="." instance=ExtResource("3_door")]
-position = Vector2(320, 150)
+[node name="PortaTaverna" parent="." unique_id=1586065235 instance=ExtResource("3_door")]
+position = Vector2(352, 142)
 cena_destino = "res://Cenas/Taverna.tscn"
-posicao_entrada = Vector2(80, 255)
-destino_label = "TAVERNA"
+posicao_entrada = Vector2(215, 275)
+destino_label = "TAVERNA DO VALE"
+titulo_area = "TAVERNA DO VALE · NOITE"
+descricao_area = "Ponto de encontro de aventureiros, bardos e mercenários ao redor da lareira. Bebe um copo de vinho verde, contrata guerreiros e organiza expedições."
+icone_simbolo = "🍺"
 apenas_a_noite = true
 
-[node name="PortaTongobriga" parent="." instance=ExtResource("3_door")]
-position = Vector2(225, 150)
-cena_destino = "res://Cenas/Tongobriga.tscn"
-posicao_entrada = Vector2(320, 180)
-destino_label = "TONGÓBRIGA · SALA DE GUERRA"
+[node name="PortaTongobriga" parent="." unique_id=1454280183 instance=ExtResource("3_door")]
+position = Vector2(166, 132)
+cena_destino = "res://Cenas/TongobrigaIntroGibi.tscn"
+destino_label = "TONGÓBRIGA · ARENA CELTA"
+titulo_area = "TONGÓBRIGA · CIDADE ROMANA E CELTA"
+descricao_area = "Ruínas históricas da grande urbe de Marco de Canaveses. Famosa pelo seu fórum e termas. Entra para combater no torneio de campeões lusitanos!"
+icone_simbolo = "⚔️"
 
-[node name="Player" parent="." instance=ExtResource("2_player")]
-position = Vector2(105, 240)
+[node name="PortaTermas" parent="." instance=ExtResource("3_door")]
+position = Vector2(236, 148)
+cena_destino = "res://Cenas/TermasRomanas.tscn"
+posicao_entrada = Vector2(175, 295)
+destino_label = "TERMAS ROMANAS"
+titulo_area = "TERMAS ROMANAS & FONTE SULFUROSA"
+descricao_area = "Balneário de águas quentes sulfurosas de Tongóbriga. Colhe basalto fervente, pó de granito, vapor condensado e acede à Cripta da Pedra Formosa."
+icone_simbolo = "♨️"
 
-[node name="Interface" type="CanvasLayer" parent="."]
+[node name="PortaCripta" parent="." instance=ExtResource("3_door")]
+position = Vector2(72, 168)
+cena_destino = "res://Cenas/CriptaPedraFormosa.tscn"
+posicao_entrada = Vector2(485, 295)
+destino_label = "CRIPTA DA PEDRA FORMOSA"
+titulo_area = "SANTUÁRIO & CRIPTA DA PEDRA FORMOSA"
+descricao_area = "Monumento castrejo ancestral gravado com trísqueles. Fonte mística de Raiz de Mandrágora, Raiz Celeste e Lágrimas do Douro."
+icone_simbolo = "🪨"
 
-[node name="Estado" type="Label" parent="Interface"]
+[node name="PortaMargensTamega" parent="." instance=ExtResource("3_door")]
+position = Vector2(148, 326)
+cena_destino = "res://Cenas/MargensTamega.tscn"
+posicao_entrada = Vector2(475, 295)
+destino_label = "MARGENS DO TÂMEGA & OLIVAL"
+titulo_area = "MARGENS DO RIO TÂMEGA & OLIVAL ANTIGO"
+descricao_area = "Beira-rio e olivais centenários de Canaveses. Recolhe azeite puro, mel dourado, resina de pinho, algas e água cristalina do Tâmega."
+icone_simbolo = "🌊"
+
+[node name="PortaFeiraMedieval" parent="." instance=ExtResource("3_door")]
+position = Vector2(465, 292)
+cena_destino = "res://Cenas/FeiraMedieval.tscn"
+posicao_entrada = Vector2(245, 302)
+destino_label = "FEIRA MEDIEVAL DA VILA"
+titulo_area = "FEIRA MEDIEVAL & MERCADO DE CANAVESES"
+descricao_area = "Bancas animadas de mercadores e caravaneiros. Negoceia ingredientes raros de Mestria, recolhe especiarias e ouve os pregões da vila!"
+icone_simbolo = "🎪"
+
+[node name="Player" parent="." unique_id=130955293 instance=ExtResource("2_player")]
+position = Vector2(295, 225)
+
+[node name="FolhasVento" type="CPUParticles2D" parent="." unique_id=93811431]
+position = Vector2(0, 100)
+amount = 18
+lifetime = 6.0
+preprocess = 2.0
+randomness = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(10, 120)
+direction = Vector2(1, 0.3)
+spread = 25.0
+gravity = Vector2(15, 8)
+initial_velocity_min = 35.0
+initial_velocity_max = 70.0
+scale_amount_min = 1.5
+scale_amount_max = 3.0
+color_ramp = SubResource("LeafGradient")
+
+[node name="OverlayPraca" type="Sprite2D" parent="." unique_id=718977758]
+z_index = 25
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("6_praca_overlay")
+
+[node name="Interface" type="CanvasLayer" parent="." unique_id=846408918]
+
+[node name="Estado" type="Label" parent="Interface" unique_id=648586253]
 offset_left = 12.0
 offset_top = 8.0
 offset_right = 628.0
@@ -120,11 +322,11 @@ theme_override_colors/font_color = Color(1, 0.93, 0.73, 1)
 theme_override_font_sizes/font_size = 14
 text = "PRAÇA CENTRAL DE CANAVESES"
 
-[node name="Instrucao" type="Label" parent="Interface"]
+[node name="Instrucao" type="Label" parent="Interface" unique_id=583023798]
 offset_left = 12.0
 offset_top = 333.0
 offset_right = 628.0
 offset_bottom = 353.0
 theme_override_colors/font_color = Color(0.96, 0.91, 0.76, 1)
 theme_override_font_sizes/font_size = 11
-text = "WASD / SETAS mover  ·  E interagir"
+text = "WASD / SETAS mover  ·  ENTER / E interagir"

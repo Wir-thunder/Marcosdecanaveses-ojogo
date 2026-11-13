@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://33c261565a4d"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Potions/pocao_fogo_do_paineiro.png" id="icone_fogo"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_33c26156"]
 
 [resource]
 script = ExtResource("1_33c26156")
+icone = ExtResource("icone_fogo")
 id = "pocao_fogo_do_paineiro"
 nome_do_item = "Poção Fogo do Paineiro"
 descricao = "Enche o corpo de calor e urgência, amplificando ataques e reações rápidas."

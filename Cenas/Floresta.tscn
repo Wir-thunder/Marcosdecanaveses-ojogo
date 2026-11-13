@@ -5,6 +5,9 @@
 [ext_resource type="PackedScene" path="res://Cenas/PortaCena.tscn" id="3_door"]
 [ext_resource type="PackedScene" path="res://Cenas/RecursoColetavel.tscn" id="4_pickup"]
 [ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/floresta_cenario.png" id="5_background"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/overlays/floresta_foreground.png" id="6_floresta_overlay"]
+[ext_resource type="PackedScene" path="res://Cenas/MoitaCamuflagem.tscn" id="7_moita"]
+[ext_resource type="PackedScene" path="res://Cenas/JavaliPatrulha.tscn" id="8_javali"]
 
 [sub_resource type="RectangleShape2D" id="WallHorizontal"]
 size = Vector2(640, 10)
@@ -65,6 +68,19 @@ shape = SubResource("TreeTrunkCollision")
 position = Vector2(555, 178)
 shape = SubResource("TreeTrunkCollision")
 
+[node name="Moita1" parent="." instance=ExtResource("7_moita")]
+position = Vector2(170, 215)
+
+[node name="Moita2" parent="." instance=ExtResource("7_moita")]
+position = Vector2(285, 170)
+
+[node name="Moita3" parent="." instance=ExtResource("7_moita")]
+position = Vector2(480, 210)
+
+[node name="JavaliPatrulha" parent="." instance=ExtResource("8_javali")]
+position = Vector2(175, 168)
+pontos_patrulha = [Vector2(175, 168), Vector2(250, 125), Vector2(330, 112), Vector2(440, 152), Vector2(330, 165)]
+
 [node name="Hortela" parent="." instance=ExtResource("4_pickup")]
 position = Vector2(220, 165)
 tipo = 0
@@ -73,6 +89,7 @@ recolha_id = "floresta_hortela_1"
 nome_exibicao = "MENTA"
 quantidade = 2
 cor = Color(0.48, 0.85, 0.39, 1)
+requer_timing = true
 
 [node name="Musgo" parent="." instance=ExtResource("4_pickup")]
 position = Vector2(420, 154)
@@ -82,6 +99,7 @@ recolha_id = "floresta_musgo_1"
 nome_exibicao = "MUSGO"
 quantidade = 2
 cor = Color(0.3, 0.68, 0.37, 1)
+requer_timing = true
 
 [node name="Arnica" parent="." instance=ExtResource("4_pickup")]
 position = Vector2(347, 235)
@@ -91,6 +109,7 @@ recolha_id = "floresta_arnica_1"
 nome_exibicao = "ARNICA"
 quantidade = 1
 cor = Color(0.95, 0.73, 0.29, 1)
+requer_timing = true
 
 [node name="ErvaCidreira" parent="." instance=ExtResource("4_pickup")]
 position = Vector2(218, 265)
@@ -100,12 +119,23 @@ recolha_id = "floresta_cidreira_1"
 nome_exibicao = "CIDREIRA"
 quantidade = 1
 cor = Color(0.67, 0.83, 0.43, 1)
+requer_timing = true
 
 [node name="PortaPraca" parent="." instance=ExtResource("3_door")]
 position = Vector2(320, 38)
 cena_destino = "res://Cenas/PracaCentral.tscn"
 posicao_entrada = Vector2(105, 240)
-destino_label = "VOLTAR A PRACA"
+destino_label = "VOLTAR À PRAÇA"
+titulo_area = "PRAÇA CENTRAL DE CANAVESES"
+descricao_area = "Regressa à vila histórica com as ervas colhidas nas margens do Tâmega. Prepara novas poções na tua Loja."
+icone_simbolo = "🏛️"
+entrar_ao_tocar = false
+
+[node name="Foreground" type="Sprite2D" parent="."]
+z_index = 10
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("6_floresta_overlay")
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector2(320, 310)
@@ -119,7 +149,7 @@ offset_right = 628.0
 offset_bottom = 32.0
 theme_override_colors/font_color = Color(0.85, 0.97, 0.78, 1)
 theme_override_font_sizes/font_size = 14
-text = "FLORESTA"
+text = "FLORESTA DO TÂMEGA"
 
 [node name="Instrucao" type="Label" parent="Interface"]
 offset_left = 12.0
@@ -128,4 +158,4 @@ offset_right = 628.0
 offset_bottom = 353.0
 theme_override_colors/font_color = Color(0.96, 0.91, 0.76, 1)
 theme_override_font_sizes/font_size = 11
-text = "WASD / SETAS mover  ·  E recolher recursos"
+text = "WASD mover  ·  E colher ervas  ·  Esconde-te nas moitas 🌿 do javali bravo 🐗"

@@ -1,0 +1,89 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://Scripts/TavernaNpc.gd" id="1_npc"]
+[ext_resource type="Texture2D" path="res://Assets/Characters/sombra_personagem.png" id="2_shadow"]
+[ext_resource type="Texture2D" path="res://Assets/Characters/Taverna/mercenarios_sentados.png" id="3_chars"]
+[ext_resource type="FontFile" path="res://Assets/Fonts/MedievalSharp.ttf" id="4_font"]
+
+[sub_resource type="CircleShape2D" id="CorpoCollision"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="InteracaoShape"]
+radius = 24.0
+
+[sub_resource type="StyleBoxFlat" id="SpeechBubbleStyle"]
+bg_color = Color(0.12, 0.08, 0.06, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.92, 0.75, 0.38, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 7.0
+content_margin_top = 4.0
+content_margin_right = 7.0
+content_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 2
+
+[node name="TavernaNpc" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_npc")
+
+[node name="CorpoFisico" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CorpoFisico"]
+position = Vector2(0, -4)
+shape = SubResource("CorpoCollision")
+
+[node name="InteracaoArea" type="Area2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteracaoArea"]
+position = Vector2(0, -8)
+shape = SubResource("InteracaoShape")
+
+[node name="Sombra" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2.8, 1.4)
+texture = ExtResource("2_shadow")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -36)
+scale = Vector2(0.58, 0.58)
+texture = ExtResource("3_chars")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 144)
+
+[node name="Balao" type="PanelContainer" parent="."]
+visible = false
+z_index = 35
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -95.0
+offset_top = -92.0
+offset_right = 95.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("SpeechBubbleStyle")
+
+[node name="Texto" type="Label" parent="Balao"]
+custom_minimum_size = Vector2(175, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_colors/font_color = Color(1, 0.95, 0.82, 1)
+theme_override_font_sizes/font_size = 9
+text = "Conversa da taverna..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

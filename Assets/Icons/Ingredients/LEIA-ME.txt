@@ -1,0 +1,14 @@
+ÍCONES DE INGREDIENTES
+======================
+Coloca aqui um PNG por ingrediente, com estas regras:
+- Tamanho: 32 x 32 px, fundo transparente (RGBA).
+- Nome do ficheiro = id do item (ex.: hortela_nobre.png).
+- Sem texto, numeros ou molduras dentro da imagem.
+- Estilo pixel art, paleta coerente com o resto do jogo.
+
+Para ligar automaticamente ao jogo, corre na raiz do projeto:
+    python ferramentas/aplicar_icones.py
+Isso preenche o campo "icone" nos ficheiros .tres de Recursos/Recursos_ingredientes
+que tenham um PNG correspondente aqui.
+
+(Alternativa manual: abre o .tres e arrasta o PNG para o campo "Icone" no Inspector do Godot.)

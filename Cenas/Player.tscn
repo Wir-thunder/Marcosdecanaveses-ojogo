@@ -13,67 +13,83 @@ radius = 24.0
 
 [sub_resource type="AtlasTexture" id="PlayerDown1"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(223, 0, 160, 280)
+region = Rect2(223, 33, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerDown2"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(491, 0, 160, 280)
+region = Rect2(489, 33, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerDown3"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(753, 0, 160, 280)
+region = Rect2(751, 33, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerDown4"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(1011, 0, 160, 280)
+region = Rect2(1010, 33, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerUp1"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(229, 270, 160, 280)
+region = Rect2(228, 299, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerUp2"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(481, 270, 160, 280)
+region = Rect2(479, 299, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerUp3"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(760, 270, 160, 280)
+region = Rect2(760, 299, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerUp4"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(1005, 270, 160, 280)
+region = Rect2(1006, 299, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerLeft1"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(220, 533, 160, 280)
+region = Rect2(220, 559, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerLeft2"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(481, 533, 160, 280)
+region = Rect2(482, 559, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerLeft3"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(749, 533, 160, 280)
+region = Rect2(749, 559, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerLeft4"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(1013, 533, 160, 280)
+region = Rect2(1014, 559, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerRight1"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(237, 795, 160, 280)
+region = Rect2(238, 822, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerRight2"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(490, 795, 160, 280)
+region = Rect2(490, 822, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerRight3"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(753, 795, 160, 280)
+region = Rect2(753, 822, 160, 256)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="PlayerRight4"]
 atlas = ExtResource("3_player_sprite")
-region = Rect2(1020, 795, 160, 280)
+region = Rect2(1020, 822, 160, 256)
+filter_clip = true
 
 [sub_resource type="SpriteFrames" id="PlayerSpriteFrames"]
 animations = [{
@@ -197,12 +213,13 @@ limit_bottom = 360
 [node name="Sombra" type="Sprite2D" parent="."]
 texture_filter = 1
 show_behind_parent = true
+scale = Vector2(2.2, 1.3)
 texture = ExtResource("2_shadow")
 
 [node name="Anim" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-offset = Vector2(0, -68)
-scale = Vector2(0.18, 0.18)
+texture_filter = 2
+offset = Vector2(0, -124)
+scale = Vector2(0.285, 0.285)
 sprite_frames = SubResource("PlayerSpriteFrames")
 
 [node name="InteracaoArea" type="Area2D" parent="."]

@@ -1,0 +1,267 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://Scripts/TongobrigaIntroGibi.gd" id="1_intro"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/tongobriga_cenario.png" id="2_castro"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/tongobriga_stage1_castro.png" id="3_arena"]
+[ext_resource type="Texture2D" path="res://Assets/Characters/Tongobriga/marco/idle_1.png" id="4_marco"]
+[ext_resource type="Texture2D" path="res://Assets/Characters/Tongobriga/decimo/idle_1.png" id="5_decimo"]
+[ext_resource type="FontFile" path="res://Assets/Fonts/MedievalSharp.ttf" id="6_fonte"]
+
+[sub_resource type="Gradient" id="GradienteBrasas"]
+offsets = PackedFloat32Array(0, 0.35, 0.75, 1)
+colors = PackedColorArray(1, 0.9, 0.45, 0, 1, 0.72, 0.22, 0.9, 0.95, 0.38, 0.1, 0.65, 0.4, 0.12, 0.05, 0)
+
+[sub_resource type="StyleBoxFlat" id="EstiloBanner"]
+bg_color = Color(0.06, 0.04, 0.03, 0.82)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.88, 0.68, 0.28, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 8
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="EstiloLegenda"]
+bg_color = Color(0.04, 0.03, 0.03, 0.86)
+border_width_top = 1
+border_color = Color(0.75, 0.58, 0.24, 0.7)
+content_margin_left = 18.0
+content_margin_top = 8.0
+content_margin_right = 18.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="EstiloPular"]
+bg_color = Color(0.06, 0.05, 0.04, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.7, 0.3, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+
+[node name="TongobrigaIntroGibi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_intro")
+
+[node name="FundoPreto" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.02, 0.02, 1)
+
+[node name="PalcoCenario" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(320, 180)
+
+[node name="CenarioCastro" type="TextureRect" parent="PalcoCenario"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_castro")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CenarioArena" type="TextureRect" parent="PalcoCenario"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_arena")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VinhetaQuente" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.14, 0.06, 0.02, 0.22)
+
+[node name="CampeoesCamada" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarcoSprite" type="TextureRect" parent="CampeoesCamada"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+layout_mode = 0
+offset_left = 30.0
+offset_top = 128.0
+offset_right = 210.0
+offset_bottom = 308.0
+texture = ExtResource("4_marco")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DecimoSprite" type="TextureRect" parent="CampeoesCamada"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+layout_mode = 0
+offset_left = 430.0
+offset_top = 128.0
+offset_right = 610.0
+offset_bottom = 308.0
+texture = ExtResource("5_decimo")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
+[node name="ParticulasBrasas" type="CPUParticles2D" parent="."]
+position = Vector2(320, 345)
+amount = 36
+lifetime = 3.2
+preprocess = 1.2
+emission_shape = 3
+emission_rect_extents = Vector2(330, 16)
+direction = Vector2(0, -1)
+spread = 22.0
+gravity = Vector2(0, -14)
+initial_velocity_min = 24.0
+initial_velocity_max = 56.0
+scale_amount_min = 1.5
+scale_amount_max = 3.5
+color_ramp = SubResource("GradienteBrasas")
+
+[node name="BarraTopo" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.03, 0.02, 0.02, 0.92)
+
+[node name="BarraBase" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -54.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("EstiloLegenda")
+
+[node name="LegendaNarrativa" type="Label" parent="BarraBase"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.91, 0.78, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.95)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("6_fonte")
+theme_override_font_sizes/font_size = 13
+text = "Nas colinas antigas sobre o Tâmega, ardem os braseiros sagrados de Tongóbriga..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BannerTitulo" type="PanelContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -210.0
+offset_top = 34.0
+offset_right = 210.0
+offset_bottom = 114.0
+grow_horizontal = 2
+pivot_offset = Vector2(210, 40)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("EstiloBanner")
+
+[node name="VBox" type="VBoxContainer" parent="BannerTitulo"]
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Subtitulo" type="Label" parent="BannerTitulo/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.72, 0.42, 0.95)
+theme_override_fonts/font = ExtResource("6_fonte")
+theme_override_font_sizes/font_size = 10
+text = "MARCO DE CANAVESES · TORNEIO LUSITANO"
+horizontal_alignment = 1
+
+[node name="TituloPrincipal" type="Label" parent="BannerTitulo/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.89, 0.56, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.04, 0.02, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("6_fonte")
+theme_override_font_sizes/font_size = 24
+text = "ARENA DE TONGÓBRIGA"
+horizontal_alignment = 1
+
+[node name="Clarao" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.92, 0.72, 0)
+
+[node name="DicaPular" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -224.0
+offset_top = 4.0
+offset_right = -10.0
+offset_bottom = 24.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 0.92, 0.65, 1)
+theme_override_fonts/font = ExtResource("6_fonte")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("EstiloPular")
+text = "ENTER / ESPAÇO · Entrar na Arena"
+horizontal_alignment = 1
+vertical_alignment = 1

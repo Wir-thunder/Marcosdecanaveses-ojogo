@@ -1,0 +1,51 @@
+keys,pt,en,es
+UI_CFG_TITULO,DEFINIÇÕES · IDIOMA E ÁUDIO [F9],SETTINGS · LANGUAGE & AUDIO [F9],AJUSTES · IDIOMA Y AUDIO [F9]
+UI_CFG_IDIOMA,Idioma / Language / Idioma,Language / Idioma,Idioma / Language
+UI_CFG_MUSICA,Música (BGM),Music (BGM),Música (BGM)
+UI_CFG_SFX,Efeitos (SFX),Sound Effects (SFX),Efectos (SFX)
+UI_CFG_VOZES,Vozes / Anunciador,Voices / Announcer,Voces / Locutor
+UI_CFG_CONTROLES,Controles: WASD/Analógico Mover · E/A Interagir · [C] Grimório · [V] Mercador · [M] Obras · [ESC] Pausa · [F9] Idioma/Som,Controls: WASD/Stick Move · E/A Interact · [C] Grimoire · [V] Merchant · [M] Upgrades · [ESC] Pause · [F9] Language/Audio,Controles: WASD/Stick Mover · E/A Interactuar · [C] Grimorio · [V] Mercader · [M] Obras · [ESC] Pausa · [F9] Idioma/Audio
+UI_CFG_FECHAR,Guardar e Fechar [F9 / ESC],Save & Close [F9 / ESC],Guardar y Cerrar [F9 / ESC]
+UI_PAUSA_TITULO,PAUSA,PAUSED,PAUSA
+UI_PAUSA_RETOMAR,Retomar,Resume,Reanudar
+UI_PAUSA_REINICIAR,Reiniciar Dia,Restart Day,Reiniciar Día
+UI_PAUSA_SAIR,Sair para a Praça,Exit to Square,Salir a la Plaza
+UI_PAUSA_IDIOMA,Idioma e Som [F9],Language & Audio [F9],Idioma y Audio [F9]
+HUD_PAUSA_BTN,[ESC] Pausa,[ESC] Pause,[ESC] Pausa
+HUD_CFG_BTN,[F9] Idioma,[F9] Lang,[F9] Idioma
+LOJA_BTN_GRIMORIO,📖 GRIMÓRIO [C],📖 GRIMOIRE [C],📖 GRIMORIO [C]
+LOJA_BTN_MERCADOR,🛒 MERCADOR [V],🛒 MERCHANT [V],🛒 MERCADER [V]
+LOJA_BTN_OBRAS,🔨 OBRAS [M],🔨 UPGRADES [M],🔨 OBRAS [M]
+LOJA_OBJ_MANHA,🎯 Objetivo: Prepara poções no Caldeirão [E] e clica '>' para abrir a loja,🎯 Goal: Brew potions at the Cauldron [E] and click '>' to open the shop,🎯 Objetivo: Prepara pociones en el Caldero [E] y pulsa '>' para abrir la tienda
+LOJA_OBJ_NOITE,🎯 Objetivo: Dia concluído! Sai pela porta [E] para explorar,🎯 Goal: Day complete! Leave through the door [E] to explore,🎯 Objetivo: ¡Día completado! Sal por la puerta [E] para explorar
+LOJA_OBJ_ATENDER,🎯 Objetivo: Atende os clientes no Balcão [E],🎯 Goal: Serve customers at the Counter [E],🎯 Objetivo: Atiende a los clientes en el Mostrador [E]
+LOJA_EST_MANHA,DIA %d · MANHÃ · PREPARA POÇÕES OU FAZ OBRAS [M] — CLICA '>' PARA ABRIR,DAY %d · MORNING · BREW POTIONS OR UPGRADE [M] — CLICK '>' TO OPEN,DÍA %d · MAÑANA · PREPARA POCIONES U OBRAS [M] — PULSA '>' PARA ABRIR
+LOJA_EST_NOITE,DIA %d · NOITE · TURNO CONCLUÍDO (%d/%d) — PORTA DESTRANCADA [E] OU OBRAS [M],DAY %d · NIGHT · SHIFT COMPLETE (%d/%d) — DOOR UNLOCKED [E] OR UPGRADES [M],DÍA %d · NOCHE · TURNO COMPLETADO (%d/%d) — PUERTA ABIERTA [E] U OBRAS [M]
+LOJA_TRENDING,⚗️ %s [NV.%d]  ·  🔥 EM ALTA: %s (+35%% 🪙),⚗️ %s [LV.%d]  ·  🔥 TRENDING: %s (+35%% 🪙),⚗️ %s [NV.%d]  ·  🔥 EN ALZA: %s (+35%% 🪙)
+LOJA_OURO,OURO,GOLD,ORO
+LOJA_FAMA,FAMA,FAME,FAMA
+LOJA_POCAO,POÇÃO,POTION,POCIÓN
+LOJA_INST_BASE,WASD mover · E interagir · [C] Grimório · [V] Mercador · [M] Obras · [F9] Idioma · [ESC] Pausa,WASD move · E interact · [C] Grimoire · [V] Merchant · [M] Upgrades · [F9] Lang · [ESC] Pause,WASD mover · E interactuar · [C] Grimorio · [V] Mercader · [M] Obras · [F9] Idioma · [ESC] Pausa
+EXP_DIA,DIA,DAY,DÍA
+EXP_NOITE,NOITE,NIGHT,NOCHE
+TONGO_TITULO,★ ARENA DE TONGÓBRIGA · SELEÇÃO DE LUTADORES ★,★ TONGÓBRIGA ARENA · FIGHTER SELECT ★,★ ARENA DE TONGÓBRIGA · SELECCIÓN DE LUCHADORES ★
+TONGO_ARENA,🏛 ARENA [1-4]:,🏛 ARENA [1-4]:,🏛 ARENA [1-4]:
+TONGO_IA,🎚 IA [F1]:,🎚 AI [F1]:,🎚 IA [F1]:
+TONGO_BTN_TORNEIO,⚔ TORNEIO (%s) COM %s [ENTER],⚔ TOURNAMENT (%s) WITH %s [ENTER],⚔ TORNEO (%s) CON %s [ENTER]
+TONGO_BTN_TREINO,🎯 TREINO & HITBOXES [T],🎯 TRAINING & HITBOXES [T],🎯 ENTRENAMIENTO & HITBOXES [T]
+TONGO_BTN_VOLTAR,VOLTAR À PRAÇA [ESC],BACK TO SQUARE [ESC],VOLVER A LA PLAZA [ESC]
+TONGO_STAT_HP,VIDA / HP,HEALTH / HP,VIDA / HP
+TONGO_STAT_ATK,FORÇA / ATAQUE,STRENGTH / ATK,FUERZA / ATAQUE
+TONGO_STAT_SPD,VELOCIDADE,SPEED,VELOCIDAD
+TONGO_STAT_DEF,DEFESA / GUARDA,DEFENSE / GUARD,DEFENSA / GUARDIA
+RPG_BTN_ATACAR,⚔️ ATACAR,⚔️ ATTACK,⚔️ ATACAR
+RPG_BTN_HABILIDADE,✨ HABILIDADE,✨ SKILL,✨ HABILIDAD
+RPG_BTN_POCAO,🧪 POÇÃO,🧪 POTION,🧪 POCIÓN
+RPG_BTN_FUGIR,🏃 FUGIR,🏃 FLEE,🏃 HUIR
+RPG_VITORIA,🏆 VITÓRIA NA MASMORRA!,🏆 DUNGEON VICTORY!,🏆 ¡VICTORIA EN LA MAZMORRA!
+RPG_DERROTA,💀 DERROTA NA MASMORRA,💀 DUNGEON DEFEAT,💀 DERROTA EN LA MAZMORRA
+AREA_FEIRA_BTN,🎪 CARAVANA [F],🎪 CARAVAN [F],🎪 CARAVANA [F]
+AREA_TAMEGA_BTN,🎣 PESCA & ENCOMENDAS [P],🎣 FISHING & ORDERS [P],🎣 PESCA Y ENCARGOS [P]
+AREA_CRIPTA_BTN,🕯️ RITUAL DA PEDRA [R],🕯️ STONE RITUAL [R],🕯️ RITUAL DE LA PIEDRA [R]
+AREA_TERMAS_BTN,♨️ BANHOS TERMAIS [T],♨️ THERMAL BATHS [T],♨️ BAÑOS TERMALES [T]
+AREA_FECHAR,Fechar [ESC],Close [ESC],Cerrar [ESC]

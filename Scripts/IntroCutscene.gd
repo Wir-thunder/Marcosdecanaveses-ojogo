@@ -25,18 +25,24 @@ func _ready() -> void:
 	_fade_entrada.tween_property(fader, "color:a", 0.0, DURACAO_FADE)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept") or event.is_action_pressed("interact"):
+	if event.is_action_pressed("ui_accept") or event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and (event.physical_keycode == KEY_ENTER or event.physical_keycode == KEY_KP_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ESCAPE)):
 		get_viewport().set_input_as_handled()
-		_transicionar_para_jogo()
+		_transicionar_para_jogo(true)
 
 func _ao_video_terminar() -> void:
-	_transicionar_para_jogo()
+	_transicionar_para_jogo(false)
 
-func _transicionar_para_jogo() -> void:
+func _transicionar_para_jogo(imediato: bool = false) -> void:
 	if _transicao_em_curso:
 		return
 	_transicao_em_curso = true
 	video.stop()
+
+	if imediato:
+		if _fade_entrada != null and _fade_entrada.is_running():
+			_fade_entrada.kill()
+		get_tree().change_scene_to_file(proxima_cena)
+		return
 
 	if _fade_entrada != null and _fade_entrada.is_running():
 		await _fade_entrada.finished

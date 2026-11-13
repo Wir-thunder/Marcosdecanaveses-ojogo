@@ -7,12 +7,19 @@ signal pocao_indisponivel(pocao: ItemData)
 # - Area2D filha chamada InteracaoArea com um CollisionShape2D.
 # - AnimatedSprite2D filho chamado Anim (com as animações idle_* e walk_*).
 
-const VELOCIDADE: float = 140.0
+const VELOCIDADE: float = 105.0
+const ACELERACAO: float = 900.0
+const FRICCAO: float = 1100.0
+# Passada do sprite: ~40 px de chão por ciclo de 4 frames (evita "patinar" sobre o cenário).
+const PASSADA_PX: float = 40.0
+const FPS_BASE_ANIM: float = 8.0
 
 @export var distancia_interacao: float = 28.0
 @export var alcance_interacao: float = 72.0
 @export var pocoes_disponiveis: Array[ItemData] = []
 @export var pocao_ativa: ItemData
+@export var escala_multiplicador: float = 1.0
+@export var camera_zoom: Vector2 = Vector2.ONE
 
 var escudos: int:
 	get:
@@ -27,6 +34,59 @@ var escudos: int:
 var olhando: Vector2 = Vector2.DOWN
 var direcao_atual: String = "down"
 var tempo_animacao: float = 0.0
+var escondido: bool = false
+var _sombra_contacto: Sprite2D = null
+var _anim_offset_base: Vector2 = Vector2.ZERO
+var _anim_escala_base: Vector2 = Vector2.ONE
+var _fase_passada: float = 0.0
+
+func _criar_sombra_contacto() -> void:
+	# Sombra elíptica suave aos pés: ancora o personagem ao chão (a sombra antiga era
+	# quase invisível e fazia-o parecer a planar).
+	var antiga := get_node_or_null("Sombra") as Sprite2D
+	if antiga != null:
+		antiga.visible = false
+	var grad := Gradient.new()
+	grad.offsets = PackedFloat32Array([0.0, 0.55, 1.0])
+	grad.colors = PackedColorArray([Color(0, 0, 0, 0.62), Color(0, 0, 0, 0.34), Color(0, 0, 0, 0.0)])
+	var tex := GradientTexture2D.new()
+	tex.gradient = grad
+	tex.fill = GradientTexture2D.FILL_RADIAL
+	tex.fill_from = Vector2(0.5, 0.5)
+	tex.fill_to = Vector2(1.0, 0.5)
+	tex.width = 64
+	tex.height = 64
+	_sombra_contacto = Sprite2D.new()
+	_sombra_contacto.name = "SombraContacto"
+	_sombra_contacto.texture = tex
+	_sombra_contacto.show_behind_parent = true
+	_sombra_contacto.position = Vector2(0, 1)
+	_sombra_contacto.scale = Vector2(0.62, 0.24)
+	add_child(_sombra_contacto)
+	move_child(_sombra_contacto, 0)
+
+func _emitir_poeira() -> void:
+	var cena := get_tree().current_scene
+	if cena == null:
+		return
+	for i in 2:
+		var p := ColorRect.new()
+		p.size = Vector2(2, 2)
+		p.color = Color(0.82, 0.76, 0.64, 0.55)
+		p.z_index = -1
+		p.position = global_position + Vector2(randf_range(-5.0, 5.0), randf_range(-1.0, 1.0))
+		cena.add_child(p)
+		var tw := p.create_tween()
+		tw.set_parallel(true)
+		tw.tween_property(p, "position", p.position + Vector2(randf_range(-5.0, 5.0), -4.0), 0.35)
+		tw.tween_property(p, "modulate:a", 0.0, 0.35)
+		tw.chain().tween_callback(p.queue_free)
+
+func set_escondido(val: bool) -> void:
+	escondido = val
+	if anim != null:
+		var tw := create_tween()
+		tw.tween_property(anim, "modulate:a", 0.45 if val else 1.0, 0.2)
 
 func _ready() -> void:
 	add_to_group("player")
@@ -38,6 +98,28 @@ func _ready() -> void:
 		push_error("Player precisa de uma Area2D filha chamada InteracaoArea.")
 		return
 
+	if anim != null:
+		anim.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		if escala_multiplicador != 1.0:
+			anim.scale *= escala_multiplicador
+			if visual_fallback != null:
+				visual_fallback.scale *= escala_multiplicador
+		_anim_offset_base = anim.offset
+		_anim_escala_base = anim.scale
+	_criar_sombra_contacto()
+	if _sombra_contacto != null:
+		_sombra_contacto.scale *= escala_multiplicador
+	if escala_multiplicador != 1.0:
+		var col := get_node_or_null("CollisionShape2D")
+		if col != null:
+			col.scale *= escala_multiplicador
+		if interacao_area != null:
+			var int_col := interacao_area.get_node_or_null("CollisionShape2D")
+			if int_col != null:
+				int_col.scale *= escala_multiplicador
+	var cam: Camera2D = get_node_or_null("Camera2D")
+	if cam != null and camera_zoom != Vector2.ONE:
+		cam.zoom = camera_zoom
 	interacao_area.monitoring = true
 	interacao_area.monitorable = false
 	atualizar_posicao_interacao()
@@ -46,13 +128,16 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	tempo_animacao += _delta
 	var movimento := Input.get_vector("mover_esquerda", "mover_direita", "mover_cima", "mover_baixo")
-	velocity = movimento * VELOCIDADE
-
+	# Aceleração/fricção: arranque e travagem com inércia em vez de deslizar sobre carris.
 	if movimento != Vector2.ZERO:
+		velocity = velocity.move_toward(movimento * VELOCIDADE, ACELERACAO * _delta)
 		olhando = _determinar_direcao_cardinal(movimento)
+	else:
+		velocity = velocity.move_toward(Vector2.ZERO, FRICCAO * _delta)
 
 	move_and_slide()
 	_atualizar_animacao(movimento)
+	_animar_passada(_delta, movimento)
 	if visual_fallback != null and visual_fallback.visible:
 		var esta_a_mover := movimento.length_squared() > 0.01
 		visual_fallback.position.y = sin(tempo_animacao * 11.0) * 1.2 if esta_a_mover else 0.0
@@ -72,6 +157,32 @@ func _physics_process(_delta: float) -> void:
 		ciclar_receita()
 	if Input.is_action_just_pressed("cycle_stock"):
 		ciclar_stock()
+
+func _animar_passada(delta: float, movimento: Vector2) -> void:
+	var vel := velocity.length()
+	var andando := vel > 10.0 and movimento != Vector2.ZERO
+	var altura_passo := 0.0
+	if andando:
+		# A animação acompanha a velocidade real: pés no ritmo do chão, sem patinar.
+		if anim != null:
+			anim.speed_scale = clampf(vel / (PASSADA_PX * 2.0), 0.6, 1.6)
+		var fase_anterior := _fase_passada
+		_fase_passada += (vel * delta / PASSADA_PX) * TAU * 2.0
+		altura_passo = absf(sin(_fase_passada * 0.5)) * 1.7
+		if floorf(fase_anterior / TAU) != floorf(_fase_passada / TAU):
+			if get_node_or_null("/root/AudioManager") != null:
+				AudioManager.tocar_sfx_volume("passo_madeira", -13.0, 0.14)
+			_emitir_poeira()
+	else:
+		if anim != null:
+			anim.speed_scale = 1.0
+		_fase_passada = 0.0
+
+	if anim != null:
+		anim.position.y = lerpf(anim.position.y, -altura_passo, minf(1.0, delta * 30.0))
+	if _sombra_contacto != null:
+		var encolher := 1.0 - altura_passo * 0.06
+		_sombra_contacto.scale = Vector2(0.62 * encolher, 0.24 * encolher) * escala_multiplicador
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if get_tree().paused or not event is InputEventKey:
@@ -195,8 +306,10 @@ func selecionar_pocao_indice(indice: int) -> bool:
 	return selecionar_pocao(pocoes_disponiveis[indice])
 
 func selecionar_pocao(pocao: ItemData) -> bool:
-	if pocao == null or not pocoes_disponiveis.has(pocao):
+	if pocao == null:
 		return false
+	if not pocoes_disponiveis.has(pocao):
+		pocoes_disponiveis.append(pocao)
 	if InventoryManager.obter_quantidade(pocao.id) <= 0:
 		pocao_indisponivel.emit(pocao)
 		return false

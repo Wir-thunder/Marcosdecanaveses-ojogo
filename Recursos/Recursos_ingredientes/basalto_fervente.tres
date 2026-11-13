@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b2ad477a85d4"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/basalto_fervente.png" id="icone_basalto"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_b2ad477a"]
 
 [resource]
 script = ExtResource("1_b2ad477a")
+icone = ExtResource("icone_basalto")
 id = "basalto_fervente"
 nome_do_item = "Basalto Fervente"
 descricao = "Pó frito de rocha vulcânica, raro e pesado, usado para estabilizar poções pesadas."

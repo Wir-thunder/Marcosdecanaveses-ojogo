@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://319f8fa5074a"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Potions/pocao_vida_fertil.png" id="icone_vida"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_319f8fa5"]
 
 [resource]
 script = ExtResource("1_319f8fa5")
+icone = ExtResource("icone_vida")
 id = "pocao_vida_fertil"
 nome_do_item = "Poção Vida Fertil"
 descricao = "Restitui vigor e reforça a recuperação natural, convertendo feridas em cicatrizes rápidas."

@@ -1,99 +1,296 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://bnexdtmqvgcaj"]
 
-[ext_resource type="Script" path="res://Scripts/Tongobriga.gd" id="1_tongobriga"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/tongobriga_cenario.png" id="2_background"]
+[ext_resource type="Script" uid="uid://dryxcqjkhk6wl" path="res://Scripts/Tongobriga.gd" id="1_tongobriga"]
+[ext_resource type="Texture2D" uid="uid://po3uopdxoiwn" path="res://Assets/Environment/backgrounds/tongobriga_stage1_castro.png" id="2_background"]
+[ext_resource type="PackedScene" path="res://Cenas/Efeitos/BraseiroArena.tscn" id="3_brazier"]
+[ext_resource type="FontFile" path="res://Assets/Fonts/MedievalSharp.ttf" id="4_font"]
 
-[sub_resource type="StyleBoxFlat" id="PanelStyle"]
-bg_color = Color(0.09, 0.075, 0.06, 0.95)
+[sub_resource type="StyleBoxFlat" id="PanelSelectStyle"]
+bg_color = Color(0.08, 0.065, 0.05, 0.96)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.67, 0.49, 0.25, 1)
+border_color = Color(0.82, 0.65, 0.3, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
-[node name="Tongobriga" type="Node2D"]
+[sub_resource type="StyleBoxFlat" id="BigPortraitStyle"]
+bg_color = Color(0.14, 0.1, 0.08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.75, 0.35, 1)
+
+[sub_resource type="StyleBoxFlat" id="StatFillLife"]
+bg_color = Color(0.25, 0.85, 0.35, 1)
+
+[sub_resource type="StyleBoxFlat" id="StatFillAttack"]
+bg_color = Color(0.95, 0.35, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StatFillSpeed"]
+bg_color = Color(0.2, 0.75, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StatFillDefense"]
+bg_color = Color(0.95, 0.8, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="PortraitBoxStyle"]
+bg_color = Color(0.12, 0.09, 0.07, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.68, 0.3, 1)
+
+[sub_resource type="StyleBoxFlat" id="HealthBgStyle"]
+bg_color = Color(0.2, 0.04, 0.04, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.92, 0.78, 0.32, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="HealthRedDamageStyle"]
+bg_color = Color(0.95, 0.18, 0.12, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="HealthYellowStyle"]
+bg_color = Color(1, 0.85, 0.16, 1)
+border_width_top = 1
+border_color = Color(1, 0.98, 0.7, 0.9)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxEmpty" id="HealthTransparentBgStyle"]
+
+[sub_resource type="StyleBoxFlat" id="SpecialBgStyle"]
+bg_color = Color(0.05, 0.07, 0.12, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.92, 0.76, 0.32, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="SpecialFillStyle"]
+bg_color = Color(0.18, 0.72, 1, 1)
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.65, 0.92, 1, 0.8)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="SpecialFillReadyStyle"]
+bg_color = Color(1, 0.86, 0.22, 1)
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 0.75, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="TimerBoxStyle"]
+bg_color = Color(0.08, 0.06, 0.05, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.68, 0.3, 1)
+
+[node name="Tongobriga" type="Node2D" unique_id=1422349176]
 script = ExtResource("1_tongobriga")
 
-[node name="Cenario" type="Sprite2D" parent="."]
+[node name="Cenario" type="Sprite2D" parent="." unique_id=839705845]
 texture_filter = 1
 position = Vector2(320, 180)
-modulate = Color(0.74, 0.7, 0.61, 1)
 texture = ExtResource("2_background")
 
-[node name="ChaoArena" type="Polygon2D" parent="."]
-color = Color(0.3, 0.23, 0.16, 1)
-polygon = PackedVector2Array(0, 279, 640, 279, 640, 360, 0, 360)
+[node name="BraseiroEsquerdo" parent="." unique_id=1850378942 instance=ExtResource("3_brazier")]
+position = Vector2(66, 232)
 
-[node name="LinhaArena" type="Line2D" parent="."]
-points = PackedVector2Array(0, 279, 640, 279)
-width = 3.0
-default_color = Color(0.82, 0.64, 0.34, 1)
+[node name="BraseiroDireito" parent="." unique_id=1241065910 instance=ExtResource("3_brazier")]
+position = Vector2(574, 232)
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1252054861]
 
-[node name="Selecao" type="PanelContainer" parent="UI"]
-offset_left = 22.0
-offset_top = 14.0
-offset_right = 618.0
-offset_bottom = 346.0
-theme_override_styles/panel = SubResource("PanelStyle")
+[node name="Selecao" type="PanelContainer" parent="UI" unique_id=32312872]
+offset_left = 14.0
+offset_top = 8.0
+offset_right = 626.0
+offset_bottom = 352.0
+theme_override_styles/panel = SubResource("PanelSelectStyle")
 
-[node name="Margem" type="MarginContainer" parent="UI/Selecao"]
+[node name="Margem" type="MarginContainer" parent="UI/Selecao" unique_id=646864055]
 layout_mode = 2
 theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 8
+theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 8
 
-[node name="Conteudo" type="VBoxContainer" parent="UI/Selecao/Margem"]
+[node name="Conteudo" type="VBoxContainer" parent="UI/Selecao/Margem" unique_id=1286327071]
 layout_mode = 2
-theme_override_constants/separation = 5
+theme_override_constants/separation = 6
 
-[node name="Titulo" type="Label" parent="UI/Selecao/Margem/Conteudo"]
+[node name="Titulo" type="Label" parent="UI/Selecao/Margem/Conteudo" unique_id=1094421153]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.82, 0.47, 1)
-theme_override_font_sizes/font_size = 20
-text = "TONGÓBRIGA · TORNEIO DOS CAMPEÕES"
+theme_override_colors/font_color = Color(1, 0.88, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 15
+text = "★ ARENA DE TONGÓBRIGA · SELEÇÃO DE LUTADORES ★"
 horizontal_alignment = 1
 
-[node name="Descricao" type="Label" parent="UI/Selecao/Margem/Conteudo"]
+[node name="GradeRetratos" type="HBoxContainer" parent="UI/Selecao/Margem/Conteudo" unique_id=751094886]
+custom_minimum_size = Vector2(0, 78)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.85, 0.74, 1)
-theme_override_font_sizes/font_size = 10
-text = "Escolhe o teu campeão. Vence três combates para conquistar a arena."
-horizontal_alignment = 1
-
-[node name="Elenco" type="GridContainer" parent="UI/Selecao/Margem/Conteudo"]
-custom_minimum_size = Vector2(0, 126)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/h_separation = 5
-theme_override_constants/v_separation = 4
-columns = 4
-
-[node name="SelecaoLabel" type="Label" parent="UI/Selecao/Margem/Conteudo"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.84, 0.66, 1)
-theme_override_font_sizes/font_size = 10
-text = "Seleciona um campeão."
-horizontal_alignment = 1
-
-[node name="Botoes" type="HBoxContainer" parent="UI/Selecao/Margem/Conteudo"]
-layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 14
 alignment = 1
 
-[node name="Iniciar" type="Button" parent="UI/Selecao/Margem/Conteudo/Botoes"]
-custom_minimum_size = Vector2(210, 30)
+[node name="Showcase" type="HBoxContainer" parent="UI/Selecao/Margem/Conteudo" unique_id=1338763266]
 layout_mode = 2
-text = "ENTRAR NO TORNEIO"
+size_flags_vertical = 3
+theme_override_constants/separation = 10
 
-[node name="Sair" type="Button" parent="UI/Selecao/Margem/Conteudo/Botoes"]
-custom_minimum_size = Vector2(180, 30)
+[node name="PainelRetratoGrande" type="PanelContainer" parent="UI/Selecao/Margem/Conteudo/Showcase" unique_id=2129515608]
+custom_minimum_size = Vector2(110, 110)
 layout_mode = 2
-text = "VOLTAR À PRAÇA"
+theme_override_styles/panel = SubResource("BigPortraitStyle")
 
-[node name="Arena" type="Control" parent="UI"]
+[node name="RetratoGrande" type="TextureRect" parent="UI/Selecao/Margem/Conteudo/Showcase/PainelRetratoGrande" unique_id=1398735900]
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Bio" type="VBoxContainer" parent="UI/Selecao/Margem/Conteudo/Showcase" unique_id=389035858]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="NomeGrande" type="Label" parent="UI/Selecao/Margem/Conteudo/Showcase/Bio" unique_id=1729296157]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "VIRIATO"
+
+[node name="Arquetipo" type="Label" parent="UI/Selecao/Margem/Conteudo/Showcase/Bio" unique_id=2039628031]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.78, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "GUERREIRO LUSITANO"
+
+[node name="Origem" type="Label" parent="UI/Selecao/Margem/Conteudo/Showcase/Bio" unique_id=915121341]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
+theme_override_font_sizes/font_size = 9
+text = "ORIGEM: CASTROS DE CANAVESES"
+
+[node name="EspecialDetalhe" type="Label" parent="UI/Selecao/Margem/Conteudo/Showcase/Bio" unique_id=776789209]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "GOLPE ESPECIAL: INVESTIDA DE FALCATA"
+
+[node name="Descricao" type="Label" parent="UI/Selecao/Margem/Conteudo/Showcase/Bio" unique_id=36848281]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.82, 0.75, 1)
+theme_override_font_sizes/font_size = 8
+text = "Líder lendário dos lusitanos. Golpe devastador a média distância."
+autowrap_mode = 3
+
+[node name="Stats" type="VBoxContainer" parent="UI/Selecao/Margem/Conteudo/Showcase" unique_id=824342805]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="LabelVida" type="Label" parent="UI/Selecao/Margem/Conteudo/Showcase/Stats" unique_id=1989324228]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "VIDA / HP"
+
+[node name="BarraVida" type="ProgressBar" parent="UI/Selecao/Margem/Conteudo/Showcase/Stats" unique_id=1279468776]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StatFillLife")
+value = 85.0
+show_percentage = false
+
+[node name="LabelForca" type="Label" parent="UI/Selecao/Margem/Conteudo/Showcase/Stats" unique_id=990675160]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "FORÇA / ATAQUE"
+
+[node name="BarraForca" type="ProgressBar" parent="UI/Selecao/Margem/Conteudo/Showcase/Stats" unique_id=1436459841]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StatFillAttack")
+value = 75.0
+show_percentage = false
+
+[node name="LabelVel" type="Label" parent="UI/Selecao/Margem/Conteudo/Showcase/Stats" unique_id=887366832]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "VELOCIDADE"
+
+[node name="BarraVel" type="ProgressBar" parent="UI/Selecao/Margem/Conteudo/Showcase/Stats" unique_id=1261864490]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StatFillSpeed")
+value = 70.0
+show_percentage = false
+
+[node name="LabelDef" type="Label" parent="UI/Selecao/Margem/Conteudo/Showcase/Stats" unique_id=1503047044]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "DEFESA / GUARDA"
+
+[node name="BarraDef" type="ProgressBar" parent="UI/Selecao/Margem/Conteudo/Showcase/Stats" unique_id=2011878043]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StatFillDefense")
+value = 50.0
+show_percentage = false
+
+[node name="Botoes" type="HBoxContainer" parent="UI/Selecao/Margem/Conteudo" unique_id=327279080]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Iniciar" type="Button" parent="UI/Selecao/Margem/Conteudo/Botoes" unique_id=2035099869]
+custom_minimum_size = Vector2(340, 30)
+layout_mode = 2
+text = "⚔️ ENTRAR NO COMBATE COM VIRIATO [ENTER]"
+
+[node name="Sair" type="Button" parent="UI/Selecao/Margem/Conteudo/Botoes" unique_id=353965808]
+custom_minimum_size = Vector2(170, 30)
+layout_mode = 2
+text = "VOLTAR À PRAÇA [ESC]"
+
+[node name="Arena" type="Control" parent="UI" unique_id=1128793657]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -102,75 +299,289 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NomeJogador" type="Label" parent="UI/Arena"]
-offset_left = 20.0
-offset_top = 10.0
-offset_right = 280.0
-offset_bottom = 30.0
-theme_override_colors/font_color = Color(1, 0.91, 0.7, 1)
-theme_override_font_sizes/font_size = 12
-text = "JOGADOR"
+[node name="TopBar" type="HBoxContainer" parent="UI/Arena" unique_id=807522064]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = 54.0
+grow_horizontal = 2
+theme_override_constants/separation = 8
+alignment = 1
 
-[node name="NomeOponente" type="Label" parent="UI/Arena"]
-offset_left = 360.0
-offset_top = 10.0
-offset_right = 620.0
-offset_bottom = 30.0
-theme_override_colors/font_color = Color(1, 0.91, 0.7, 1)
-theme_override_font_sizes/font_size = 12
+[node name="P1_Box" type="HBoxContainer" parent="UI/Arena/TopBar" unique_id=1987193601]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="PainelRetratoP1" type="PanelContainer" parent="UI/Arena/TopBar/P1_Box" unique_id=981346280]
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PortraitBoxStyle")
+
+[node name="RetratoP1" type="TextureRect" parent="UI/Arena/TopBar/P1_Box" unique_id=1714250537]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Info" type="VBoxContainer" parent="UI/Arena/TopBar/P1_Box" unique_id=1576955507]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="LinhaNome" type="HBoxContainer" parent="UI/Arena/TopBar/P1_Box/Info" unique_id=1115327074]
+layout_mode = 2
+
+[node name="NomeP1" type="Label" parent="UI/Arena/TopBar/P1_Box/Info/LinhaNome" unique_id=1629913471]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 11
+text = "VIRIATO"
+
+[node name="VitoriasP1" type="Label" parent="UI/Arena/TopBar/P1_Box/Info/LinhaNome" unique_id=612217027]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="BarraContainer" type="MarginContainer" parent="UI/Arena/TopBar/P1_Box/Info" unique_id=1175710270]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="VidaDanoP1" type="ProgressBar" parent="UI/Arena/TopBar/P1_Box/Info/BarraContainer" unique_id=1362501093]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("HealthBgStyle")
+theme_override_styles/fill = SubResource("HealthRedDamageStyle")
+show_percentage = false
+
+[node name="VidaP1" type="ProgressBar" parent="UI/Arena/TopBar/P1_Box/Info/BarraContainer" unique_id=258596400]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("HealthTransparentBgStyle")
+theme_override_styles/fill = SubResource("HealthYellowStyle")
+show_percentage = false
+
+[node name="TimerBox" type="PanelContainer" parent="UI/Arena/TopBar" unique_id=1493636291]
+custom_minimum_size = Vector2(56, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("TimerBoxStyle")
+
+[node name="VBox" type="VBoxContainer" parent="UI/Arena/TopBar/TimerBox" unique_id=716551757]
+layout_mode = 2
+alignment = 1
+
+[node name="RoundInfoLabel" type="Label" parent="UI/Arena/TopBar/TimerBox/VBox" unique_id=358689262]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 8
+text = "LUTA 1/3"
+horizontal_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="UI/Arena/TopBar/TimerBox/VBox" unique_id=2018387663]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "99"
+horizontal_alignment = 1
+
+[node name="P2_Box" type="HBoxContainer" parent="UI/Arena/TopBar" unique_id=1358070453]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+alignment = 2
+
+[node name="Info" type="VBoxContainer" parent="UI/Arena/TopBar/P2_Box" unique_id=507997509]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="LinhaNome" type="HBoxContainer" parent="UI/Arena/TopBar/P2_Box/Info" unique_id=1314381929]
+layout_mode = 2
+alignment = 2
+
+[node name="VitoriasP2" type="Label" parent="UI/Arena/TopBar/P2_Box/Info/LinhaNome" unique_id=1968379139]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="NomeP2" type="Label" parent="UI/Arena/TopBar/P2_Box/Info/LinhaNome" unique_id=809781426]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 11
 text = "OPONENTE"
 horizontal_alignment = 2
 
-[node name="VidaJogador" type="ProgressBar" parent="UI/Arena"]
-offset_left = 20.0
-offset_top = 32.0
-offset_right = 280.0
-offset_bottom = 45.0
+[node name="BarraContainer" type="MarginContainer" parent="UI/Arena/TopBar/P2_Box/Info" unique_id=1413695100]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="VidaDanoP2" type="ProgressBar" parent="UI/Arena/TopBar/P2_Box/Info/BarraContainer" unique_id=1426674252]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("HealthBgStyle")
+theme_override_styles/fill = SubResource("HealthRedDamageStyle")
+fill_mode = 1
 show_percentage = false
 
-[node name="VidaOponente" type="ProgressBar" parent="UI/Arena"]
-offset_left = 360.0
-offset_top = 32.0
-offset_right = 620.0
-offset_bottom = 45.0
+[node name="VidaP2" type="ProgressBar" parent="UI/Arena/TopBar/P2_Box/Info/BarraContainer" unique_id=1290489842]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("HealthTransparentBgStyle")
+theme_override_styles/fill = SubResource("HealthYellowStyle")
+fill_mode = 1
 show_percentage = false
 
-[node name="Ronda" type="Label" parent="UI/Arena"]
-offset_left = 260.0
-offset_top = 12.0
-offset_right = 380.0
-offset_bottom = 30.0
-theme_override_colors/font_color = Color(1, 0.81, 0.45, 1)
+[node name="PainelRetratoP2" type="PanelContainer" parent="UI/Arena/TopBar/P2_Box" unique_id=2036571469]
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PortraitBoxStyle")
+
+[node name="RetratoP2" type="TextureRect" parent="UI/Arena/TopBar/P2_Box" unique_id=1911589592]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BottomBar" type="HBoxContainer" parent="UI/Arena" unique_id=502630059]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -48.0
+offset_right = -16.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="EspecialLabel" type="Label" parent="UI/Arena/BottomBar" unique_id=1668986674]
+custom_minimum_size = Vector2(185, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 10
-text = "TORNEIO 1/3"
+text = "⚡ ESPECIAL ARCANO: 0%"
+vertical_alignment = 1
+
+[node name="EspecialP1" type="ProgressBar" parent="UI/Arena/BottomBar" unique_id=1063725737]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("SpecialBgStyle")
+theme_override_styles/fill = SubResource("SpecialFillStyle")
+show_percentage = false
+
+[node name="EspecialP2" type="ProgressBar" parent="UI/Arena/BottomBar" unique_id=1063725738]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("SpecialBgStyle")
+theme_override_styles/fill = SubResource("SpecialFillStyle")
+fill_mode = 1
+show_percentage = false
+
+[node name="BannerArcade" type="Label" parent="UI/Arena" unique_id=83741555]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -60.0
+offset_right = 260.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(260, 35)
+theme_override_colors/font_color = Color(1, 0.88, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.02, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 28
+text = "ROUND 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ComboLabel" type="Label" parent="UI/Arena" unique_id=2034271228]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 15.0
+offset_right = 160.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.15, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 14
+text = "2 HITS COMBO!"
 horizontal_alignment = 1
 
-[node name="Mensagem" type="Label" parent="UI/Arena"]
-offset_left = 30.0
-offset_top = 226.0
-offset_right = 610.0
-offset_bottom = 253.0
-theme_override_colors/font_color = Color(1, 0.91, 0.68, 1)
+[node name="Mensagem" type="Label" parent="UI/Arena" unique_id=497633384]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -78.0
+offset_bottom = -58.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.95, 0.75, 1)
 theme_override_font_sizes/font_size = 11
-text = "Prepara-te!"
+text = "Prepara-te para a arena!"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="Controlos" type="Label" parent="UI/Arena"]
-offset_left = 10.0
-offset_top = 327.0
-offset_right = 630.0
-offset_bottom = 350.0
-theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
-theme_override_font_sizes/font_size = 9
-text = "A/D mover · W saltar · J soco · K pontapé · L defender · I especial"
+[node name="Controlos" type="Label" parent="UI/Arena" unique_id=1376371968]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.8, 0.75, 0.65, 1)
+theme_override_font_sizes/font_size = 8
+text = "WASD/Setas mover/saltar  ·  J soco  ·  K pontapé  ·  L/S defender  ·  I super especial  ·  ESC sair"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="Regressar" type="Button" parent="UI/Arena"]
+[node name="Regressar" type="Button" parent="UI/Arena" unique_id=59223172]
 visible = false
-offset_left = 230.0
-offset_top = 284.0
-offset_right = 410.0
-offset_bottom = 315.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "VOLTAR À PRAÇA"

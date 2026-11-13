@@ -1,18 +1,33 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=29 format=3]
 
 [ext_resource type="Script" path="res://Scripts/Taverna.gd" id="1_taverna"]
 [ext_resource type="PackedScene" path="res://Cenas/Player.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://Cenas/PortaCena.tscn" id="3_door"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/taverna_cenario.png" id="4_background"]
 [ext_resource type="Script" path="res://Scripts/TavernaInteraction.gd" id="5_interaction"]
+[ext_resource type="PackedScene" path="res://Cenas/TavernaNpc.tscn" id="9_tavern_npc"]
+[ext_resource type="Texture2D" path="res://Assets/UI/quadro_missoes_madeira.png" id="18_quadro_madeira"]
+[ext_resource type="FontFile" path="res://Assets/Fonts/MedievalSharp.ttf" id="19_fonte_medieval"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/taverna_chao_novo.png" id="20_chao_novo"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/taverna_paredes_novo.png" id="21_paredes_novo"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/balcao_novo.png" id="22_balcao_novo"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/balcao_oclusao_novo.png" id="23_balcao_oclusao_novo"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/mesa_central_nova.png" id="24_mesa_central_nova"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/mesa_lateral_nova.png" id="25_mesa_lateral_nova"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/mesa_pequena_nova.png" id="26_mesa_pequena_nova"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/quadro_missoes_novo.png" id="27_quadro_novo"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/barris_props_novo.png" id="28_barris_novo"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/taverna/taverna_vigas_teto.png" id="29_vigas_teto"]
 
-[sub_resource type="StyleBoxFlat" id="TavernPanelStyle"]
-bg_color = Color(0.12, 0.08, 0.07, 0.88)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.48, 0.32, 0.2, 1)
+[sub_resource type="StyleBoxTexture" id="TavernBoardStyle"]
+texture = ExtResource("18_quadro_madeira")
+texture_margin_left = 24.0
+texture_margin_top = 38.0
+texture_margin_right = 24.0
+texture_margin_bottom = 20.0
+content_margin_left = 26.0
+content_margin_top = 38.0
+content_margin_right = 26.0
+content_margin_bottom = 20.0
 
 [sub_resource type="RectangleShape2D" id="WallHorizontal"]
 size = Vector2(640, 10)
@@ -20,79 +35,334 @@ size = Vector2(640, 10)
 [sub_resource type="RectangleShape2D" id="WallVertical"]
 size = Vector2(10, 360)
 
-[sub_resource type="RectangleShape2D" id="BarCollision"]
-size = Vector2(170, 22)
+[sub_resource type="RectangleShape2D" id="FireplaceCollision"]
+size = Vector2(85, 26)
 
-[sub_resource type="RectangleShape2D" id="TableCollision"]
-size = Vector2(42, 20)
+[sub_resource type="RectangleShape2D" id="BalcaoFootprint"]
+size = Vector2(190, 16)
+
+[sub_resource type="RectangleShape2D" id="MesaCentralFootprint"]
+size = Vector2(70, 16)
+
+[sub_resource type="RectangleShape2D" id="MesaLateralFootprint"]
+size = Vector2(85, 16)
+
+[sub_resource type="RectangleShape2D" id="MesaPequenaFootprint"]
+size = Vector2(50, 16)
+
+[sub_resource type="RectangleShape2D" id="QuadroFootprint"]
+size = Vector2(60, 16)
+
+[sub_resource type="RectangleShape2D" id="BarrisFootprint"]
+size = Vector2(40, 16)
+
+[sub_resource type="CircleShape2D" id="InteractionCircleShape"]
+radius = 42.0
 
 [node name="Taverna" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_taverna")
 
-[node name="CenarioPixel" type="Sprite2D" parent="."]
-z_index = -10
+[node name="ModuladorLuz" type="CanvasModulate" parent="."]
+color = Color(0.88, 0.82, 0.74, 1)
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -30
+
+[node name="BaseTerreno" type="Sprite2D" parent="Background"]
 texture_filter = 1
 position = Vector2(320, 180)
-texture = ExtResource("4_background")
+texture = ExtResource("20_chao_novo")
 
-[node name="Limites" type="StaticBody2D" parent="."]
+[node name="ParedesFundo" type="Sprite2D" parent="Background"]
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("21_paredes_novo")
+
+[node name="YSort" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="BalcaoPrincipal" type="StaticBody2D" parent="YSort"]
+position = Vector2(240, 240)
+collision_layer = 1
 collision_mask = 0
 
-[node name="ParedeCima" type="CollisionShape2D" parent="Limites"]
-position = Vector2(320, 5)
+[node name="Sprite2D" type="Sprite2D" parent="YSort/BalcaoPrincipal"]
+texture_filter = 1
+position = Vector2(0, -36)
+texture = ExtResource("22_balcao_novo")
+
+[node name="OclusaoFrontal" type="Sprite2D" parent="YSort/BalcaoPrincipal"]
+texture_filter = 1
+position = Vector2(0, -36)
+texture = ExtResource("23_balcao_oclusao_novo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BalcaoPrincipal"]
+position = Vector2(0, -8)
+shape = SubResource("BalcaoFootprint")
+
+[node name="MesaCentral" type="StaticBody2D" parent="YSort"]
+position = Vector2(390, 285)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/MesaCentral"]
+texture_filter = 1
+position = Vector2(0, -29)
+texture = ExtResource("24_mesa_central_nova")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/MesaCentral"]
+position = Vector2(0, -8)
+shape = SubResource("MesaCentralFootprint")
+
+[node name="MesaLateral" type="StaticBody2D" parent="YSort"]
+position = Vector2(535, 260)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/MesaLateral"]
+texture_filter = 1
+position = Vector2(0, -20)
+texture = ExtResource("25_mesa_lateral_nova")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/MesaLateral"]
+position = Vector2(0, -8)
+shape = SubResource("MesaLateralFootprint")
+
+[node name="MesaVasco" type="StaticBody2D" parent="YSort"]
+position = Vector2(280, 335)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/MesaVasco"]
+texture_filter = 1
+position = Vector2(0, -30)
+texture = ExtResource("26_mesa_pequena_nova")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/MesaVasco"]
+position = Vector2(0, -8)
+shape = SubResource("MesaPequenaFootprint")
+
+[node name="MesaTiago" type="StaticBody2D" parent="YSort"]
+position = Vector2(550, 335)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/MesaTiago"]
+texture_filter = 1
+position = Vector2(0, -30)
+texture = ExtResource("26_mesa_pequena_nova")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/MesaTiago"]
+position = Vector2(0, -8)
+shape = SubResource("MesaPequenaFootprint")
+
+[node name="QuadroMissoesProp" type="StaticBody2D" parent="YSort"]
+position = Vector2(75, 230)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/QuadroMissoesProp"]
+texture_filter = 1
+position = Vector2(0, -35)
+texture = ExtResource("27_quadro_novo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/QuadroMissoesProp"]
+position = Vector2(0, -8)
+shape = SubResource("QuadroFootprint")
+
+[node name="BarrisAdega" type="StaticBody2D" parent="YSort"]
+position = Vector2(80, 165)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/BarrisAdega"]
+texture_filter = 1
+position = Vector2(0, -18.5)
+texture = ExtResource("28_barris_novo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BarrisAdega"]
+position = Vector2(0, -8)
+shape = SubResource("BarrisFootprint")
+
+[node name="Taberneiro" parent="YSort" instance=ExtResource("9_tavern_npc")]
+position = Vector2(240, 195)
+nome_npc = "Taberneiro Afonso"
+profissao_npc = "Taberneiro do Vale"
+falas = Array[String]([
+	"Bem-vindo à Taverna do Vale, Marco! Um copo de vinho verde fresco?",
+	"Hoje a lareira afasta o vento gélido que desce da serra.",
+	"Tens novas poções para os aventureiros que vão descer à dungeon?",
+	"O cozido farturento de feijão com carne fumada está no ponto!",
+	"Se precisares de dormir para recuperar forças, os quartos do sótão estão prontos!"
+])
+pose_indice = 0
+
+[node name="NpcBardo" parent="YSort" instance=ExtResource("9_tavern_npc")]
+position = Vector2(362, 174)
+nome_npc = "Martim, o Trovador"
+profissao_npc = "Bardo"
+falas = Array[String]([
+	"Cantarei as glórias dos campeões na arena de Tongóbriga!",
+	"Nada aquece mais a alma que uma trova dedilhada ao calor da lareira.",
+	"Escutai a balada do alquimista que desvendou os segredos do Tâmega!"
+])
+pose_indice = 4
+
+[node name="NpcGuerreiro" parent="YSort" instance=ExtResource("9_tavern_npc")]
+position = Vector2(390, 235)
+nome_npc = "Rodrigo, o Veterano"
+profissao_npc = "Cavaleiro"
+falas = Array[String]([
+	"Esta cerveja encorpada do vale dá ânimo para qualquer combate!",
+	"Comprei uma poção de espinheira real na botica e salvou a minha pele nas catacumbas!",
+	"As ruínas de Tongóbriga guardam guerreiros celtas formidáveis."
+])
+pose_indice = 3
+
+[node name="NpcMago" parent="YSort" instance=ExtResource("9_tavern_npc")]
+position = Vector2(510, 225)
+nome_npc = "Mestre Baltasar"
+profissao_npc = "Mago Arcano"
+falas = Array[String]([
+	"As essências alquímicas do Tâmega condensam mana pura.",
+	"Dizem que na mina antiga há veios de cristais azuis cintilantes.",
+	"O caldeirão do Marco tem a têmpera mágica exata."
+])
+pose_indice = 2
+
+[node name="NpcArqueiro" parent="YSort" instance=ExtResource("9_tavern_npc")]
+position = Vector2(540, 185)
+nome_npc = "Inês da Floresta"
+profissao_npc = "Druida dos Bosques"
+falas = Array[String]([
+	"A caça nas margens do rio foi generosa e o vento soprava a favor.",
+	"Esconder-se nas moitas é a melhor tática contra as feras que investem!",
+	"Precisamos de mais corajosos para a próxima expedição às profundezas."
+])
+pose_indice = 1
+
+[node name="NpcCurandeira" parent="YSort" instance=ExtResource("9_tavern_npc")]
+position = Vector2(610, 195)
+nome_npc = "Irmã Beatriz"
+profissao_npc = "Curandeira"
+falas = Array[String]([
+	"A erva-cidreira e o musgo da floresta curam qualquer maleita.",
+	"Levem elixires de proteção e poções de vento antes de descerem à mina!",
+	"Que a bênção das águas do Tâmega proteja a nossa guarnição."
+])
+pose_indice = 5
+
+[node name="NpcCampesinoVasco" parent="YSort" instance=ExtResource("9_tavern_npc")]
+position = Vector2(280, 315)
+nome_npc = "Vasco do Souto"
+profissao_npc = "Pastor Aldeão"
+falas = Array[String]([
+	"Mais uma caneca, mestre Afonso! O pastoreio na serra foi duro hoje.",
+	"Já vi muitos invernos em Marco de Canaveses, mas este ano a magia está viva.",
+	"As poções do Marco têm fama até do outro lado do rio Douro."
+])
+pose_indice = 6
+
+[node name="NpcCampesinoTiago" parent="YSort" instance=ExtResource("9_tavern_npc")]
+position = Vector2(525, 315)
+nome_npc = "Tiago das Vinhas"
+profissao_npc = "Lavrador"
+falas = Array[String]([
+	"A poda das videiras deu-me cabo das costas, mas este caldo aquece o corpo!",
+	"Aposto 10 escudos nos dados de osso contra qualquer um!",
+	"Cuidado na floresta ao anoitecer... ouvi javalis bravos a rondar as margens."
+])
+pose_indice = 6
+
+[node name="Player" parent="YSort" instance=ExtResource("2_player")]
+position = Vector2(215, 275)
+escala_multiplicador = 1.0
+camera_zoom = Vector2(1.0, 1.0)
+
+[node name="OclusaoPrimeiroPlano" type="Node2D" parent="."]
+z_index = 25
+
+[node name="VigasTeto" type="Sprite2D" parent="OclusaoPrimeiroPlano"]
+texture_filter = 1
+position = Vector2(320, 32.5)
+texture = ExtResource("29_vigas_teto")
+
+[node name="Collisions" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="ParedeCima" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(320, 145)
 shape = SubResource("WallHorizontal")
 
-[node name="ParedeBaixo" type="CollisionShape2D" parent="Limites"]
+[node name="ParedeBaixo" type="CollisionShape2D" parent="Collisions"]
 position = Vector2(320, 355)
 shape = SubResource("WallHorizontal")
 
-[node name="ParedeEsquerda" type="CollisionShape2D" parent="Limites"]
-position = Vector2(5, 180)
+[node name="ParedeEsquerda" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(10, 180)
 shape = SubResource("WallVertical")
 
-[node name="ParedeDireita" type="CollisionShape2D" parent="Limites"]
-position = Vector2(635, 180)
+[node name="ParedeDireita" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(630, 180)
 shape = SubResource("WallVertical")
 
-[node name="ObstaculosMobiliario" type="StaticBody2D" parent="."]
-collision_mask = 0
+[node name="LareiraFisica" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(460, 150)
+shape = SubResource("FireplaceCollision")
 
-[node name="Balcao" type="CollisionShape2D" parent="ObstaculosMobiliario"]
-position = Vector2(220, 160)
-shape = SubResource("BarCollision")
+[node name="Interactables" type="Node2D" parent="."]
 
-[node name="MesaCentral" type="CollisionShape2D" parent="ObstaculosMobiliario"]
-position = Vector2(385, 270)
-shape = SubResource("TableCollision")
+[node name="QuadroMissoes" type="Area2D" parent="Interactables"]
+position = Vector2(75, 230)
+script = ExtResource("5_interaction")
+modo_painel = "quadro"
+texto_badge = "📜 Missões & Dungeon RPG [E]"
 
-[node name="MesaLateral" type="CollisionShape2D" parent="ObstaculosMobiliario"]
-position = Vector2(535, 250)
-shape = SubResource("TableCollision")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/QuadroMissoes"]
+shape = SubResource("InteractionCircleShape")
 
-[node name="Player" parent="." instance=ExtResource("2_player")]
-position = Vector2(64, 255)
+[node name="InteracaoBalcao" type="Area2D" parent="Interactables"]
+position = Vector2(240, 218)
+script = ExtResource("5_interaction")
+modo_painel = "balcao"
+texto_badge = "🍷 Balcão do Afonso [E]"
 
-[node name="PortaPraca" parent="." instance=ExtResource("3_door")]
-position = Vector2(64, 318)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/InteracaoBalcao"]
+shape = SubResource("InteractionCircleShape")
+
+[node name="InteracaoMesaDados" type="Area2D" parent="Interactables"]
+position = Vector2(550, 316)
+script = ExtResource("5_interaction")
+modo_painel = "dados"
+texto_badge = "🎲 Mesa de Dados Celtas [E]"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/InteracaoMesaDados"]
+shape = SubResource("InteractionCircleShape")
+
+[node name="EntradasESaidas" type="Node2D" parent="."]
+
+[node name="PortaPraca" parent="EntradasESaidas" instance=ExtResource("3_door")]
+position = Vector2(145, 350)
 cena_destino = "res://Cenas/PracaCentral.tscn"
 posicao_entrada = Vector2(320, 180)
-destino_label = "SAIR PARA A PRACA"
-
-[node name="InteracaoBalcao" type="Node2D" parent="."]
-position = Vector2(220, 198)
-script = ExtResource("5_interaction")
+destino_label = "SAIR PARA A PRAÇA"
+titulo_area = "PRAÇA CENTRAL DE CANAVESES"
+descricao_area = "Regressa ao coração de Marco de Canaveses. Visita a Loja do Alquimista, a Floresta do Tâmega ou a Mina Antiga."
+icone_simbolo = "🏛️"
+entrar_ao_tocar = false
 
 [node name="Interface" type="CanvasLayer" parent="."]
 
 [node name="Instrucao" type="Label" parent="Interface"]
 offset_left = 8.0
-offset_top = 331.0
+offset_top = 338.0
 offset_right = 632.0
-offset_bottom = 355.0
+offset_bottom = 358.0
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
 theme_override_colors/font_color = Color(1, 0.91, 0.69, 1)
 theme_override_font_sizes/font_size = 11
-text = "Aproxima-te do balcão e carrega em E · Esc fecha o painel"
+text = "Aproxima-te do Quadro 📜, Balcão 🍷, Mesa de Dados 🎲 ou prime [Q] Missões · [B] Balcão · [D] Dados"
 horizontal_alignment = 1
 
 [node name="FundoPopUp" type="ColorRect" parent="Interface"]
@@ -103,7 +373,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
-color = Color(0, 0, 0, 0.55)
+color = Color(0, 0, 0, 0.65)
 
 [node name="Painel" type="PanelContainer" parent="Interface"]
 visible = false
@@ -112,17 +382,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -248.0
-offset_top = -168.0
-offset_right = 248.0
-offset_bottom = 168.0
+offset_left = -285.0
+offset_top = -165.0
+offset_right = 285.0
+offset_bottom = 165.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("TavernPanelStyle")
+theme_override_styles/panel = SubResource("TavernBoardStyle")
 
 [node name="Coluna" type="VBoxContainer" parent="Interface/Painel"]
 layout_mode = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 3
 
 [node name="Cabecalho" type="HBoxContainer" parent="Interface/Painel/Coluna"]
 layout_mode = 2
@@ -131,78 +401,123 @@ theme_override_constants/separation = 8
 [node name="Titulo" type="Label" parent="Interface/Painel/Coluna/Cabecalho"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.91, 0.78, 0.49, 1)
-theme_override_font_sizes/font_size = 16
-text = "A TAVERNA · NOITE"
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+theme_override_colors/font_color = Color(0.98, 0.88, 0.52, 1)
+theme_override_font_sizes/font_size = 13
+text = "📜 QUADRO DE MISSÕES & EXPEDIÇÕES ⚔️"
+horizontal_alignment = 1
 
 [node name="Fechar" type="Button" parent="Interface/Painel/Coluna/Cabecalho"]
-custom_minimum_size = Vector2(28, 24)
+custom_minimum_size = Vector2(26, 22)
 layout_mode = 2
-text = "X"
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+text = "✕"
+
+[node name="Separador1" type="HSeparator" parent="Interface/Painel/Coluna"]
+layout_mode = 2
 
 [node name="Estado" type="Label" parent="Interface/Painel/Coluna"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.92, 0.88, 0.75, 1)
-theme_override_font_sizes/font_size = 11
-text = "A recrutar aventureiros..."
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+theme_override_colors/font_color = Color(0.85, 0.94, 0.95, 1)
+theme_override_font_sizes/font_size = 10
+text = "DIA 1 · OURO 100 · contrata e gere a tua guarda celta."
 
 [node name="Expedicao" type="Label" parent="Interface/Painel/Coluna"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.82, 0.91, 0.79, 1)
-theme_override_font_sizes/font_size = 11
-text = "Sem expedições ativas."
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+theme_override_colors/font_color = Color(0.92, 0.88, 0.74, 1)
+theme_override_font_sizes/font_size = 10
+text = "Sem expedições ativas. Escolhe Caçada IDLE ou Batalha Ativa."
 
 [node name="Progresso" type="ProgressBar" parent="Interface/Painel/Coluna"]
-custom_minimum_size = Vector2(0, 12)
+custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
+value = 0.0
 show_percentage = false
 
-[node name="OfertaTitulo" type="Label" parent="Interface/Painel/Coluna"]
+[node name="ConteudoDuplo" type="HBoxContainer" parent="Interface/Painel/Coluna"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.84, 0.65, 1)
-theme_override_font_sizes/font_size = 11
-text = "AVENTUREIROS · CONTRATAR (NÍVEIS E PREÇOS VARIÁVEIS)"
+size_flags_vertical = 3
+theme_override_constants/separation = 12
 
-[node name="OfertasScroll" type="ScrollContainer" parent="Interface/Painel/Coluna"]
-custom_minimum_size = Vector2(0, 68)
+[node name="ColunaEsquerda" type="VBoxContainer" parent="Interface/Painel/Coluna/ConteudoDuplo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="OfertasTitulo" type="Label" parent="Interface/Painel/Coluna/ConteudoDuplo/ColunaEsquerda"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+theme_override_colors/font_color = Color(0.96, 0.84, 0.58, 1)
+theme_override_font_sizes/font_size = 10
+text = "AVENTUREIROS DISPONÍVEIS NA TAVERNA"
+
+[node name="OfertasScroll" type="ScrollContainer" parent="Interface/Painel/Coluna/ConteudoDuplo/ColunaEsquerda"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Ofertas" type="VBoxContainer" parent="Interface/Painel/Coluna/ConteudoDuplo/ColunaEsquerda/OfertasScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="SeparadorMeio" type="VSeparator" parent="Interface/Painel/Coluna/ConteudoDuplo"]
 layout_mode = 2
 
-[node name="Ofertas" type="VBoxContainer" parent="Interface/Painel/Coluna/OfertasScroll"]
+[node name="ColunaDireita" type="VBoxContainer" parent="Interface/Painel/Coluna/ConteudoDuplo"]
 layout_mode = 2
-theme_override_constants/separation = 1
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
 
-[node name="EquipaTitulo" type="Label" parent="Interface/Painel/Coluna"]
+[node name="EquipaTitulo" type="Label" parent="Interface/Painel/Coluna/ConteudoDuplo/ColunaDireita"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.84, 0.65, 1)
-theme_override_font_sizes/font_size = 11
-text = "A TUA EQUIPA · SELECIONA ATÉ 4 PARA O GRUPO"
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+theme_override_colors/font_color = Color(0.96, 0.84, 0.58, 1)
+theme_override_font_sizes/font_size = 10
+text = "A TUA COMPANHIA REGIONAL · ATÉ 4 MEMBROS"
 
-[node name="EquipaScroll" type="ScrollContainer" parent="Interface/Painel/Coluna"]
-custom_minimum_size = Vector2(0, 72)
+[node name="EquipaScroll" type="ScrollContainer" parent="Interface/Painel/Coluna/ConteudoDuplo/ColunaDireita"]
+custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Equipa" type="VBoxContainer" parent="Interface/Painel/Coluna/EquipaScroll"]
+[node name="Equipa" type="VBoxContainer" parent="Interface/Painel/Coluna/ConteudoDuplo/ColunaDireita/EquipaScroll"]
 layout_mode = 2
-theme_override_constants/separation = 0
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
 
 [node name="Relatorio" type="Label" parent="Interface/Painel/Coluna"]
-custom_minimum_size = Vector2(0, 24)
+custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.71, 0.39, 1)
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+theme_override_colors/font_color = Color(0.95, 0.74, 0.42, 1)
 theme_override_font_sizes/font_size = 10
-text = ""
 autowrap_mode = 3
 
 [node name="Botoes" type="HBoxContainer" parent="Interface/Painel/Coluna"]
 layout_mode = 2
 theme_override_constants/separation = 8
+alignment = 1
 
-[node name="Enviar" type="Button" parent="Interface/Painel/Coluna/Botoes"]
-custom_minimum_size = Vector2(230, 24)
+[node name="EnviarBatalha" type="Button" parent="Interface/Painel/Coluna/Botoes"]
+custom_minimum_size = Vector2(230, 28)
 layout_mode = 2
-text = "INICIAR DUNGEON POR TURNOS"
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+theme_override_font_sizes/font_size = 11
+text = "⚔️ ENTRAR NO COMBATE RPG"
+
+[node name="EnviarIdle" type="Button" parent="Interface/Painel/Coluna/Botoes"]
+custom_minimum_size = Vector2(130, 28)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+theme_override_font_sizes/font_size = 11
+text = "⏳ EXPEDIÇÃO IDLE"
 
 [node name="ProximoTurno" type="Button" parent="Interface/Painel/Coluna/Botoes"]
-custom_minimum_size = Vector2(230, 24)
+custom_minimum_size = Vector2(140, 28)
 layout_mode = 2
-text = "REGRESSAR À LOJA"
+theme_override_fonts/font = ExtResource("19_fonte_medieval")
+theme_override_font_sizes/font_size = 11
+text = "🛏️ DORMIR NA TAVERNA"

@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://6ffea7b2cd6e"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/flor_de_urze.png" id="icone_urze"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_6ffea7b2"]
 
 [resource]
 script = ExtResource("1_6ffea7b2")
+icone = ExtResource("icone_urze")
 id = "flor_de_urze"
 nome_do_item = "Flor de Urze"
 descricao = "Botão roxo de zonas pedregosas, muito valorizado em misturas de visão e foco."

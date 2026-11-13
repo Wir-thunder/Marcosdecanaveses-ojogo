@@ -11,12 +11,18 @@
 [ext_resource type="Script" uid="uid://c7kcjgdu6dyii" path="res://Scripts/PotionRecipeData.gd" id="11_recipe_data"]
 [ext_resource type="Script" uid="uid://cc4flmcuimjla" path="res://Scripts/Fornecedor.gd" id="12_fornecedor"]
 [ext_resource type="Script" uid="uid://c61qlh4wyk5uh" path="res://Scripts/Pausa.gd" id="13_pausa"]
-[ext_resource type="Texture2D" uid="uid://cvtoxbtcd7h0j" path="res://Assets/Environment/props/balcao.png" id="14_balcao_texture"]
-[ext_resource type="Texture2D" uid="uid://dyauruam4qbce" path="res://Assets/Environment/props/caldeirao.png" id="15_caldeirao_texture"]
-[ext_resource type="Texture2D" path="res://Sprites/Cenário_loja.jpeg" id="16_room_texture"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/props/balcao.png" id="14_balcao_texture"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/props/caldeirao.png" id="15_caldeirao_texture"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/loja_cenario.png" id="16_room_texture"]
 [ext_resource type="PackedScene" path="res://Cenas/PortaCena.tscn" id="18_door"]
 [ext_resource type="Texture2D" path="res://Assets/Environment/props/fornecedor_pixel.png" id="19_supplier_sprite"]
 [ext_resource type="Script" path="res://Scripts/TimeControls.gd" id="20_time_controls"]
+[ext_resource type="PackedScene" path="res://Cenas/Efeitos/FogoCaldeirao.tscn" id="21_fogo_caldeirao"]
+[ext_resource type="PackedScene" path="res://Cenas/Efeitos/CaldeiraoVapor.tscn" id="22_caldeirao_vapor"]
+[ext_resource type="PackedScene" path="res://Cenas/Efeitos/TochaParede.tscn" id="23_tocha"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/overlays/loja_foreground.png" id="24_loja_overlay"]
+[ext_resource type="PackedScene" path="res://Cenas/PrateleiraExibicao.tscn" id="25_prateleira"]
+[ext_resource type="PackedScene" path="res://Cenas/PainelAtendimentoBalcao.tscn" id="26_painel_atendimento"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundary_Top"]
 normal = Vector2(0, 1)
@@ -30,32 +36,47 @@ normal = Vector2(1, 0)
 normal = Vector2(-1, 0)
 
 [sub_resource type="RectangleShape2D" id="CounterShape"]
-size = Vector2(142, 104)
+size = Vector2(180, 150)
 
 [sub_resource type="RectangleShape2D" id="CounterBlockShape"]
-size = Vector2(132, 26)
+size = Vector2(118, 30)
 
 [sub_resource type="CircleShape2D" id="CauldronInteractionShape"]
 radius = 26.0
 
 [sub_resource type="CircleShape2D" id="CauldronBaseShape"]
+radius = 20.0
+
+[sub_resource type="RectangleShape2D" id="CabinetsLeftShape"]
+size = Vector2(28, 90)
+
+[sub_resource type="RectangleShape2D" id="BookshelfTopShape"]
+size = Vector2(46, 36)
+
+[sub_resource type="RectangleShape2D" id="BarrelsBottomLeftShape"]
+size = Vector2(50, 36)
+
+[sub_resource type="RectangleShape2D" id="ChestBottomRightShape"]
+size = Vector2(50, 40)
 
 [sub_resource type="RectangleShape2D" id="SupplierAreaShape"]
 size = Vector2(64, 44)
 
 [sub_resource type="RectangleShape2D" id="SupplierFrontShape"]
-size = Vector2(64, 12)
+size = Vector2(82, 26)
 
 [node name="Loja" type="Node2D" unique_id=1575213275]
 y_sort_enabled = true
 script = ExtResource("1_game")
 
 [node name="CenarioFundo" type="Sprite2D" parent="." unique_id=1802054955]
-z_index = -1
+z_index = -10
 texture_filter = 1
 position = Vector2(320, 180)
-scale = Vector2(0.232558, 0.234375)
 texture = ExtResource("16_room_texture")
+
+[node name="ModuladorLuz" type="CanvasModulate" parent="."]
+color = Color(0.85, 0.82, 0.78, 1)
 
 [node name="LimitesSala" type="StaticBody2D" parent="." unique_id=987123456]
 collision_mask = 0
@@ -76,8 +97,33 @@ shape = SubResource("WorldBoundary_Left")
 position = Vector2(630, 180)
 shape = SubResource("WorldBoundary_Right")
 
+[node name="ObstaculosLoja" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="ArmariosErvasEsq" type="CollisionShape2D" parent="ObstaculosLoja"]
+position = Vector2(24, 205)
+shape = SubResource("CabinetsLeftShape")
+
+[node name="EstanteLivrosCima" type="CollisionShape2D" parent="ObstaculosLoja"]
+position = Vector2(115, 194)
+shape = SubResource("BookshelfTopShape")
+
+[node name="BarrisCantoInfEsq" type="CollisionShape2D" parent="ObstaculosLoja"]
+position = Vector2(40, 325)
+shape = SubResource("BarrelsBottomLeftShape")
+
+[node name="MesaIngredientesCantoDir" type="CollisionShape2D" parent="ObstaculosLoja"]
+position = Vector2(595, 320)
+shape = SubResource("ChestBottomRightShape")
+
+[node name="TochaEsquerda" parent="." instance=ExtResource("23_tocha")]
+position = Vector2(100, 136)
+
+[node name="TochaDireita" parent="." instance=ExtResource("23_tocha")]
+position = Vector2(250, 136)
+
 [node name="Balcao" type="Area2D" parent="." unique_id=47932170]
-position = Vector2(330, 190)
+position = Vector2(245, 205)
 script = ExtResource("3_balcao")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Balcao" unique_id=1833654297]
@@ -85,42 +131,35 @@ shape = SubResource("CounterShape")
 
 [node name="Sprite2D" type="Sprite2D" parent="Balcao" unique_id=198612413]
 texture_filter = 1
-scale = Vector2(0.4, 0.4)
+scale = Vector2(1.22, 1.22)
 texture = ExtResource("14_balcao_texture")
-region_enabled = true
-region_rect = Rect2(2, 2, 348, 190)
 
 [node name="BalcaoFisico" type="StaticBody2D" parent="." unique_id=1746221300]
-position = Vector2(330, 208)
+position = Vector2(245, 208)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BalcaoFisico" unique_id=653281327]
 shape = SubResource("CounterBlockShape")
 
-[node name="PlacaBalcao" type="Label" parent="." unique_id=2085095696]
-z_index = 10
-offset_left = 282.0
-offset_top = 132.0
-offset_right = 378.0
-offset_bottom = 152.0
-theme_override_colors/font_color = Color(1, 0.9, 0.69, 1)
-theme_override_font_sizes/font_size = 12
-text = "ATENDIMENTO"
-horizontal_alignment = 1
-
 [node name="Caldeirao" type="Area2D" parent="." unique_id=289872812]
-position = Vector2(455, 190)
+position = Vector2(385, 195)
 collision_mask = 0
 script = ExtResource("4_caldeirao")
 receitas = Array[ExtResource("11_recipe_data")]([ExtResource("7_receita_vento"), ExtResource("8_receita_espinheira"), ExtResource("9_receita_mente"), ExtResource("10_receita_escudo")])
+
+[node name="FogoCaldeirao" parent="Caldeirao" instance=ExtResource("21_fogo_caldeirao")]
+position = Vector2(0, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Caldeirao" unique_id=249184466]
 shape = SubResource("CauldronInteractionShape")
 
 [node name="Sprite2D" type="Sprite2D" parent="Caldeirao" unique_id=890371548]
 texture_filter = 1
-position = Vector2(0, -20)
-scale = Vector2(0.625, 0.625)
+position = Vector2(0, -10)
+scale = Vector2(1.28, 1.28)
 texture = ExtResource("15_caldeirao_texture")
+
+[node name="CaldeiraoVapor" parent="Caldeirao" instance=ExtResource("22_caldeirao_vapor")]
+position = Vector2(0, -25)
 
 [node name="BaseFisica" type="StaticBody2D" parent="Caldeirao" unique_id=1482366006]
 collision_mask = 0
@@ -128,19 +167,8 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Caldeirao/BaseFisica" unique_id=1818368956]
 shape = SubResource("CauldronBaseShape")
 
-[node name="PlacaCaldeirao" type="Label" parent="." unique_id=1275906571]
-z_index = 10
-offset_left = 410.0
-offset_top = 132.0
-offset_right = 500.0
-offset_bottom = 152.0
-theme_override_colors/font_color = Color(0.78, 0.9, 0.77, 1)
-theme_override_font_sizes/font_size = 12
-text = "CALDEIRÃO"
-horizontal_alignment = 1
-
 [node name="Fornecedor" type="Area2D" parent="." unique_id=1316958283]
-position = Vector2(535, 190)
+position = Vector2(520, 200)
 collision_mask = 0
 script = ExtResource("12_fornecedor")
 
@@ -149,40 +177,40 @@ position = Vector2(0, 8)
 shape = SubResource("SupplierAreaShape")
 
 [node name="PrateleiraFundo" type="Node2D" parent="." unique_id=1332412675]
-position = Vector2(535, 190)
+position = Vector2(520, 200)
 
 [node name="PrateleiraPixel" type="Sprite2D" parent="PrateleiraFundo" unique_id=1021726531]
 texture_filter = 1
+scale = Vector2(1.22, 1.22)
 texture = ExtResource("19_supplier_sprite")
 
 [node name="BalcaoFrente" type="StaticBody2D" parent="." unique_id=759925133]
-position = Vector2(535, 198)
+position = Vector2(520, 206)
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BalcaoFrente" unique_id=1838463967]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BalcaoFrente" unique_id=1833654297]
 position = Vector2(0, 1)
 shape = SubResource("SupplierFrontShape")
-
-[node name="PlacaFornecedor" type="Label" parent="." unique_id=1523241235]
-z_index = 10
-offset_left = 493.0
-offset_top = 146.0
-offset_right = 578.0
-offset_bottom = 166.0
-theme_override_colors/font_color = Color(0.86, 0.82, 0.62, 1)
-theme_override_font_sizes/font_size = 11
-text = "FORNECEDOR"
-horizontal_alignment = 1
 
 [node name="PortaPraca" parent="." unique_id=1906365511 instance=ExtResource("18_door")]
 position = Vector2(320, 326)
 cena_destino = "res://Cenas/PracaCentral.tscn"
-posicao_entrada = Vector2(540, 270)
-destino_label = "SAIR PARA A PRACA"
-entrar_ao_tocar = true
+posicao_entrada = Vector2(548, 276)
+destino_label = "SAIR PARA A PRAÇA"
+titulo_area = "PRAÇA CENTRAL DE CANAVESES"
+descricao_area = "Coração histórico da vila. Liga a tua Loja à Taverna do Vale, Floresta do Tâmega, Mina Antiga e Ruínas de Tongóbriga."
+icone_simbolo = "🏛️"
+apenas_a_noite = true
+entrar_ao_tocar = false
 
 [node name="Player" parent="." unique_id=916926789 instance=ExtResource("2_player_scene")]
-position = Vector2(235, 250)
+position = Vector2(245, 175)
+
+[node name="OverlayVigas" type="Sprite2D" parent="." visible=false]
+z_index = 25
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("24_loja_overlay")
 
 [node name="TemporizadorCliente" type="Timer" parent="." unique_id=1533797540]
 one_shot = true
@@ -207,27 +235,31 @@ theme_override_constants/separation = 4
 
 [node name="ControlesTempo" type="HBoxContainer" parent="Interface"]
 process_mode = 3
-offset_left = 412.0
-offset_top = 268.0
+offset_left = 538.0
+offset_top = 272.0
 offset_right = 628.0
 offset_bottom = 292.0
-theme_override_constants/separation = 4
+theme_override_constants/separation = 3
+alignment = 2
 script = ExtResource("20_time_controls")
 
 [node name="Play" type="Button" parent="Interface/ControlesTempo"]
-custom_minimum_size = Vector2(72, 22)
+focus_mode = 0
+custom_minimum_size = Vector2(26, 20)
 layout_mode = 2
-text = "PLAY"
-
-[node name="Pause" type="Button" parent="Interface/ControlesTempo"]
-custom_minimum_size = Vector2(72, 22)
-layout_mode = 2
-text = "PAUSE"
+text = ">"
 
 [node name="Accelerate" type="Button" parent="Interface/ControlesTempo"]
-custom_minimum_size = Vector2(60, 22)
+focus_mode = 0
+custom_minimum_size = Vector2(28, 20)
 layout_mode = 2
-text = "2×"
+text = ">>"
+
+[node name="Pause" type="Button" parent="Interface/ControlesTempo"]
+focus_mode = 0
+custom_minimum_size = Vector2(26, 20)
+layout_mode = 2
+text = "II"
 
 [node name="Margem" type="MarginContainer" parent="Interface/Painel" unique_id=581869510]
 layout_mode = 2
@@ -242,14 +274,14 @@ theme_override_constants/separation = 0
 
 [node name="Titulo" type="Label" parent="Interface/Painel/Margem/Coluna" unique_id=1348138675]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.78, 0.49, 1)
-theme_override_font_sizes/font_size = 12
-text = "A LOJA DO ALQUIMISTA — ALFA 0.1"
+theme_override_colors/font_color = Color(0.96, 0.85, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "A LOJA DO ALQUIMISTA · MARCO DE CANAVESES"
 
 [node name="Estado" type="Label" parent="Interface/Painel/Margem/Coluna" unique_id=1005245441]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.92, 0.88, 0.75, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.94, 0.90, 0.78, 1)
+theme_override_font_sizes/font_size = 11
 text = "A preparar a loja..."
 
 [node name="Rodape" type="PanelContainer" parent="Interface" unique_id=839812752]
@@ -271,20 +303,20 @@ theme_override_constants/separation = 1
 
 [node name="Receita" type="Label" parent="Interface/Rodape/Margem/Coluna" unique_id=432107173]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.84, 0.65, 1)
-theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.94, 0.86, 0.68, 1)
+theme_override_font_sizes/font_size = 10
 text = "RECEITA"
 
 [node name="Inventario" type="Label" parent="Interface/Rodape/Margem/Coluna" unique_id=2142692613]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.82, 0.88, 0.77, 1)
-theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.85, 0.91, 0.80, 1)
+theme_override_font_sizes/font_size = 10
 text = "STOCK"
 
 [node name="Instrucoes" type="Label" parent="Interface/Rodape/Margem/Coluna" unique_id=917414871]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.71, 0.39, 1)
-theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.96, 0.76, 0.44, 1)
+theme_override_font_sizes/font_size = 10
 text = "WASD mover · E usar · Q poção · TAB receita · F ingrediente · ESC pausa"
 autowrap_mode = 3
 
@@ -345,3 +377,8 @@ text = "Reiniciar turno"
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 text = "Sair do jogo"
+
+[node name="PrateleiraExibicao" parent="." instance=ExtResource("25_prateleira")]
+position = Vector2(115, 190)
+
+[node name="PainelAtendimento" parent="." instance=ExtResource("26_painel_atendimento")]

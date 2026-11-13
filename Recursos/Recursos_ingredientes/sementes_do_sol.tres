@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://67ffd1876c98"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/sementes_do_sol.png" id="icone_1"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_67ffd187"]
 
 [resource]
 script = ExtResource("1_67ffd187")
+icone = ExtResource("icone_1")
 id = "sementes_do_sol"
 nome_do_item = "Sementes do Sol"
 descricao = "Grãos dourados de calor intenso, usados para dar brilho e energia a misturas raras."

@@ -1,0 +1,100 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://Scripts/FogoBruxuleante.gd" id="1_flicker"]
+[ext_resource type="Texture2D" path="res://Assets/Effects/fogo_caldeirao.png" id="2_fire_texture"]
+[ext_resource type="Texture2D" path="res://Assets/Effects/luz_radial.png" id="3_light_texture"]
+
+[sub_resource type="AtlasTexture" id="Frame0"]
+atlas = ExtResource("2_fire_texture")
+region = Rect2(0, 0, 32, 18)
+
+[sub_resource type="AtlasTexture" id="Frame1"]
+atlas = ExtResource("2_fire_texture")
+region = Rect2(32, 0, 32, 18)
+
+[sub_resource type="AtlasTexture" id="Frame2"]
+atlas = ExtResource("2_fire_texture")
+region = Rect2(64, 0, 32, 18)
+
+[sub_resource type="AtlasTexture" id="Frame3"]
+atlas = ExtResource("2_fire_texture")
+region = Rect2(96, 0, 32, 18)
+
+[sub_resource type="AtlasTexture" id="Frame4"]
+atlas = ExtResource("2_fire_texture")
+region = Rect2(128, 0, 32, 18)
+
+[sub_resource type="AtlasTexture" id="Frame5"]
+atlas = ExtResource("2_fire_texture")
+region = Rect2(160, 0, 32, 18)
+
+[sub_resource type="SpriteFrames" id="CauldronFireFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Frame0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Frame1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Frame2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Frame3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Frame4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Frame5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="Gradient" id="EmberGradient"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0.85, 0.3, 1, 1, 0.45, 0.1, 0.7, 0.6, 0.1, 0.05, 0)
+
+[node name="FogoCaldeirao" type="Node2D"]
+script = ExtResource("1_flicker")
+velocidade_flicker = 15.0
+intensidade_base = 0.95
+variacao_intensidade = 0.22
+cor_quente = Color(1, 0.8, 0.45, 1)
+cor_alaranjada = Color(1, 0.5, 0.15, 1)
+
+[node name="HaloBrilho" type="Sprite2D" parent="."]
+modulate = Color(1, 0.6, 0.2, 0.35)
+scale = Vector2(0.9, 0.6)
+texture = ExtResource("3_light_texture")
+
+[node name="Luz" type="PointLight2D" parent="."]
+color = Color(1, 0.7, 0.35, 1)
+energy = 0.9
+texture = ExtResource("3_light_texture")
+texture_scale = 1.2
+
+[node name="Anim" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -4)
+sprite_frames = SubResource("CauldronFireFrames")
+autoplay = "default"
+
+[node name="Brasas" type="CPUParticles2D" parent="."]
+position = Vector2(0, -2)
+amount = 8
+lifetime = 1.1
+emission_shape = 3
+emission_rect_extents = Vector2(10, 2)
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, -12)
+initial_velocity_min = 10.0
+initial_velocity_max = 22.0
+scale_amount_min = 1.0
+scale_amount_max = 1.8
+color_ramp = SubResource("EmberGradient")
+

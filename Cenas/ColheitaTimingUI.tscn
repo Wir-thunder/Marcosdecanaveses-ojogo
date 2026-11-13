@@ -1,0 +1,100 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/ColheitaTimingUI.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="EstiloPainel"]
+bg_color = Color(0.1, 0.08, 0.06, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.65, 0.35, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+
+[node name="ColheitaTimingUI" type="CanvasLayer"]
+layer = 50
+script = ExtResource("1_script")
+
+[node name="Painel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -65.0
+offset_right = 140.0
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("EstiloPainel")
+
+[node name="VBox" type="VBoxContainer" parent="Painel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="ItemNomeLabel" type="Label" parent="Painel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "COLHEITA DELICADA · ERVA RARA"
+horizontal_alignment = 1
+
+[node name="BarraContainer" type="Control" parent="Painel/VBox"]
+custom_minimum_size = Vector2(240, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="BarraFundo" type="ColorRect" parent="Painel/VBox/BarraContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2, 0.18, 0.16, 1)
+
+[node name="ZonaVerde" type="ColorRect" parent="Painel/VBox/BarraContainer"]
+layout_mode = 0
+offset_left = 95.0
+offset_right = 145.0
+offset_bottom = 24.0
+color = Color(0.25, 0.75, 0.35, 1)
+
+[node name="CentroDourado" type="ColorRect" parent="Painel/VBox/BarraContainer/ZonaVerde"]
+layout_mode = 0
+offset_left = 18.0
+offset_right = 32.0
+offset_bottom = 24.0
+color = Color(1, 0.85, 0.2, 1)
+
+[node name="Ponteiro" type="ColorRect" parent="Painel/VBox/BarraContainer"]
+layout_mode = 0
+offset_left = 117.0
+offset_top = -3.0
+offset_right = 123.0
+offset_bottom = 27.0
+color = Color(1, 0.3, 0.2, 1)
+
+[node name="FeedbackLabel" type="Label" parent="Painel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "Pressiona [ESPAÇO / ENTER] na zona verde!"
+horizontal_alignment = 1
+
+[node name="BotaoColher" type="Button" parent="Painel/VBox"]
+custom_minimum_size = Vector2(160, 22)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 10
+text = "✂️ COLHER [ESPAÇO]"
+

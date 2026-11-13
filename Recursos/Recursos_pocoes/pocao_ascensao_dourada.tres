@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://fd9ed69b163d"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Potions/pocao_ascensao_dourada.png" id="icone_dourada"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_fd9ed69b"]
 
 [resource]
 script = ExtResource("1_fd9ed69b")
+icone = ExtResource("icone_dourada")
 id = "pocao_ascensao_dourada"
 nome_do_item = "Poção Ascensão Dourada"
 descricao = "Eleva a vontade e aumenta o dinamismo, favorecendo ações decisivas e ousadas."

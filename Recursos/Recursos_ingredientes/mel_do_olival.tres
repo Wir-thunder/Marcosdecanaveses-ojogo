@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c2565bdc6059"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/mel_do_olival.png" id="icone_1"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_c2565bdc"]
 
 [resource]
 script = ExtResource("1_c2565bdc")
+icone = ExtResource("icone_1")
 id = "mel_do_olival"
 nome_do_item = "Mel do Olival"
 descricao = "Mel dourado e denso, muito perfumado, ideal como doçura natural de elixires."

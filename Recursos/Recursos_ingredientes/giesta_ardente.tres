@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://7265755d589b"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/giesta_ardente.png" id="icone_1"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_7265755d"]
 
 [resource]
 script = ExtResource("1_7265755d")
+icone = ExtResource("icone_1")
 id = "giesta_ardente"
 nome_do_item = "Giesta Ardente"
 descricao = "Flores amarelas em tons de fogo, usadas para criar poções ofensivas e energéticas."

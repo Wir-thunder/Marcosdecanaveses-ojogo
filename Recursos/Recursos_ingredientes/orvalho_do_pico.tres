@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://109144cf1ca6"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/orvalho_do_pico.png" id="icone_1"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_109144cf"]
 
 [resource]
 script = ExtResource("1_109144cf")
+icone = ExtResource("icone_1")
 id = "orvalho_do_pico"
 nome_do_item = "Orvalho do Pico"
 descricao = "Gotas cristalinas colhidas ao amanhecer em cotas elevadas, energizantes e sutis."

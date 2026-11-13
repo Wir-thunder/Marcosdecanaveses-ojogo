@@ -1,0 +1,103 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://Scripts/CriptaPedraFormosa.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://Cenas/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://Cenas/PortaCena.tscn" id="3_door"]
+[ext_resource type="PackedScene" path="res://Cenas/RecursoColetavel.tscn" id="4_pickup"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/cripta_pedra_formosa_cenario.png" id="5_background"]
+[ext_resource type="PackedScene" path="res://Cenas/TavernaNpc.tscn" id="6_npc"]
+[ext_resource type="PackedScene" path="res://Cenas/Efeitos/FogoCaldeirao.tscn" id="7_fogo"]
+
+[sub_resource type="RectangleShape2D" id="WallHorizontal"]
+size = Vector2(640, 10)
+
+[sub_resource type="RectangleShape2D" id="WallVertical"]
+size = Vector2(10, 360)
+
+[node name="CriptaPedraFormosa" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_world")
+nome_local = "Santuário & Cripta da Pedra Formosa"
+
+[node name="CenarioPixel" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("5_background")
+
+[node name="ModuladorLuz" type="CanvasModulate" parent="."]
+color = Color(0.76, 0.72, 0.88, 1)
+
+[node name="Limites" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="ParedeCima" type="CollisionShape2D" parent="Limites"]
+position = Vector2(320, 268)
+shape = SubResource("WallHorizontal")
+
+[node name="ParedeBaixo" type="CollisionShape2D" parent="Limites"]
+position = Vector2(320, 336)
+shape = SubResource("WallHorizontal")
+
+[node name="ParedeEsquerda" type="CollisionShape2D" parent="Limites"]
+position = Vector2(5, 180)
+shape = SubResource("WallVertical")
+
+[node name="ParedeDireita" type="CollisionShape2D" parent="Limites"]
+position = Vector2(635, 180)
+shape = SubResource("WallVertical")
+
+[node name="NpcDruida" parent="." instance=ExtResource("6_npc")]
+position = Vector2(262, 276)
+nome_npc = "Guardião da Pedra Formosa"
+profissao_npc = "Sacerdote Castrejo"
+falas = Array[String]([
+	"Os trísqueles gravados na Pedra Formosa guardam a memória dos antigos galaico-lusitanos.",
+	"A Raiz de Mandrágora e a Lágrima do Douro nascem apenas onde o véu místico é ténue.",
+	"Quando atingires Mestria 5 nas tuas poções, o teu caldeirão revelará elixires lendários!"
+])
+pose_indice = 2
+
+[node name="PortaTermas" parent="." instance=ExtResource("3_door")]
+position = Vector2(72, 302)
+cena_destino = "res://Cenas/TermasRomanas.tscn"
+posicao_entrada = Vector2(495, 298)
+destino_label = "TERMAS ROMANAS"
+titulo_area = "TERMAS ROMANAS & FONTE SULFUROSA"
+descricao_area = "Retorna às piscinas fumegantes do balneário romano."
+icone_simbolo = "♨️"
+entrar_ao_tocar = false
+
+[node name="PortaPraca" parent="." instance=ExtResource("3_door")]
+position = Vector2(568, 302)
+cena_destino = "res://Cenas/PracaCentral.tscn"
+posicao_entrada = Vector2(210, 175)
+destino_label = "PRAÇA CENTRAL"
+titulo_area = "PRAÇA CENTRAL DE CANAVESES"
+descricao_area = "Sobe diretamente para a Praça Central com as relíquias alquímicas."
+icone_simbolo = "🏛️"
+entrar_ao_tocar = false
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(175, 298)
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Estado" type="Label" parent="Interface"]
+offset_left = 12.0
+offset_top = 8.0
+offset_right = 628.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(0.88, 0.76, 1.0, 1)
+theme_override_font_sizes/font_size = 14
+text = "SANTUÁRIO & CRIPTA DA PEDRA FORMOSA"
+
+[node name="Instrucao" type="Label" parent="Interface"]
+offset_left = 12.0
+offset_top = 333.0
+offset_right = 628.0
+offset_bottom = 353.0
+theme_override_colors/font_color = Color(0.96, 0.91, 0.76, 1)
+theme_override_font_sizes/font_size = 11
+text = "WASD mover  ·  E colher reagentes místicos de Tier 2 e Tier 3  ·  Oeste: Termas  ·  Leste: Praça"

@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dljp2bfnkl5kh"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/essencia_vinho_verde.png" id="icone_1"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_xa03c"]
 
 [resource]
 script = ExtResource("1_xa03c")
+icone = ExtResource("icone_1")
 id = "essencia_vinho_verde"
 nome_do_item = "Essência de Vinho Verde"
 descricao = "Essência aromática destilada de uvas verdes do Tâmega, usada para dar vigor e frescura às poções."

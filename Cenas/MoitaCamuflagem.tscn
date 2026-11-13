@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Scripts/MoitaCamuflagem.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/props/moita_camuflagem.png" id="2_moita"]
+
+[sub_resource type="CircleShape2D" id="MoitaArea"]
+radius = 20.0
+
+[sub_resource type="Gradient" id="LeafGrad"]
+colors = PackedColorArray(0.35, 0.75, 0.3, 0.9, 0.15, 0.45, 0.15, 0)
+
+[node name="MoitaCamuflagem" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -6)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("2_moita")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("MoitaArea")
+
+[node name="Folhas" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 6
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.8
+emission_shape = 1
+emission_sphere_radius = 12.0
+gravity = Vector2(0, -10)
+initial_velocity_min = 10.0
+initial_velocity_max = 25.0
+color_ramp = SubResource("LeafGrad")
+
+[node name="Feedback" type="Label" parent="."]
+visible = false
+z_index = 30
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -34.0
+offset_right = 40.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.65, 0.95, 0.45, 1)
+theme_override_font_sizes/font_size = 8
+text = "🌿 ESCONDIDO"
+horizontal_alignment = 1
+

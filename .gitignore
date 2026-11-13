@@ -18,3 +18,9 @@ addons/godot_ai/
 # Vídeo duplicado (o jogo usa o .ogv)
 *.mp4
 
+# Temporários / backups locais
+scratch/
+*.zip
+*.backup*
+*.bak
+

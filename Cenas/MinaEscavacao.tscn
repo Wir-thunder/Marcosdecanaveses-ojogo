@@ -1,0 +1,175 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Scripts/MinaEscavacao.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/backgrounds/dungeon_cenario.png" id="2_bg"]
+
+[sub_resource type="StyleBoxFlat" id="EstiloPainelTopo"]
+bg_color = Color(0.08, 0.07, 0.06, 0.88)
+border_width_bottom = 2
+border_color = Color(0.65, 0.5, 0.3, 1)
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="EstiloVitoria"]
+bg_color = Color(0.12, 0.1, 0.08, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.75, 0.35, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+
+[node name="MinaEscavacao" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="FundoCenario" type="TextureRect" parent="."]
+modulate = Color(0.4, 0.4, 0.45, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+
+[node name="Centro" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridArea" type="Control" parent="Centro"]
+custom_minimum_size = Vector2(304, 228)
+layout_mode = 2
+
+[node name="PlayerToken" type="ColorRect" parent="Centro/GridArea"]
+z_index = 5
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 30.0
+color = Color(1, 0.85, 0.2, 0.95)
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Topo" type="PanelContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("EstiloPainelTopo")
+
+[node name="HBox" type="HBoxContainer" parent="HUD/Topo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PicaretaLabel" type="Label" parent="HUD/Topo/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.7, 1)
+theme_override_font_sizes/font_size = 11
+text = "🔨 PICARETA: 16/16"
+
+[node name="RecompensaLabel" type="Label" parent="HUD/Topo/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.92, 0.85, 1)
+theme_override_font_sizes/font_size = 10
+text = "💰 Ouro: +0 | Minérios: Nenhum"
+
+[node name="BotaoSair" type="Button" parent="HUD/Topo/HBox"]
+custom_minimum_size = Vector2(100, 22)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 9
+text = "SUBIR DA MINA [ESC]"
+
+[node name="InstrucaoLabel" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.8, 0.75, 0.65, 1)
+theme_override_font_sizes/font_size = 9
+text = "WASD / Setas ou Clique para escavar blocos adjacentes · Pedras gastam 2 golpes, terra gasta 1"
+horizontal_alignment = 1
+
+[node name="Faiscas" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 14
+lifetime = 0.35
+one_shot = true
+explosiveness = 0.9
+emission_shape = 1
+emission_sphere_radius = 6.0
+gravity = Vector2(0, 80)
+initial_velocity_min = 40.0
+initial_velocity_max = 85.0
+color = Color(1, 0.85, 0.3, 1)
+
+[node name="PainelVitoria" type="PanelContainer" parent="."]
+visible = false
+z_index = 60
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -80.0
+offset_right = 160.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("EstiloVitoria")
+
+[node name="VBox" type="VBoxContainer" parent="PainelVitoria"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="ResumoLabel" type="Label" parent="PainelVitoria/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.85, 1)
+theme_override_font_sizes/font_size = 11
+text = "⛏️ ESCAVAÇÃO CONCLUÍDA!"
+horizontal_alignment = 1
+
+[node name="BotaoOk" type="Button" parent="PainelVitoria/VBox"]
+custom_minimum_size = Vector2(160, 26)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 11
+text = "GUARDAR NA MOCHILA 🎒"
+

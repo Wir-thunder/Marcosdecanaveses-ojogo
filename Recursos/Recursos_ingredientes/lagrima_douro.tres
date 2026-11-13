@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://db3xjxwmexh25"]
 
+[ext_resource type="Texture2D" path="res://Assets/Icons/Ingredients/lagrima_douro.png" id="icone_1"]
 [ext_resource type="Script" uid="uid://cyrtq3g5yojy6" path="res://Scripts/ItemData.gd" id="1_yufjj"]
 
 [resource]
 script = ExtResource("1_yufjj")
+icone = ExtResource("icone_1")
 id = "lagrima_douro"
 nome_do_item = "Lágrima do Douro"
 descricao = "Uma gota de névoa matinal cristalizada nas margens do Rio Douro. Acalma a mente e restaura a mana."

@@ -1,0 +1,269 @@
+[gd_scene format=3 uid="uid://c83p6m2nb2b11"]
+
+[ext_resource type="Script" path="res://Scripts/PainelAtendimentoBalcao.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_FundoEscuro"]
+bg_color = Color(0.08, 0.07, 0.06, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.68, 0.52, 0.28, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_Fala"]
+bg_color = Color(0.14, 0.12, 0.1, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.32, 0.22, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_PacienciaBg"]
+bg_color = Color(0.15, 0.13, 0.12, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_PacienciaFill"]
+bg_color = Color(0.28, 0.72, 0.36, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_Botao"]
+bg_color = Color(0.2, 0.16, 0.13, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.42, 0.25, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="PainelAtendimento" type="CanvasLayer"]
+layer = 15
+script = ExtResource("1_script")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FundoEscurecido" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Painel" type="PanelContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -140.0
+offset_right = 260.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBox_FundoEscuro")
+
+[node name="Margem" type="MarginContainer" parent="Control/Painel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="Control/Painel/Margem"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Header" type="HBoxContainer" parent="Control/Painel/Margem/VBox"]
+layout_mode = 2
+
+[node name="Titulo" type="Label" parent="Control/Painel/Margem/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.98, 0.88, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "⚖️ BALCÃO DO ALQUIMISTA · SWORDS & POTIONS"
+
+[node name="LabelFama" type="Label" parent="Control/Painel/Margem/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.78, 0.65, 1)
+theme_override_font_sizes/font_size = 10
+text = "Fama: Boticário de Canaveses"
+
+[node name="Separador" type="HSeparator" parent="Control/Painel/Margem/VBox"]
+layout_mode = 2
+
+[node name="Conteudo" type="HBoxContainer" parent="Control/Painel/Margem/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="ColCliente" type="VBoxContainer" parent="Control/Painel/Margem/VBox/Conteudo"]
+custom_minimum_size = Vector2(230, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LabelNome" type="Label" parent="Control/Painel/Margem/VBox/Conteudo/ColCliente"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.85, 1)
+theme_override_font_sizes/font_size = 11
+text = "Manuel da Ribeira"
+
+[node name="LabelClasse" type="Label" parent="Control/Painel/Margem/VBox/Conteudo/ColCliente"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.7, 0.6, 1)
+theme_override_font_sizes/font_size = 9
+text = "[Lavrador de Vinho Verde]"
+
+[node name="BarPaciencia" type="ProgressBar" parent="Control/Painel/Margem/VBox/Conteudo/ColCliente"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBox_PacienciaBg")
+theme_override_styles/fill = SubResource("StyleBox_PacienciaFill")
+value = 80.0
+show_percentage = false
+
+[node name="PainelFala" type="PanelContainer" parent="Control/Painel/Margem/VBox/Conteudo/ColCliente"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBox_Fala")
+
+[node name="Margem" type="MarginContainer" parent="Control/Painel/Margem/VBox/Conteudo/ColCliente/PainelFala"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="LabelFala" type="Label" parent="Control/Painel/Margem/VBox/Conteudo/ColCliente/PainelFala/Margem"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.9, 0.86, 0.78, 1)
+theme_override_font_sizes/font_size = 9
+text = "\"A poda das videiras deu-me cabo das costas... Tens algo revigorante aí no caldeirão?\""
+autowrap_mode = 3
+
+[node name="ColPedido" type="VBoxContainer" parent="Control/Painel/Margem/VBox/Conteudo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="LabelPedido" type="Label" parent="Control/Painel/Margem/VBox/Conteudo/ColPedido"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "PEDIDO: Poção Vento Ligeiro"
+
+[node name="LabelStock" type="Label" parent="Control/Painel/Margem/VBox/Conteudo/ColPedido"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "Stock: 2 un disponível"
+
+[node name="LabelPreco" type="Label" parent="Control/Painel/Margem/VBox/Conteudo/ColPedido"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "Preço a Pagar: 45 OURO"
+
+[node name="PainelSugestoes" type="VBoxContainer" parent="Control/Painel/Margem/VBox/Conteudo/ColPedido"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TituloSugestao" type="Label" parent="Control/Painel/Margem/VBox/Conteudo/ColPedido/PainelSugestoes"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.8, 0.6, 1)
+theme_override_font_sizes/font_size = 9
+text = "Escolhe uma poção do teu stock para sugerir:"
+
+[node name="ListaBotoes" type="HBoxContainer" parent="Control/Painel/Margem/VBox/Conteudo/ColPedido/PainelSugestoes"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BotoesAcao" type="HBoxContainer" parent="Control/Painel/Margem/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="BtnVender" type="Button" parent="Control/Painel/Margem/VBox/BotoesAcao"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(0.95, 0.92, 0.8, 1)
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBox_Botao")
+text = "💰 VENDER (45 OURO)"
+
+[node name="BtnSugerir" type="Button" parent="Control/Painel/Margem/VBox/BotoesAcao"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(0.95, 0.92, 0.8, 1)
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBox_Botao")
+text = "💡 SUGERIR OUTRA"
+
+[node name="BtnPechinchar" type="Button" parent="Control/Painel/Margem/VBox/BotoesAcao"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(0.95, 0.92, 0.8, 1)
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBox_Botao")
+text = "📈 PECHINCHAR (+35%)"
+
+[node name="BtnDesconto" type="Button" parent="Control/Painel/Margem/VBox/BotoesAcao"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(0.95, 0.92, 0.8, 1)
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBox_Botao")
+text = "🏷️ DAR DESCONTO (-20%)"
+
+[node name="BtnDispensar" type="Button" parent="Control/Painel/Margem/VBox/BotoesAcao"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.8, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBox_Botao")
+text = "🚪 DISPENSAR"
+
+[node name="BtnFechar" type="Button" parent="Control/Painel/Margem/VBox/BotoesAcao"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBox_Botao")
+text = "✕"
